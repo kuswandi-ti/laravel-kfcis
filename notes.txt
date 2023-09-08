@@ -1,0 +1,486 @@
+Guard :
+    Super Admin (admins),
+    Pengurus (Staff -> admin, ketua, wakil, sekretaris, bendahara),
+    User
+
+------------ Super Admin -------------
+General Settings
+    1.  Basic Configuration
+        - Application name
+        - Timezone
+        - Currency
+        - Currency Symbol
+        - Account Number Prefix
+        - Account Number Length
+        - Maintenance Mode
+Logo
+    - Logo Image
+    - Favicon Image
+System Configuration
+    - Online Member Registration
+    - Email Verification
+    - Email Notification
+    - SMS Notification
+    - Language Options
+    - Deposit
+    - Withdraw
+    - OTP Email
+    - OTP SMS
+    - Push Notification
+------------ End Super Admin -------------
+
+------------ Staff (Admin) ------------
+1. Setting Identitas Lingkungan
+2. Menentukan Ketua RT
+2. Menentukan Sekretaris RT
+2. Menentukan Bendahara RT
+------------ End Staff (Admin) --------
+
+------------ Staff (Ketua & Wakil RT) ------------
+1. Report Statistik Data Warga
+2. Report Pemasukan
+3. Report Pengeluaran
+4. Approve Pengeluaran
+------------ End Staff (Ketua RT) --------
+
+------------ Staff (Sekretaris RT) ------------
+1. Register Warga Baru
+2. Membuat Surat Pengantar
+2. Report Statistik Data Warga
+------------ End Staff (Sekretaris RT) --------
+
+------------ Staff (Bendahara RT) ------------
+1. Membuat Data Tagihan
+2. Membuat Data Pemasukan
+3. Membuat Data Pengeluaran
+4. Report Pemasukan
+5. Report Pengeluaran
+------------ End Staff (Bendahara RT) --------
+
+
+
+------------ Aturan Main ---------------------
+1. Admin RT mendaftar langganan ke super admin
+2. Superadmin membuat user admin RT
+3. Kirim link aktivasi admin RT
+------------ Aturan Main ---------------------
+
+
+
+
+
+Fix Variable :
+1. Default image
+
+
+1. Hilangkan role di member halaman admin
+
+
+
+
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=48f8e1de6780f8
+MAIL_PASSWORD=f2d23b631e7928
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+
+
+PATH_STORAGE="public/storage"
+
+DEFAULT_IMAGE_SQUARE="/images/no_image_square.png"
+DEFAULT_IMAGE_CIRCLE="/images/no_image_circle.png"
+
+PATH_TEMPLATE="public/template"
+PATH_TEMPLATE_ADMIN="${PATH_TEMPLATE}/admin/"
+PATH_TEMPLATE_MOBILE="${PATH_TEMPLATE}/mobile/"
+PATH_TEMPLATE_WEBSITE="${PATH_TEMPLATE}/website/"
+
+GUARD_NAME_ADMIN="admin"
+GUARD_NAME_MEMBER="member"
+GUARD_NAME_USER="web"
+
+GUARD_TEXT_ADMIN="Admin"
+GUARD_TEXT_MEMBER="Member"
+GUARD_TEXT_USER="User"
+
+SITE_MICROSOFT_API_HOST=microsoft-translator-text.p.rapidapi.com
+SITE_MICROSOFT_API_KEY=384e408287mshfda0dbb1518ddf2p12065bjsn6ae311d7402b
+
+
+Package :
+1. Staff Account
+2. Jumlah Warga
+3. Wallet Amount Max
+4. Live Chat
+5. Online Payment
+
+
+
+type -> name -> id -> class -> value -> required,autofocus
+
+
+/** Textbox create dengan mark */
+<div class="form-group">
+    <label>{{ __('Role Name') }} <x-fill-field /></label>
+    <input type="text" name="role_name" id="role_name"
+        class="form-control @error('role_name') is-invalid @enderror"
+        value="{{ old('role_name') }}" required>
+    @error('role_name')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+/** Textbox edit dengan mark */
+<div class="form-group">
+    <label>{{ __('Role Name') }} <x-fill-field /></label>
+    <input type="text" name="role_name" id="role_name"
+        class="form-control @error('role_name') is-invalid @enderror"
+        value="{{ old('role_name') ?? $role->name }}" required>
+    @error('role_name')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+/** Textbox create tanpa mark */
+<div class="form-group">
+    <label>{{ __('Role Name') }}</label>
+    <input type="text" name="role_name" id="role_name"
+        class="form-control @error('role_name') is-invalid @enderror"
+        value="{{ old('role_name') }}">
+    @error('role_name')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+/** Textbox edit tanpa mark */
+<div class="form-group">
+    <label>{{ __('Role Name') }}</label>
+    <input type="text" name="role_name" id="role_name"
+        class="form-control @error('role_name') is-invalid @enderror"
+        value="{{ old('role_name') ?? $role->name }}">
+    @error('role_name')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+
+<div class="form-group">
+    <label>{{ __('Default Date Format') }} <x-fill-field /></label>
+    <select id="default_date_format" name="default_date_format"
+        class="form-control select2 @error('default_date_format') is-invalid @enderror"
+        required>
+        <option value="" selected disabled>{{ __('Choose one ...') }}
+        </option>
+        @foreach ($format_dates as $code => $text)
+            <option value="{{ $code }}"
+                {{ old('default_date_format') ?? !empty($setting['default_date_format']) ? ($setting['default_date_format'] == $code ? 'selected' : '') : '' }}>
+                {{ $text }}</option>
+        @endforeach
+    </select>
+    @error('default_date_format')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+
+
+
+Admin
+'views/admin'
+'Http/Controllers/Admin'
+'views/mail'
+'views/layouts/admin'
+Member
+'views/member'
+'Http/Controllers/Member'
+
+
+
+
+TODO :
+1. Edit Translate masih belum sesuai (setelah search, data yg diedit tidak sesuai)
+   Lihat kembali di tutorial udemy (OK). Solusi, di jquery menggunakan fungsi body on click button
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------
+.env
+---------------------------------------------------------------------------------------
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:LkBA79J19f8a/1u+ZTtlZfePTCjXST6P3Xt5S04d/6s=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=db_laravel_portal
+DB_USERNAME=root
+DB_PASSWORD=
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=e795e7a21b5af5
+MAIL_PASSWORD=cebc03e3d821e3
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_HOST=
+PUSHER_PORT=443
+PUSHER_SCHEME=https
+PUSHER_APP_CLUSTER=mt1
+
+VITE_APP_NAME="${APP_NAME}"
+VITE_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+VITE_PUSHER_HOST="${PUSHER_HOST}"
+VITE_PUSHER_PORT="${PUSHER_PORT}"
+VITE_PUSHER_SCHEME="${PUSHER_SCHEME}"
+VITE_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+PATH_STORAGE="public/storage"
+
+DEFAULT_IMAGE_SQUARE="/images/no_image_square.png"
+DEFAULT_IMAGE_CIRCLE="/images/no_image_circle.png"
+
+PATH_TEMPLATE="public/template"
+PATH_TEMPLATE_ADMIN="${PATH_TEMPLATE}/admin/"
+PATH_TEMPLATE_MOBILE="${PATH_TEMPLATE}/mobile/"
+PATH_TEMPLATE_WEBSITE="${PATH_TEMPLATE}/website/"
+
+GUARD_NAME_ADMIN="admin"
+GUARD_NAME_MEMBER="member"
+GUARD_NAME_USER="web"
+
+GUARD_TEXT_ADMIN="Admin"
+GUARD_TEXT_MEMBER="Member"
+GUARD_TEXT_USER="User"
+
+SITE_MICROSOFT_API_HOST=microsoft-translator-text.p.rapidapi.com
+SITE_MICROSOFT_API_KEY=384e408287mshfda0dbb1518ddf2p12065bjsn6ae311d7402b
+
+MIDTRANS_ENVIRONMENT=sandbox
+MIDTRANS_MERCHANT_ID=G182400219
+MIDTRANS_CLIENT_KEY=SB-Mid-client-dR0O_qzGlDut2H4W
+MIDTRANS_SERVER_KEY=SB-Mid-server-wqi7Qz4u9kNIMpxnwW1LLTsC
+
+# MIDTRANS_ENVIRONMENT=production
+# MIDTRANS_MERCHANT_ID=G182400219
+# MIDTRANS_CLIENT_KEY=Mid-client-9VatgRzOBhxiVTDx
+# MIDTRANS_SERVER_KEY=Mid-server-aIcbql824rydGuK_Pz1NT7ex
+---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+====================
+GUARD ADMIN
+====================
+package index
+package create
+package update
+package delete
+package restore
+residence index
+residence create
+residence update
+residence delete
+residence restore
+permission index
+permission create
+permission update
+permission delete
+role index
+role create
+role update
+role delete
+system admin user index
+system admin user create
+system admin user update
+system admin user delete
+system admin user restore
+member admin user index
+member admin user update
+member admin user delete
+member admin user restore
+languages index
+languages create
+languages update
+languages delete
+languages restore
+translate admin index
+translate admin generate
+translate admin trans
+translate mobile index
+translate mobile generate
+translate mobile trans
+translate website index
+translate website generate
+translate website trans
+system setting
+====================
+
+
+
+====================
+GUARD MEMBER
+====================
+street index
+street create
+street update
+street delete
+street restore
+block index
+block create
+block update
+block delete
+block restore
+house index
+house create
+house update
+house delete
+house restore
+role index
+role create
+role update
+role delete
+admin index
+admin create
+admin update
+admin delete
+admin restore
+staff index
+staff create
+staff update
+staff delete
+staff restore
+user restore
+announcement index
+announcement create
+announcement update
+announcement delete
+announcement restore
+member setting
+====================
+
+
+====================
+GUARD WEB
+====================
+user index
+user create
+user update
+user delete
+====================
+
+
+
+
+
+
+TODO :
+1. tambahkan house id saat create staff (OK)
+2. System Admin
+   - Notif email register dari halaman backend (OK)
+   - Notif email forgot password (OK)
+3. Member Admin
+   - Notif email register dari halaman backend (OK)
+   - Notif email register dari halaman website (OK)
+   - Notif email forgot password (OK)
+4. Member Staff
+   - Notif email register dari halaman backend (OK)
+   - Notif email forgot password (OK)
+5. Member User
+   - Notif email register dari halaman backend (OK)
+   - Notif email forgot password (OK)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+system setting
+================
+company_name
+company_logo
+login_image
