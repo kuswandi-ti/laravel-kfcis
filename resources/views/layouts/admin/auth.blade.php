@@ -1,35 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr" data-nav-layout="vertical" data-vertical-style="overlay" data-theme-mode="light"
+    data-header-styles="light" data-menu-styles="light" data-toggled="close" style="--primary-rgb: 0, 128, 172;">
 
 <head>
+    <!-- Meta Data -->
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{{ $system_setting['site_title'] ?? config('app.name') }} &mdash; @yield('page_title')</title>
+
+    <meta name="Description" content="Bootstrap Responsive Admin Web Dashboard HTML5 Template">
+    <meta name="Author" content="Spruko Technologies Private Limited">
+    <meta name="keywords"
+        content="simple admin panel template html css,admin panel html,bootstrap 5 admin template,admin,bootstrap dashboard,bootstrap 5 admin panel template,html and css,admin panel,admin panel html template,simple html template,bootstrap admin template,admin dashboard,admin dashboard template,admin panel template,template dashboard">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $setting['site_title'] ?? config('app.name') }} &mdash; @yield('page_title')</title>
-
+    <!-- Favicon -->
     <link rel="icon"
-        href="{{ url(config('common.path_storage') . (!empty($setting['company_favicon']) ? $setting['company_favicon'] : config('common.default_image_circle')) ?? config('common.default_image_circle')) }}"
-        type="image/*">
+        href="{{ url(config('common.path_storage') . (!empty($system_setting['company_favicon']) ? $system_setting['company_favicon'] : config('common.no_image')) ?? config('common.no_image')) }}"
+        type="image/png">
 
-    @stack('styles_vendor')
-    @include('layouts.admin.includes.styles')
-    @stack('styles')
+    <!-- Main Theme Js -->
+    <script src="{{ url(config('common.path_template_admin') . 'assets/js/authentication-main.js') }}"></script>
+
+    <!-- Bootstrap Css -->
+    <link id="style"
+        href="{{ url(config('common.path_template_admin') . 'assets/libs/bootstrap/css/bootstrap.min.css') }}"
+        rel="stylesheet">
+
+    <!-- Style Css -->
+    <link href="{{ url(config('common.path_template_admin') . 'assets/css/styles.min.css') }}" rel="stylesheet">
+
+    <!-- Icons Css -->
+    <link href="{{ url(config('common.path_template_admin') . 'assets/css/icons.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <div id="app">
-        <section class="section">
-            <div class="container mt-5">
-                @yield('content')
+    <div class="page error-bg" id="particles-js">
+        <div class="error-page ">
+            <div class="container">
+                <div class="row justify-content-center">
+                    @yield('content')
+                </div>
             </div>
-        </section>
+        </div>
     </div>
 
-    @include('layouts.admin.includes.scripts')
-    @stack('scripts_vendor')
-    @stack('scripts')
+    <!-- Bootstrap JS -->
+    <script src="{{ url(config('common.path_template_admin') . 'assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}">
+    </script>
+
+    <!-- Show Password JS -->
+    <script src="{{ url(config('common.path_template_admin') . 'assets/js/show-password.js') }}"></script>
 </body>
 
 </html>

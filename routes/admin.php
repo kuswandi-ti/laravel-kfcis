@@ -19,10 +19,12 @@ use App\Http\Controllers\Admin\AdminPermissionController;
 Route::group(['middleware' => ['set_language']], function () {
     Route::get('/', [AdminAuthController::class, 'login'])->name('login');
 
-    /** Auth Admin Routes */
+    /** Auth Routes */
+    Route::get('register', [AdminAuthController::class, 'register'])->name('register');
+    Route::post('register', [AdminAuthController::class, 'handleRegister'])->name('register.post');
+    Route::get('register-verify/{token}', [AdminAuthController::class, 'registerVerify'])->name('register.verify');
     Route::get('login', [AdminAuthController::class, 'login'])->name('login');
     Route::post('login', [AdminAuthController::class, 'handleLogin'])->name('login.post');
-    Route::get('register-verify/{token}', [AdminAuthController::class, 'registerVerify'])->name('register.verify');
     Route::get('forgot-password', [AdminAuthController::class, 'forgotPassword'])->name('forgot_password');
     Route::post('forgot-password', [AdminAuthController::class, 'sendResetLink'])->name('forgot_password.send');
     Route::get('reset-password/{token}', [AdminAuthController::class, 'resetPassword'])->name('reset_password');
