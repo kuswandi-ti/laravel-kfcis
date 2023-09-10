@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Setting;
+use App\Models\SettingSystem;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class SettingAdminTableSeeder extends Seeder
+class SettingSystemTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,18 +14,16 @@ class SettingAdminTableSeeder extends Seeder
     public function run(): void
     {
         $input = [
-            ['key' => 'company_name', 'value' => 'PT. Sekawan Kreatif Optima'],
-            ['key' => 'site_title', 'value' => 'ErteAdmin'],
+            ['key' => 'company_name', 'value' => 'Koperasi FCI Sejahtera'],
+            ['key' => 'site_title', 'value' => 'Koperasi FCI Sejahtera'],
             ['key' => 'company_phone', 'value' => '021-505848'],
-            ['key' => 'company_email', 'value' => 'admin@sko.com'],
-            ['key' => 'company_address', 'value' => 'Cileungsi - Bogor'],
-            ['key' => 'default_date_format', 'value' => 'Y-m-d'],
+            ['key' => 'company_email', 'value' => 'admin@kfcis.com'],
+            ['key' => 'company_address', 'value' => 'Bekasi'],
+            ['key' => 'default_date_format', 'value' => 'd-m-Y'],
             ['key' => 'default_time_format', 'value' => 'H:i:s'],
-            ['key' => 'default_currency', 'value' => 'IDR'],
-            ['key' => 'default_language', 'value' => 'en'],
-            ['key' => 'trial_days', 'value' => '30'],
-            ['key' => 'company_logo', 'value' => config('common.default_image_circle')],
-            ['key' => 'company_favicon', 'value' => config('common.default_image_circle')],
+            ['key' => 'default_language', 'value' => 'id'],
+            ['key' => 'company_logo', 'value' => config('common.no_image')],
+            ['key' => 'company_favicon', 'value' => config('common.no_image')],
             ['key' => 'site_microsoft_api_host', 'value' => config('common.site_microsoft_api_host')],
             ['key' => 'site_microsoft_api_key', 'value' => config('common.site_microsoft_api_key')],
             ['key' => 'mail_type', 'value' => config('common.mail_mailer')],
@@ -42,7 +40,7 @@ class SettingAdminTableSeeder extends Seeder
             ['key' => 'midtrans_server_key', 'value' => config('common.midtrans_server_key')],
         ];
         foreach ($input as $item) {
-            Setting::create($item);
+            SettingSystem::create($item);
         }
     }
 }

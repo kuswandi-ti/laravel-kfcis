@@ -14,18 +14,18 @@ class LanguagesTableSeeder extends Seeder
     public function run(): void
     {
         $language = new Language();
-        $language->name = 'English';
-        $language->lang = 'en';
-        $language->slug = 'en';
+        $language->name = 'Indonesian';
+        $language->lang = 'id';
+        $language->slug = 'id';
         $language->default = 1;
         $language->status = 1;
         $language->created_by = 'Super Admin';
         $language->save();
 
         $language = new Language();
-        $language->name = 'Indonesian';
-        $language->lang = 'id';
-        $language->slug = 'id';
+        $language->name = 'English';
+        $language->lang = 'en';
+        $language->slug = 'en';
         $language->default = 0;
         $language->status = 1;
         $language->created_by = 'Super Admin';

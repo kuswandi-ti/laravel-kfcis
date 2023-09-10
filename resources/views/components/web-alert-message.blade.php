@@ -5,28 +5,25 @@
 @endif
 
 @if ($message = Session::get('error'))
-    <div class="mb-2 alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-solid-danger alert-dismissible fade show">
         {{ $message }}
     </div>
-    <br>
 @endif
 
 @if ($message = Session::get('warning'))
-    <div class="mb-2 alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert alert-solid-warning alert-dismissible fade show">
         {{ $message }}
     </div>
-    <br>
 @endif
 
 @if ($message = Session::get('info'))
-    <div class="mb-2 alert alert-info alert-dismissible fade show" role="alert">
+    <div class="alert alert-solid-info alert-dismissible fade show">
         {{ $message }}
     </div>
-    <br>
 @endif
 
 @if ($errors->any())
-    <div class="mb-2 alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-solid-danger alert-dismissible fade show">
         <strong> Please check the form below for errors</strong>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>

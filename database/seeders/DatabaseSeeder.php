@@ -5,13 +5,12 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\MainDataSeeder;
-use Database\Seeders\CurrencyTableSeeder;
 use Database\Seeders\ReligionTableSeeder;
 use Database\Seeders\LanguagesTableSeeder;
 use Database\Seeders\FormatDateTableSeeder;
 use Database\Seeders\FormatTimeTableSeeder;
 use Database\Seeders\ProfessionTableSeeder;
-use Database\Seeders\SettingAdminTableSeeder;
+use Database\Seeders\SettingSystemTableSeeder;
 use KodePandai\Indonesia\IndonesiaDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -28,11 +27,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(CurrencyTableSeeder::class);
         $this->call(FormatDateTableSeeder::class);
         $this->call(FormatTimeTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);
-        $this->call(SettingAdminTableSeeder::class);
+        $this->call(SettingSystemTableSeeder::class);
         $this->call(ReligionTableSeeder::class);
         $this->call(ProfessionTableSeeder::class);
         $this->call(IndonesiaDatabaseSeeder::class);

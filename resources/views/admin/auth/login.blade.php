@@ -46,9 +46,11 @@
                             </p>
 
                             <div class="alert alert-solid-warning alert-dismissible fade show">
-                                Email : <strong>adminrt5rw11ph6@mail.com</strong>
+                                Email : <strong>superadmin@mail.com</strong><br>
                                 Password : <strong>password</strong>
                             </div>
+
+                            <x-web-alert-message />
 
                             <form method="POST" action="{{ route('admin.login.post') }}">
                                 @csrf

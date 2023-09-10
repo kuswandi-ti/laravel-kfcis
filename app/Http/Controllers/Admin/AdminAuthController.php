@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class AdminAuthController extends Controller
 {
     public function registerVerify($token)
     {
-        $admin = Admin::where('register_token', $token)->first();
+        $admin = User::where('register_token', $token)->first();
 
         $message = 'Sorry your email cannot be identified.';
 
@@ -37,7 +38,7 @@ class AdminAuthController extends Controller
 
     public function login()
     {
-        if (!Auth::guard(getGuardNameAdmin())->check()) {
+        if (!Auth::check()) {
             return view('admin.auth.login');
         } else {
             return redirect()->route('admin.dashboard.index');
@@ -76,7 +77,7 @@ class AdminAuthController extends Controller
 
     public function handleResetPassword(AdminAuthResetPasswordRequest $request)
     {
-        $admin = Admin::where([
+        $admin = User::where([
             'email' => $request->email,
             'remember_token' => $request->token,
         ])->first();
@@ -94,7 +95,7 @@ class AdminAuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        Auth::guard(getGuardNameAdmin())->logout();
+        Auth::logout();
 
         $request->session()->invalidate();
 

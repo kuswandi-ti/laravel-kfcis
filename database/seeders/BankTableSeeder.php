@@ -14,8 +14,6 @@ class BankTableSeeder extends Seeder
     public function run(): void
     {
         $input = [
-            ['name' => 'Cash', 'code' => 'cash', 'type' => 'cash', 'created_by' => 'Super Admin'],
-            ['name' => 'Other', 'code' => 'other', 'type' => 'other', 'created_by' => 'Super Admin'],
             ['name' => 'BNI (Bank Negara Indonesia)', 'code' => '009', 'created_by' => 'Super Admin'],
             ['name' => 'BRI (Bank Rakyat Indonesia)', 'code' => '002', 'created_by' => 'Super Admin'],
             ['name' => 'BTN (Bank Tabungan Negara)', 'code' => '200', 'created_by' => 'Super Admin'],
@@ -90,7 +88,7 @@ class BankTableSeeder extends Seeder
             ['name' => 'Bank Kaltim Tara (Kalimantan Timur dan Utara)', 'code' => '124', 'created_by' => 'Super Admin'],
             ['name' => 'Bank Kalteng (Kalimantan Tengah)', 'code' => '125', 'created_by' => 'Super Admin'],
             ['name' => 'Bank Sulselbar (Sulawesi Selatan dan Barat)', 'code' => '126', 'created_by' => 'Super Admin'],
-            ['name' => 'Bank Sulutgo (Sulawesi Utara dan Gorontalo)' , 'code' => '127', 'created_by' => 'Super Admin'],
+            ['name' => 'Bank Sulutgo (Sulawesi Utara dan Gorontalo)', 'code' => '127', 'created_by' => 'Super Admin'],
             ['name' => 'Bank NTP', 'code' => '128', 'created_by' => 'Super Admin'],
             ['name' => 'Bank NTB Syariah', 'code' => '128', 'created_by' => 'Super Admin'],
             ['name' => 'Bank BPD Bali', 'code' => '129', 'created_by' => 'Super Admin'],

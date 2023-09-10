@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Setting;
-use App\Models\SettingMember;
-use Illuminate\Support\Facades\Auth;
+use App\Models\SettingUser;
+use App\Models\SettingSystem;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view()->composer('*', function ($view) {
-            $view->with('system_setting', getSettingAdmin())
-                ->with('user_setting', getSettingMember());
+            $view->with('setting_system', SettingSystem::pluck('value', 'key')->toArray())
+                ->with('setting_user', !empty(auth()->user() ? SettingUser::where('user_id', auth()->id())->get()->pluck('value', 'key')->toArray() : ''));
         });
 
         Debugbar::disable();
