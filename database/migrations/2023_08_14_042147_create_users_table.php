@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('register_token')->nullable();
             $table->text('image')->nullable();
+            $table->timestamp('approved_at')->nullable();
             $table->boolean('status')->default(1)->comment('1 = Active, 0 = Inactive Status');
             $table->rememberToken();
             $table->timestamps();

@@ -33,8 +33,8 @@ class AdminProfilePasswordUpdateRequest extends FormRequest
     public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
-            if (!Hash::check($this->current_password, Auth::guard('admin')->user()->password)) {
-                $validator->errors()->add('current_password', __('Current password doesn\'t match'));
+            if (!Hash::check($this->current_password, Auth::user()->password)) {
+                $validator->errors()->add('current_password', __('Password saat ini tidak cocok'));
             }
         });
     }

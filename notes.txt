@@ -3,3 +3,7 @@ system setting
 company_name
 company_logo
 default_language
+company_logo_light_big
+company_logo_light_small
+company_logo_dark_big
+company_logo_dark_small

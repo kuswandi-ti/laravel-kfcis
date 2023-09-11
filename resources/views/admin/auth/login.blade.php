@@ -15,8 +15,8 @@
                                 <div class="p-5 card-body rectangle3">
                                     <div class="text-center">
                                         <a href="{{ route('website.index') }}">
-                                            <img src="{{ url(config('common.path_storage') . '/images/koperasi.png') }}"
-                                                alt="logo" class="desktop-dark" style="width: 70%">
+                                            <img src="{{ url(config('common.path_storage') . (!empty($system_setting['company_logo']) ? $system_setting['company_logo'] : config('common.no_image')) ?? config('common.no_image')) }}"
+                                                alt="logo" class="desktop-dark" style="width: 50%">
                                         </a>
                                     </div>
                                     <h6 class="mt-4 fs-15 op-9 text-fixed-white">
@@ -41,7 +41,7 @@
                                 {{ __('Login') }}
                             </p>
 
-                            <p class="mb-3 text-muted op-7 fw-normal">
+                            <p class="mb-4 text-muted op-7 fw-normal">
                                 {{ __('Selamat datang di sistem kami') }}
                             </p>
 
@@ -49,8 +49,6 @@
                                 Email : <strong>superadmin@mail.com</strong><br>
                                 Password : <strong>password</strong>
                             </div>
-
-                            <x-web-alert-message />
 
                             <form method="POST" action="{{ route('admin.login.post') }}">
                                 @csrf
@@ -62,7 +60,8 @@
                                         </label>
                                         <input type="email"
                                             class="form-control form-control-lg @error('email') is-invalid @enderror"
-                                            name="email" id="email" placeholder="{{ __('Email') }}">
+                                            name="email" id="email" placeholder="{{ __('Email') }}" required
+                                            autofocus>
                                         @error('email')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -81,7 +80,7 @@
                                             <input type="password"
                                                 class="form-control form-control-lg @error('password') is-invalid @enderror"
                                                 name="password" id="password" id="password"
-                                                placeholder="{{ __('Password') }}">
+                                                placeholder="{{ __('Password') }}" required>
                                             <button class="bg-transparent btn btn-light" type="button"
                                                 onclick="createpassword('password', this)">
                                                 <i class="align-middle ri-eye-off-line"></i>
@@ -113,10 +112,7 @@
 
                             <div class="text-center ">
                                 <p class="mt-4 mb-0 fs-12 text-muted">
-                                    {{ __('Belum punya akun ? Daftar') }}
-                                    <a href="{{ route('admin.register') }}" class="text-primary">
-                                        {{ __('disini') }}
-                                    </a>
+                                    {{ __('Belum terdaftar sebagai anggota koperasi ? Silahkan hubungi admin') }}
                                 </p>
                             </div>
                         </div>

@@ -328,24 +328,24 @@
 
 
     /*  */
-    let typehead = document.querySelector('#typehead');
-    typehead.addEventListener('click', showSearchResult);
-    document.body.addEventListener('click', removeSearchResult);
+    // let typehead = document.querySelector('#typehead');
+    // typehead.addEventListener('click', showSearchResult);
+    // document.body.addEventListener('click', removeSearchResult);
 })();
 
-function showSearchResult(event){
-    event.preventDefault();
-    event.stopPropagation();
-    let headerSearch = document.querySelector('#headersearch');
-    headerSearch.classList.add('searchdrop');
-}
-function removeSearchResult(event){
-    let headerSearch = document.querySelector('#headersearch');
-    if(event.target.classList.contains('header-search') || event.target.closest('.header-search')){
-        return;
-    }
-    headerSearch.classList.remove('searchdrop');
-}
+// function showSearchResult(event){
+//     event.preventDefault();
+//     event.stopPropagation();
+//     let headerSearch = document.querySelector('#headersearch');
+//     headerSearch.classList.add('searchdrop');
+// }
+// function removeSearchResult(event){
+//     let headerSearch = document.querySelector('#headersearch');
+//     if(event.target.classList.contains('header-search') || event.target.closest('.header-search')){
+//         return;
+//     }
+//     headerSearch.classList.remove('searchdrop');
+// }
 
 /* full screen */
 var elem = document.documentElement;

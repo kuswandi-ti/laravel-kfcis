@@ -59,6 +59,7 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'image' => config('common.no_image'),
+            'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
             'created_by' => 'Super Admin',
@@ -71,6 +72,7 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'image' => config('common.no_image'),
+            'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
             'created_by' => 'Super Admin',
@@ -83,6 +85,7 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'image' => config('common.no_image'),
+            'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
             'created_by' => 'Super Admin',
@@ -95,6 +98,7 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'image' => config('common.no_image'),
+            'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
             'created_by' => 'Super Admin',

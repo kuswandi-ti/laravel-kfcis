@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AdminProfilePasswordUpdateRequest;
-use App\Http\Requests\Admin\AdminProfileUpdateRequest;
-use App\Models\Admin;
-use App\Traits\FileUploadTrait;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Traits\FileUploadTrait;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Admin\AdminProfilePasswordUpdateRequest;
+use App\Http\Requests\Admin\AdminProfilePersonalUpdateRequest;
 
 class AdminProfileController extends Controller
 {
@@ -19,7 +19,7 @@ class AdminProfileController extends Controller
      */
     public function index()
     {
-        $admin = Auth::guard('admin')->user();
+        $admin = Auth::user();
         return view('admin.profile.index', compact('admin'));
     }
 
@@ -58,18 +58,20 @@ class AdminProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminProfileUpdateRequest $request, string $id)
+    public function update(AdminProfilePersonalUpdateRequest $request, string $id)
     {
-        $imagePath = $this->handleImageUpload($request, 'image', $request->old_image, 'admin_profile');
+        $imagePath = $this->handleImageUpload($request, 'image', $request->old_image, 'profile');
 
-        $admin = Admin::findOrFail($id);
+        $admin = User::findOrFail($id);
 
         $admin->name = $request->name;
         $admin->image = !empty($imagePath) ? $imagePath : $request->old_image;
+        $admin->updated_at = saveDateTimeNow();
+        $admin->updated_by = auth()->user()->name;
 
         $admin->save();
 
-        return redirect()->back()->with('success', __('admin.Update profile successfully'));
+        return redirect()->back()->with('success', __('Update profil sukses'));
     }
 
     /**
@@ -82,7 +84,7 @@ class AdminProfileController extends Controller
 
     public function updatePassword(AdminProfilePasswordUpdateRequest $request, string $id)
     {
-        $admin = Admin::findOrFail($id);
+        $admin = User::findOrFail($id);
         $admin->password = bcrypt($request->password);
         $admin->save();
 

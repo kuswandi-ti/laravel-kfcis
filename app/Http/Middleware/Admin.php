@@ -23,6 +23,10 @@ class Admin
                 Auth::logout();
                 return redirect()->route('admin.login')
                     ->with('error', 'Anda perlu mengonfirmasi akun Anda. Kami telah mengirimkan Anda kode aktivasi, silakan periksa email Anda');
+            } else if (!Auth::user()->approved_at) {
+                Auth::logout();
+                return redirect()->route('admin.login')
+                    ->with('error', 'Akun anda belum aktif. Perlu approve dari admin agar akun anda bisa digunakan. Silahkan hubungi admin');
             }
         }
 

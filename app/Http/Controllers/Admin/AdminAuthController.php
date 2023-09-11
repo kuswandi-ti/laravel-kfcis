@@ -17,6 +17,16 @@ use App\Http\Requests\Admin\AdminAuthSendResetLinkRequest;
 
 class AdminAuthController extends Controller
 {
+    public function register()
+    {
+        return view('admin.auth.register');
+    }
+
+    public function handleRegister()
+    {
+        //
+    }
+
     public function registerVerify($token)
     {
         $admin = User::where('register_token', $token)->first();
