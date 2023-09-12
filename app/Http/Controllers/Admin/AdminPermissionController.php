@@ -12,10 +12,10 @@ class AdminPermissionController extends Controller
 {
     function __construct()
     {
-        $this->middleware(['permission:permission create,' . getGuardNameAdmin()])->only(['create', 'store']);
-        $this->middleware(['permission:permission delete,' . getGuardNameAdmin()])->only(['destroy']);
-        $this->middleware(['permission:permission index,' . getGuardNameAdmin()])->only(['index', 'show', 'data']);
-        $this->middleware(['permission:permission update,' . getGuardNameAdmin()])->only(['edit', 'update']);
+        // $this->middleware(['permission:permission create,' . getGuardNameAdmin()])->only(['create', 'store']);
+        // $this->middleware(['permission:permission delete,' . getGuardNameAdmin()])->only(['destroy']);
+        // $this->middleware(['permission:permission index,' . getGuardNameAdmin()])->only(['index', 'show', 'data']);
+        // $this->middleware(['permission:permission update,' . getGuardNameAdmin()])->only(['edit', 'update']);
     }
 
     /**
@@ -103,33 +103,26 @@ class AdminPermissionController extends Controller
 
     public function data(Request $request)
     {
-        // $query = Permission::where('guard_name', '!=', getGuardNameUser())
-        //     ->orderBy('guard_name', 'ASC')
-        //     ->orderBy('name', 'ASC')
-        //     ->get();
-
-        $query = Permission::orderBy('guard_name', 'ASC')
-            ->orderBy('name', 'ASC')
-            ->get();
+        $query = Permission::orderBy('name', 'ASC')->get();
 
         return datatables($query)
             ->addIndexColumn()
             ->editColumn('guard_name', function ($query) {
-                $badge = $query->guard_name == getGuardNameAdmin() ? 'danger' : 'dark';
+                $badge = 'danger';
                 return '<div class="badge badge-' . $badge . '">' . $query->guard_name . '</div>';
             })
             ->addColumn('action', function ($query) {
                 if (canAccess(['permission update'])) {
                     $update = '
                         <a href="' . route('admin.permission.edit', $query->id) . '" class="btn btn-primary btn-sm">
-                            <i class="fas fa-edit"></i>
+                            <i class="bx bxs-edit-alt"></i>
                         </a>
                     ';
                 }
                 if (canAccess(['permission delete'])) {
                     $delete = '
-                        <a href="' . route('admin.permission.destroy', $query->id) . '" class="btn btn-danger btn-sm delete_item">
-                            <i class="fas fa-trash-alt"></i>
+                        <a href="' . route('admin.permission.destroy', $query->id) . '" class="btn btn-danger btn-sm delete_item">                            
+                            <i class="bx bxs-trash"></i>
                         </a>
                     ';
                 }

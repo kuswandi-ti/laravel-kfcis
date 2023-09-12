@@ -1,22 +1,21 @@
 @push('styles_vendor')
     <!-- DataTables -->
     <link rel="stylesheet"
-        href="{{ asset(config('common.path_template_admin') . 'assets/modules/datatables/datatables.min.css') }}">
+        href="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/datatables.min.css') }}">
     <link rel="stylesheet"
-        href="{{ asset(config('common.path_template_admin') . 'assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+        href="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet"
-        href="{{ asset(config('common.path_template_admin') . 'assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+        href="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 @endpush
 
 @push('scripts_vendor')
     <!-- DataTables  & Plugins -->
-    <script src="{{ asset(config('common.path_template_admin') . 'assets/modules/datatables/datatables.min.js') }}">
+    <script src="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/datatables.min.js') }}"></script>
+    <script
+        src="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}">
     </script>
     <script
-        src="{{ asset(config('common.path_template_admin') . 'assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}">
+        src="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/Select-1.2.4/js/dataTables.select.min.js') }}">
     </script>
-    <script
-        src="{{ asset(config('common.path_template_admin') . 'assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}">
-    </script>
-    <script src="{{ asset(config('common.path_template_admin') . 'assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset(config('common.path_template_admin') . 'assets/libs/jquery-ui/jquery-ui.min.js') }}"></script>
 @endpush

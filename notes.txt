@@ -2,6 +2,7 @@ system setting
 ================
 company_name
 company_logo
+company_favicon
 default_language
 company_logo_light_big
 company_logo_light_small

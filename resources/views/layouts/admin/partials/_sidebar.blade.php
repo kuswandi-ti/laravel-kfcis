@@ -65,7 +65,7 @@
                             </a>
                         </li>
                         <li class="slide">
-                            <a href="carousel.html" class="side-menu__item">
+                            <a href="{{ route('admin.permission.index') }}" class="side-menu__item">
                                 {{ __('Permissions') }}
                             </a>
                         </li>

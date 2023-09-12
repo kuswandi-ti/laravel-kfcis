@@ -406,14 +406,14 @@
                 <div class="offcanvas-header border-bottom">
                     <h5 id="appsLabel" class="mb-0 fs-18">Related Apps</h5>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"> <i class="bx bx-x   apps-btn-close"></i></button>
+                        aria-label="Close"> <i class="bx bx-x apps-btn-close"></i></button>
                 </div>
                 <div class="p-3">
                     <div class="row g-3">
                         <div class="col-6">
                             <a href="full-calendar.html">
-                                <div class="text-center p-3 related-app border">
-                                    <span class="avatar fs-23 bg-success-transparent p-2 mb-2">
+                                <div class="p-3 text-center border related-app">
+                                    <span class="p-2 mb-2 avatar fs-23 bg-success-transparent">
                                         <i class="bx bx-calendar text-success"></i>
                                     </span>
                                     <span class="d-block fs-13 text-muted fw-semibold">Calendar</span>
@@ -422,9 +422,9 @@
                         </div>
                         <div class="col-6">
                             <a href="mail.html">
-                                <div class="text-center p-3 related-app border">
-                                    <span class="avatar  fs-23 bg-info-transparent p-2 mb-2">
-                                        <i class="bx bx-envelope  text-info"></i>
+                                <div class="p-3 text-center border related-app">
+                                    <span class="p-2 mb-2 avatar fs-23 bg-info-transparent">
+                                        <i class="bx bx-envelope text-info"></i>
                                     </span>
                                     <span class="d-block fs-13 text-muted fw-semibold">Mail</span>
                                 </div>
@@ -432,9 +432,9 @@
                         </div>
                         <div class="col-6">
                             <a href="profile.html">
-                                <div class="text-center p-3 related-app border">
-                                    <span class="avatar bg-warning-transparent fs-23 bg p-2 mb-2">
-                                        <i class="bx bx-user  text-warning"></i>
+                                <div class="p-3 text-center border related-app">
+                                    <span class="p-2 mb-2 avatar bg-warning-transparent fs-23 bg">
+                                        <i class="bx bx-user text-warning"></i>
                                     </span>
                                     <span class="d-block fs-13 text-muted fw-semibold">Profile</span>
                                 </div>
@@ -442,8 +442,8 @@
                         </div>
                         <div class="col-6">
                             <a href="chat.html">
-                                <div class="text-center p-3 related-app border">
-                                    <span class="avatar    bg-pink-transparent fs-23 bg p-2 mb-2">
+                                <div class="p-3 text-center border related-app">
+                                    <span class="p-2 mb-2 avatar bg-pink-transparent fs-23 bg">
                                         <i class="bx bx-chat text-pink"></i>
                                     </span>
                                     <span class="d-block fs-13 text-muted fw-semibold">Chat</span>
@@ -452,8 +452,8 @@
                         </div>
                         <div class="col-6">
                             <a href="contacts.html">
-                                <div class="text-center p-3 related-app border">
-                                    <span class="avatar    bg-secondary-transparent fs-23 bg p-2 mb-2">
+                                <div class="p-3 text-center border related-app">
+                                    <span class="p-2 mb-2 avatar bg-secondary-transparent fs-23 bg">
                                         <i class="bx bx-phone text-secondary"></i>
                                     </span>
                                     <span class="d-block fs-13 text-muted fw-semibold">Contacts</span>
@@ -462,8 +462,8 @@
                         </div>
                         <div class="col-6">
                             <a href="mail-settings.html">
-                                <div class="text-center p-3 related-app border">
-                                    <span class="avatar    bg-teal-transparent fs-23 bg p-2 mb-2">
+                                <div class="p-3 text-center border related-app">
+                                    <span class="p-2 mb-2 avatar bg-teal-transparent fs-23 bg">
                                         <i class="bx bx-cog text-teal"></i>
                                     </span>
                                     <span class="d-block fs-13 text-muted fw-semibold">Settings</span>

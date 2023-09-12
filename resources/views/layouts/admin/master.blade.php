@@ -88,6 +88,14 @@
 
     <!-- Inline JS -->
     <script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-danger ms-2',
+                cancelButton: 'btn btn-success'
+            },
+            buttonsStyling: false
+        })
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -114,15 +122,14 @@
 
             $('body').on('click', '.logout', function(e) {
                 e.preventDefault();
-                Swal.fire({
+                swalWithBootstrapButtons.fire({
                     title: "{{ __('Anda yakin akan logout ?') }}",
                     text: "{{ __('Setelah logout akan kembali ke halaman login') }}",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
                     confirmButtonText: "{{ __('Ya, logout !') }}",
                     cancelButtonText: "{{ __('Batal') }}",
+                    reverseButtons: false
                 }).then((result) => {
                     if (result.value === true) {
                         $('#form-logout').submit()
@@ -132,15 +139,14 @@
 
             $('body').on('click', '.delete_item', function(e) {
                 e.preventDefault();
-                Swal.fire({
+                swalWithBootstrapButtons.fire({
                     title: "{{ __('Anda yakin akan menghapus data ?') }}",
                     text: "{{ __('Setelah data terhapus, anda tidak dapat mengembalikannya') }}",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
                     confirmButtonText: "{{ __('Ya, hapus data !') }}",
                     cancelButtonText: "{{ __('Batal') }}",
+                    reverseButtons: false
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let url = $(this).attr('href');
