@@ -15,8 +15,8 @@
                                 <div class="p-5 card-body rectangle3">
                                     <div class="text-center">
                                         <a href="{{ route('website.index') }}">
-                                            <img src="{{ url(config('common.path_storage') . (!empty($system_setting['company_logo']) ? $system_setting['company_logo'] : config('common.no_image')) ?? config('common.no_image')) }}"
-                                                alt="logo" class="desktop-dark" style="width: 50%">
+                                            <img src="{{ url(config('common.path_storage') . (!empty($setting_system['company_logo']) ? $setting_system['company_logo'] : config('common.no_image')) ?? config('common.no_image')) }}"
+                                                alt="logo" class="desktop-dark" style="width: 60%">
                                         </a>
                                     </div>
                                     <h6 class="mt-4 fs-15 op-9 text-fixed-white">
@@ -49,6 +49,8 @@
                                 Email : <strong>superadmin@mail.com</strong><br>
                                 Password : <strong>password</strong>
                             </div>
+
+                            <x-web-alert-message />
 
                             <form method="POST" action="{{ route('admin.login.post') }}">
                                 @csrf

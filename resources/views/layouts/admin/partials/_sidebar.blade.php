@@ -3,13 +3,13 @@
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
         <a href="{{ route('admin.dashboard.index') }}" class="header-logo">
-            <img src="{{ url(!empty($system_setting['company_logo_light_big']) ? config('common.path_storage') . $system_setting['company_logo_light_big'] : config('common.path_template_admin') . 'assets/images/brand-logos/desktop-logo.png') }}"
+            <img src="{{ url(!empty($setting_system['company_logo_desktop']) ? config('common.path_storage') . $setting_system['company_logo_desktop'] : config('common.path_template_admin') . 'assets/images/brand-logos/desktop-logo.png') }}"
                 alt="logo" class="desktop-logo">
-            <img src="{{ url(!empty($system_setting['company_logo_light_small']) ? config('common.path_storage') . $system_setting['company_logo_light_small'] : config('common.path_template_admin') . 'assets/images/brand-logos/toggle-logo.png') }}"
+            <img src="{{ url(!empty($setting_system['company_logo_toggle']) ? config('common.path_storage') . $setting_system['company_logo_toggle'] : config('common.path_template_admin') . 'assets/images/brand-logos/toggle-logo.png') }}"
                 alt="logo" class="toggle-logo">
-            <img src="{{ url(!empty($system_setting['company_logo_dark_big']) ? config('common.path_storage') . $system_setting['company_logo_dark_big'] : config('common.path_template_admin') . 'assets/images/brand-logos/desktop-dark.png') }}"
+            <img src="{{ url(!empty($setting_system['company_logo_desktop']) ? config('common.path_storage') . $setting_system['company_logo_desktop'] : config('common.path_template_admin') . 'assets/images/brand-logos/desktop-dark.png') }}"
                 alt="logo" class="desktop-dark">
-            <img src="{{ url(!empty($system_setting['company_logo_dark_small']) ? config('common.path_storage') . $system_setting['company_logo_dark_small'] : config('common.path_template_admin') . 'assets/images/brand-logos/toggle-dark.png') }}"
+            <img src="{{ url(!empty($setting_system['company_logo_toggle']) ? config('common.path_storage') . $setting_system['company_logo_toggle'] : config('common.path_template_admin') . 'assets/images/brand-logos/toggle-dark.png') }}"
                 alt="logo" class="toggle-dark">
         </a>
     </div>
@@ -27,7 +27,7 @@
             </div>
             <ul class="main-menu">
                 <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">Main</span></li>
+                <li class="slide__category"><span class="category-name">{{ __('Dashboard') }}</span></li>
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
@@ -38,6 +38,22 @@
                             <i class='bx bx-desktop'></i>
                         </span>
                         <span class="side-menu__label">{{ __('Dashboard') }}</span>
+                    </a>
+                </li>
+                <!-- End::slide -->
+
+                <!-- Start::slide__category -->
+                <li class="slide__category"><span class="category-name">{{ __('Data Utama') }}</span></li>
+                <!-- End::slide__category -->
+
+                <!-- Start::slide -->
+                <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
+                    <a href="{{ route('admin.product.index') }}"
+                        class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                        <span class="side-menu__icon">
+                            <i class='bx bx-archive'></i>
+                        </span>
+                        <span class="side-menu__label">{{ __('Produk Penjualan') }}</span>
                     </a>
                 </li>
                 <!-- End::slide -->

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBankController;
 use App\Http\Controllers\Admin\AdminLanguageChange;
@@ -92,12 +93,13 @@ Route::group([
     Route::post('languange-string-update', [AdminTranslateController::class, 'updateLanguangeString'])->name('translate.update_languange_string');
     Route::post('translate-string', [AdminTranslateController::class, 'translateString'])->name('translate.translate_string');
 
+    /** Product Routes */
+    Route::get('product/data', [AdminProductController::class, 'data'])->name('product.data');
+    Route::get('product/restore/{id}', [AdminProductController::class, 'restore'])->name('product.restore');
+    Route::resource('product', AdminProductController::class);
+
     /** Setting Routes */
     Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
-    Route::get('general-setting', [AdminSettingController::class, 'generalSettingIndex'])->name('general_setting.index');
     Route::put('general-setting', [AdminSettingController::class, 'generalSettingUpdate'])->name('general_setting.update');
-    Route::get('notification-setting', [AdminSettingController::class, 'notificationSettingIndex'])->name('notification_setting.index');
-    Route::put('notification-setting', [AdminSettingController::class, 'notificationSettingUpdate'])->name('notification_setting.update');
-    Route::get('payment-setting', [AdminSettingController::class, 'paymentSettingIndex'])->name('payment_setting.index');
-    Route::put('payment-setting', [AdminSettingController::class, 'paymentSettingUpdate'])->name('payment_setting.update');
+    Route::put('jasa-setting', [AdminSettingController::class, 'jasaSettingUpdate'])->name('jasa_setting.update');
 });

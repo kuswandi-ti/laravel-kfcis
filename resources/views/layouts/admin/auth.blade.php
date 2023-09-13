@@ -8,7 +8,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>{{ $system_setting['site_title'] ?? config('app.name') }} &mdash; @yield('page_title')</title>
+    <title>{{ $setting_system['site_title'] ?? config('app.name') }} &mdash; @yield('page_title')</title>
 
     <meta name="Description" content="Bootstrap Responsive Admin Web Dashboard HTML5 Template">
     <meta name="Author" content="Spruko Technologies Private Limited">
@@ -19,7 +19,7 @@
 
     <!-- Favicon -->
     <link rel="icon"
-        href="{{ url(config('common.path_storage') . (!empty($system_setting['company_favicon']) ? $system_setting['company_favicon'] : config('common.no_image')) ?? config('common.no_image')) }}"
+        href="{{ url(config('common.path_storage') . (!empty($setting_system['company_logo']) ? $setting_system['company_logo'] : config('common.no_image')) ?? config('common.no_image')) }}"
         type="image/png">
 
     <!-- Main Theme Js -->
