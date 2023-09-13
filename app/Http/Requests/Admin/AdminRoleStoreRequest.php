@@ -23,14 +23,12 @@ class AdminRoleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'guard_name' => ['required'],
             'role_name' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('roles', 'name')->where(function ($query) {
-                    $query->where('guard_name', $this->guard_name)
-                        ->where('area_id', getLoggedUserAreaId());
+                    $query->where('guard_name', 'web');
                 })
             ],
         ];

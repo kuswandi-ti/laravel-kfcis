@@ -47,31 +47,44 @@
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
+                <li
+                    class="slide has-sub {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }} {{ setSidebarOpen(['admin.permission.*', 'admin.role.*']) }}">
+                    <a href="javascript:void(0);"
+                        class="side-menu__item {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
                         <span class=" side-menu__icon">
                             <i class='bx bxs-lock-open-alt'></i>
                         </span>
                         <span class="side-menu__label">{{ __('Roles & Permissions') }}</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
                     </a>
-                    <ul class="slide-menu child1">
+                    <ul class="slide-menu child1 {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
                         <li class="slide side-menu__label1">
                             <a href="javascript:void(0)">{{ __('Roles & Permissions') }}</a>
                         </li>
-                        <li class="slide">
-                            <a href="accordions_collpase.html" class="side-menu__item">
+                        <li class="slide {{ setSidebarActive(['admin.role.*']) }}">
+                            <a href="{{ route('admin.role.index') }}"
+                                class="side-menu__item {{ setSidebarActive(['admin.role.*']) }}">
                                 {{ __('Roles') }}
                             </a>
                         </li>
-                        <li class="slide">
-                            <a href="{{ route('admin.permission.index') }}" class="side-menu__item">
+                        <li class="slide {{ setSidebarActive(['admin.permission.*']) }}">
+                            <a href="{{ route('admin.permission.index') }}"
+                                class="side-menu__item {{ setSidebarActive(['admin.permission.*']) }}">
                                 {{ __('Permissions') }}
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="slide has-sub">
+                <li class="slide {{ setSidebarActive(['admin.setting.*']) }}">
+                    <a href="{{ route('admin.setting.index') }}"
+                        class="side-menu__item {{ setSidebarActive(['admin.setting.*']) }}">
+                        <span class="side-menu__icon">
+                            <i class='bx bx-cog'></i>
+                        </span>
+                        <span class="side-menu__label">{{ __('Pengaturan Sistem') }}</span>
+                    </a>
+                </li>
+                {{-- <li class="slide has-sub">
                     <a href="javascript:void(0);" class="side-menu__item">
                         <span class=" side-menu__icon">
                             <i class='bx bxs-user-plus'></i>
@@ -94,7 +107,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <!-- End::slide -->
 
                 <!-- Start::slide__category -->

@@ -28,8 +28,7 @@ class AdminRoleUpdateRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('roles', 'name')->where(function ($query) {
-                    $query->where('guard_name', $this->guard_name)
-                        ->where('area_id', getLoggedUserAreaId());
+                    $query->where('guard_name', 'web');
                 })->ignore($this->id)
             ],
         ];

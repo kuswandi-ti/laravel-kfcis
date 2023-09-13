@@ -15,10 +15,10 @@ class AdminRoleController extends Controller
 {
     function __construct()
     {
-        $this->middleware(['permission:role admin create,' . getGuardNameAdmin()])->only(['create', 'store']);
-        $this->middleware(['permission:role admin delete,' . getGuardNameAdmin()])->only(['destroy']);
-        $this->middleware(['permission:role admin index,' . getGuardNameAdmin()])->only(['index', 'show', 'data']);
-        $this->middleware(['permission:role admin update,' . getGuardNameAdmin()])->only(['edit', 'update']);
+        $this->middleware(['permission:role admin create'])->only(['create', 'store']);
+        $this->middleware(['permission:role admin delete'])->only(['destroy']);
+        $this->middleware(['permission:role admin index'])->only(['index', 'show', 'data']);
+        $this->middleware(['permission:role admin update'])->only(['edit', 'update']);
     }
 
     /**
@@ -26,7 +26,8 @@ class AdminRoleController extends Controller
      */
     public function index()
     {
-        return view('admin.role.index');
+        $permissions = Permission::orderBy('name', 'ASC')->get()->groupBy('group_name');
+        return view('admin.role.index', compact('permissions'));
     }
 
     /**
@@ -34,9 +35,8 @@ class AdminRoleController extends Controller
      */
     public function create()
     {
-        $permissions_admin = Permission::where('guard_name', 'admin')->get()->groupBy('group_name');
-        $permissions_member = Permission::where('guard_name', 'member')->get()->groupBy('group_name');
-        return view('admin.role.create', compact('permissions_admin', 'permissions_member'));
+        $permissions = Permission::orderBy('name', 'ASC')->get()->groupBy('group_name');
+        return view('admin.role.index', compact('permissions'));
     }
 
     /**
@@ -47,13 +47,11 @@ class AdminRoleController extends Controller
         DB::transaction(function () use ($request) {
             $role = Role::create([
                 'name' => $request->role_name,
-                'guard_name' => $request->guard_name,
-                'area_id' => getLoggedUserAreaId(),
             ]);
             $role->syncPermissions($request->permissions);
         });
 
-        return redirect()->route('admin.role.index')->with('success', __('admin.Create role & permissions successfully'));
+        return redirect()->back()->with('success', __('Data role berhasil dibuat'));
     }
 
     /**
@@ -62,12 +60,12 @@ class AdminRoleController extends Controller
     public function edit(string $id)
     {
         $role = Role::findOrFail($id);
-        $permissions_admin = Permission::where('guard_name', getGuardNameAdmin())->get()->groupBy('group_name');
-        $permissions_member = Permission::where('guard_name', getGuardNameMember())->get()->groupBy('group_name');
+
+        $permissions = Permission::orderBy('name', 'ASC')->get()->groupBy('group_name');
         $roles_permissions = $role->permissions;
         $roles_permissions = $roles_permissions->pluck('name')->toArray();
 
-        return view('admin.role.edit', compact('role', 'permissions_admin', 'permissions_member', 'roles_permissions'));
+        return view('admin.role.index', compact('role', 'permissions', 'roles_permissions'));
     }
 
     /**
@@ -76,15 +74,12 @@ class AdminRoleController extends Controller
     public function update(AdminRoleUpdateRequest $request, string $id)
     {
         $role = Role::findOrFail($id);
+        $role->update([
+            'name' => $request->role_name,
+        ]);
+        $role->syncPermissions($request->permissions);
 
-        DB::transaction(function () use ($request) {
-            $role->update([
-                'name' => $request->role_name,
-            ]);
-            $role->syncPermissions($request->permissions);
-        });
-
-        return redirect()->route('admin.role.index')->with('success', __('admin.Updated role & permissions successfully'));
+        return redirect()->back()->with('success', __('Data permission berhasil diupdate'));
     }
 
     /**
@@ -98,7 +93,7 @@ class AdminRoleController extends Controller
             if ($role->name == 'Super Admin') {
                 return response([
                     'status' => 'error',
-                    'message' => __('admin.Cannot delete this role')
+                    'message' => __('Tidak bisa menghapus role Super Admin'),
                 ]);
             }
 
@@ -106,53 +101,53 @@ class AdminRoleController extends Controller
 
             return response([
                 'status' => 'success',
-                'message' => __('admin.Deleted role successfully')
+                'message' => __('Data role berhasil dihapus'),
             ]);
         } catch (\Throwable $th) {
             return response([
                 'status' => 'error',
-                'message' => __('admin.Deleted role is error')
+                'message' => __('Data role gagal dihapus'),
             ]);
         }
     }
 
     public function data(Request $request)
     {
-        $query = Role::where('guard_name', '!=', getGuardNameUser())->orderBy('name', 'ASC')->get();
+        $query = Role::where('name', '!=', 'Super Admin')->orderBy('name', 'ASC')->get();
 
         return datatables($query)
             ->addIndexColumn()
-            ->editColumn('guard_name', function ($query) {
-                $badge = $query->guard_name == getGuardNameAdmin() ? 'danger' : 'dark';
-                return '<div class="badge badge-' . $badge . '">' . $query->guard_name . '</div>';
-            })
-            ->editColumn('residence', function ($query) {
-                $area = Area::findOrFail($query->area_id);
-                return $area->residence->name;
-            })
-            ->editColumn('area', function ($query) {
-                $area = Area::findOrFail($query->area_id);
-                return $area->name;
-            })
             ->addColumn('action', function ($query) {
-                if ($query->name == 'Super Admin') {
-                    return '<div class="badge badge-danger">'  . __('No Action') . '</div>';
+                if (canAccess(['role update'])) {
+                    $update = '
+                        <li>
+                            <a href="' . route('admin.role.edit', $query->id) . '" class="dropdown-item border-bottom">
+                                <i class="bx bxs-edit-alt"></i> ' . __("Ubah") . '
+                            </a>
+                        </li>
+                    ';
+                }
+                if (canAccess(['role delete'])) {
+                    $delete = '
+                        <li>
+                            <a href="' . route('admin.role.destroy', $query->id) . '" class="dropdown-item border-bottom delete_item">
+                                <i class="bx bxs-trash"></i> ' . __("Hapus") . '
+                            </a>
+                        </li>
+                    ';
+                }
+                if (canAccess(['role update', 'role delete'])) {
+                    return '<div class="dropdown ms-3">
+                                <a href="javascript:void(0);" class="text-muted border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fe fe-more-vertical"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="">' .
+                                    (!empty($update) ? $update : '') .
+                                    (!empty($delete) ? $delete : '') . '
+                                </ul>
+                            </div>';
                 } else {
-                    if (canAccess(['role admin update'])) {
-                        $update = '
-                            <a href="' . route('admin.role.edit', $query->id) . '" class="btn btn-primary btn-sm">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                        ';
-                    }
-                    if (canAccess(['role admin delete'])) {
-                        $delete = '
-                            <a href="' . route('admin.role.destroy', $query->id) . '" class="btn btn-danger btn-sm delete_item">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        ';
-                    }
-                    return (!empty($update) ? $update : '') . (!empty($delete) ? $delete : '');
+                    return '<span class="badge rounded-pill bg-outline-danger">' . __("Tidak ada akses") . '</span>';
                 }
             })
             ->rawColumns(['action', 'residence', 'area'])

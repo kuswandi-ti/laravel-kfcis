@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Setting;
 use App\Models\Currency;
 use App\Models\Language;
 use App\Models\FormatDate;
 use App\Models\FormatTime;
 use Illuminate\Http\Request;
+use App\Models\SettingSystem;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminGeneralSettingUpdateRequest;
@@ -20,7 +20,7 @@ class AdminSettingController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:system setting,' . getGuardNameAdmin(), ['only' => ['index', 'generalSettingIndex', 'generalSettingUpdate', 'notificationSettingIndex', 'paymentSettingUpdate']]);
+        $this->middleware('permission:system setting', ['only' => ['index', 'generalSettingIndex', 'generalSettingUpdate', 'notificationSettingIndex', 'paymentSettingUpdate']]);
     }
 
     public function index()
@@ -40,30 +40,31 @@ class AdminSettingController extends Controller
 
     public function generalSettingUpdate(AdminGeneralSettingUpdateRequest $request)
     {
-        foreach ($request->only('company_name', 'site_title', 'company_phone', 'company_email', 'company_address', 'default_date_format', 'default_time_format', 'default_currency', 'default_language') as $key => $value) {
-            Setting::updateOrCreate(
+        // foreach ($request->only('company_name', 'site_title', 'company_phone', 'company_email', 'company_address', 'default_date_format', 'default_time_format', 'default_currency', 'default_language') as $key => $value) {
+        foreach ($request->only('company_name', 'site_title', 'company_phone', 'company_email', 'company_address') as $key => $value) {
+            SettingSystem::updateOrCreate(
                 ['key' => $key],
-                ['value' => $value],
+                ['value' => $value, 'updated_by' => auth()->user()->name],
             );
         }
 
-        if ($request->hasFile('company_logo')) {
-            $imagePath = $this->handleImageUpload($request, 'company_logo', $request->old_image_logo, 'company_logo');
-            Setting::updateOrCreate(
-                ['key' => 'company_logo'],
-                ['value' => $imagePath],
-            );
-        }
+        // if ($request->hasFile('company_logo')) {
+        //     $imagePath = $this->handleImageUpload($request, 'company_logo', $request->old_image_logo, 'company_logo');
+        //     Setting::updateOrCreate(
+        //         ['key' => 'company_logo'],
+        //         ['value' => $imagePath],
+        //     );
+        // }
 
-        if ($request->hasFile('company_favicon')) {
-            $imagePath = $this->handleImageUpload($request, 'company_favicon', $request->old_image_logo, 'company_favicon');
-            Setting::updateOrCreate(
-                ['key' => 'company_favicon'],
-                ['value' => $imagePath],
-            );
-        }
+        // if ($request->hasFile('company_favicon')) {
+        //     $imagePath = $this->handleImageUpload($request, 'company_favicon', $request->old_image_logo, 'company_favicon');
+        //     Setting::updateOrCreate(
+        //         ['key' => 'company_favicon'],
+        //         ['value' => $imagePath],
+        //     );
+        // }
 
-        return redirect()->back()->with('success', __('admin.Updated general setting successfully'));
+        return redirect()->back()->with('success', __('Pengaturan informasi koperasi berhasil diupdate'));
     }
 
     public function notificationSettingIndex()

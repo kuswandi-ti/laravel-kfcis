@@ -6,6 +6,8 @@
         href="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset(config('common.path_template_admin') . 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
 @endpush
 
 @push('scripts_vendor')

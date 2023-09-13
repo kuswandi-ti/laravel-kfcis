@@ -15,7 +15,7 @@
 
 @section('page_content')
     <div class="row">
-        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12">
             <form method="post" action="{{ route('admin.profile.update', auth()->user()->id) }}"
                 enctype="multipart/form-data">
                 @csrf
@@ -34,7 +34,7 @@
                         <div class="text-center">
                             <p class="avatar avatar-xxxl avatar-rounded">
                                 <img src="{{ url(config('common.path_storage') . (!empty(auth()->user()->image) ? auth()->user()->image : config('common.no_image')) ?? config('common.no_image')) }}"
-                                    class="preview-path_image">
+                                    class="object-fit-cover preview-path_image">
                             </p>
                             <div class="mb-4">
                                 <label for="path_image" class="form-label text-default">{{ __('Foto Profil') }}</label>
@@ -50,7 +50,7 @@
                                     <x-all-not-null /></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
                                     name="name" id="name" value="{{ old('name') ?? $admin->name }}"
-                                    placeholder="{{ __('Nama') }}">
+                                    placeholder="{{ __('Nama') }}" required autofocus>
                                 @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -88,7 +88,7 @@
             </form>
         </div>
 
-        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12">
             <form method="post" action="{{ route('admin.profile_password.update', $admin->id) }}">
                 @csrf
                 @method('PUT')

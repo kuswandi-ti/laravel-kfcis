@@ -12,10 +12,10 @@ class AdminPermissionController extends Controller
 {
     function __construct()
     {
-        // $this->middleware(['permission:permission create,' . getGuardNameAdmin()])->only(['create', 'store']);
-        // $this->middleware(['permission:permission delete,' . getGuardNameAdmin()])->only(['destroy']);
-        // $this->middleware(['permission:permission index,' . getGuardNameAdmin()])->only(['index', 'show', 'data']);
-        // $this->middleware(['permission:permission update,' . getGuardNameAdmin()])->only(['edit', 'update']);
+        $this->middleware(['permission:permission create'])->only(['create', 'store']);
+        $this->middleware(['permission:permission delete'])->only(['destroy']);
+        $this->middleware(['permission:permission index'])->only(['index', 'show', 'data']);
+        $this->middleware(['permission:permission update'])->only(['edit', 'update']);
     }
 
     /**
@@ -31,7 +31,7 @@ class AdminPermissionController extends Controller
      */
     public function create()
     {
-        return view('admin.permission.create');
+        return view('admin.permission.index');
     }
 
     /**
@@ -42,11 +42,10 @@ class AdminPermissionController extends Controller
         $permission = new Permission();
 
         $permission->name = $request->permission_name;
-        $permission->guard_name = $request->guard_name;
         $permission->group_name = $request->group_name;
         $permission->save();
 
-        return redirect()->route('admin.permission.index')->with('success', __('admin.Created permission successfully'));
+        return redirect()->back()->with('success', __('Data permission berhasil dibuat'));
     }
 
     /**
@@ -63,7 +62,8 @@ class AdminPermissionController extends Controller
     public function edit(string $id)
     {
         $permission = Permission::findOrFail($id);
-        return view('admin.permission.edit', compact('permission'));
+
+        return view('admin.permission.index', compact('permission'));
     }
 
     /**
@@ -74,11 +74,10 @@ class AdminPermissionController extends Controller
         $permission = Permission::findOrFail($id);
 
         $permission->name = $request->permission_name;
-        $permission->guard_name = $request->guard_name;
         $permission->group_name = $request->group_name;
         $permission->save();
 
-        return redirect()->route('admin.permission.index')->with('success', __('admin.Updated permission successfully'));
+        return redirect()->back()->with('success', __('Data permission berhasil diupdate'));
     }
 
     /**
@@ -91,12 +90,12 @@ class AdminPermissionController extends Controller
             $permission->delete();
             return response([
                 'status' => 'success',
-                'message' => __('admin.Deleted permission successfully')
+                'message' => __('Data permission berhasil dihapus'),
             ]);
         } catch (\Throwable $th) {
             return response([
                 'status' => 'error',
-                'message' => __('admin.Deleted permission is error')
+                'message' => __('Data permission gagal dihapus'),
             ]);
         }
     }
@@ -107,26 +106,38 @@ class AdminPermissionController extends Controller
 
         return datatables($query)
             ->addIndexColumn()
-            ->editColumn('guard_name', function ($query) {
-                $badge = 'danger';
-                return '<div class="badge badge-' . $badge . '">' . $query->guard_name . '</div>';
-            })
             ->addColumn('action', function ($query) {
                 if (canAccess(['permission update'])) {
                     $update = '
-                        <a href="' . route('admin.permission.edit', $query->id) . '" class="btn btn-primary btn-sm">
-                            <i class="bx bxs-edit-alt"></i>
-                        </a>
+                        <li>
+                            <a href="' . route('admin.permission.edit', $query->id) . '" class="dropdown-item border-bottom">
+                                <i class="bx bxs-edit-alt"></i> ' . __("Ubah") . '
+                            </a>
+                        </li>
                     ';
                 }
                 if (canAccess(['permission delete'])) {
                     $delete = '
-                        <a href="' . route('admin.permission.destroy', $query->id) . '" class="btn btn-danger btn-sm delete_item">                            
-                            <i class="bx bxs-trash"></i>
-                        </a>
+                        <li>
+                            <a href="' . route('admin.permission.destroy', $query->id) . '" class="dropdown-item border-bottom delete_item">
+                                <i class="bx bxs-trash"></i> ' . __("Hapus") . '
+                            </a>
+                        </li>
                     ';
                 }
-                return (!empty($update) ? $update : '') . (!empty($delete) ? $delete : '');
+                if (canAccess(['permission update', 'permission delete'])) {
+                    return '<div class="dropdown ms-3">
+                                <a href="javascript:void(0);" class="text-muted border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fe fe-more-vertical"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="">' .
+                                    (!empty($update) ? $update : '') .
+                                    (!empty($delete) ? $delete : '') . '
+                                </ul>
+                            </div>';
+                } else {
+                    return '<span class="badge rounded-pill bg-outline-danger">' . __("Tidak ada akses") . '</span>';
+                }
             })
             ->rawColumns(['action'])
             ->escapeColumns([])

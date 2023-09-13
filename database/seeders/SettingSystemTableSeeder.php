@@ -15,9 +15,9 @@ class SettingSystemTableSeeder extends Seeder
     {
         $input = [
             ['key' => 'company_name', 'value' => 'Koperasi FCI Sejahtera'],
-            ['key' => 'site_title', 'value' => 'Koperasi FCI Sejahtera'],
-            ['key' => 'company_phone', 'value' => '021-505848'],
+            ['key' => 'site_title', 'value' => 'KFCIS System'],
             ['key' => 'company_email', 'value' => 'admin@kfcis.com'],
+            ['key' => 'company_phone', 'value' => '021-505848'],
             ['key' => 'company_address', 'value' => 'Bekasi'],
             ['key' => 'default_date_format', 'value' => 'd-m-Y'],
             ['key' => 'default_time_format', 'value' => 'H:i:s'],

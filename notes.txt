@@ -1,6 +1,7 @@
 system setting
 ================
 company_name
+site_title
 company_logo
 company_favicon
 default_language

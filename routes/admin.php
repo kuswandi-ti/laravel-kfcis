@@ -32,7 +32,7 @@ Route::group(['middleware' => ['set_language']], function () {
 });
 
 Route::group([
-    'middleware' => ['admin']
+    'middleware' => ['admin', 'prevent_back_history']
 ], function () {
     /** Auth Admin Routes */
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
