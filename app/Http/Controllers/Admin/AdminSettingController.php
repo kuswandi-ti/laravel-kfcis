@@ -36,7 +36,7 @@ class AdminSettingController extends Controller
             $imagePath = $this->handleImageUpload($request, 'image_company_logo', $request->old_image_company_logo, 'company_logo');
             SettingSystem::updateOrCreate(
                 ['key' => 'company_logo'],
-                ['value' => $imagePath],
+                ['value' => $imagePath, 'updated_by' => auth()->user()->name],
             );
         }
 
@@ -44,7 +44,7 @@ class AdminSettingController extends Controller
             $imagePath = $this->handleImageUpload($request, 'image_company_logo_desktop', $request->old_image_company_logo_desktop, 'company_logo');
             SettingSystem::updateOrCreate(
                 ['key' => 'company_logo_desktop'],
-                ['value' => $imagePath],
+                ['value' => $imagePath, 'updated_by' => auth()->user()->name],
             );
         }
 
@@ -52,11 +52,11 @@ class AdminSettingController extends Controller
             $imagePath = $this->handleImageUpload($request, 'image_company_logo_toggle', $request->old_image_company_logo_toggle, 'company_logo');
             SettingSystem::updateOrCreate(
                 ['key' => 'company_logo_toggle'],
-                ['value' => $imagePath],
+                ['value' => $imagePath, 'updated_by' => auth()->user()->name],
             );
         }
 
-        return redirect()->back()->with('success', __('Pengaturan informasi koperasi berhasil diupdate'));
+        return redirect()->route('admin.setting.index')->with('success', __('Pengaturan informasi koperasi berhasil diperbarui'));
     }
 
     public function jasaSettingUpdate(AdminJasaSettingUpdateRequest $request)
@@ -68,6 +68,6 @@ class AdminSettingController extends Controller
             );
         }
 
-        return redirect()->back()->with('success', __('Pengaturan persentase jasa berhasil diupdate'));
+        return redirect()->route('admin.setting.index')->with('success', __('Pengaturan persentase jasa berhasil diperbarui'));
     }
 }

@@ -13,17 +13,19 @@ class FormatDateTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $user = 'Super Admin';
+
         $input = [
-            ['code' => 'Y-m-d', 'text' => date('Y-m-d'), 'created_by' => 'Super Admin'],
-            ['code' => 'd-m-Y', 'text' => date('d-m-Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'd/m/Y', 'text' => date('d/m/Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'm-d-Y', 'text' => date('m-d-Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'm.d.Y', 'text' => date('m.d.Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'm/d/Y', 'text' => date('m/d/Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'd.m.Y', 'text' => date('d.m.Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'd/M/Y', 'text' => date('d/M/Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'M/d/Y', 'text' => date('M/d/Y'), 'created_by' => 'Super Admin'],
-            ['code' => 'd M, Y', 'text' => date('d M, Y'), 'created_by' => 'Super Admin'],
+            ['code' => 'Y-m-d', 'text' => date('Y-m-d'), 'created_by' => $user],
+            ['code' => 'd-m-Y', 'text' => date('d-m-Y'), 'created_by' => $user],
+            ['code' => 'd/m/Y', 'text' => date('d/m/Y'), 'created_by' => $user],
+            ['code' => 'm-d-Y', 'text' => date('m-d-Y'), 'created_by' => $user],
+            ['code' => 'm.d.Y', 'text' => date('m.d.Y'), 'created_by' => $user],
+            ['code' => 'm/d/Y', 'text' => date('m/d/Y'), 'created_by' => $user],
+            ['code' => 'd.m.Y', 'text' => date('d.m.Y'), 'created_by' => $user],
+            ['code' => 'd/M/Y', 'text' => date('d/M/Y'), 'created_by' => $user],
+            ['code' => 'M/d/Y', 'text' => date('M/d/Y'), 'created_by' => $user],
+            ['code' => 'd M, Y', 'text' => date('d M, Y'), 'created_by' => $user],
         ];
         foreach ($input as $item) {
             FormatDate::create($item);

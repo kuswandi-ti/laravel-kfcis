@@ -29,6 +29,26 @@ class AdminAuthLoginRequest extends FormRequest
         ];
     }
 
+    // public function failedValidation(Validator $validator)
+    // {
+    //     throw new HttpResponseException(response()->json([
+    //         'success'   => false,
+    //         'message'   => 'Validation errors',
+    //         'data'      => $validator->errors()
+    //     ]));
+    // }
+
+    // public function messages()
+    // {
+    //     return [
+    //         'email.required' => __('Email harus diisi'),
+    //         'email.email' => __('Format email tidak valid'),
+    //         'email.max' => __('Maksimal email adalah 255 karakter'),
+    //         'email.exists' => __('Email tidak terdaftar'),
+    //         'password.required' => __('Password harus diisi'),
+    //     ];
+    // }
+
     /**
      * Attempt to authenticate the request's credentials.
      *

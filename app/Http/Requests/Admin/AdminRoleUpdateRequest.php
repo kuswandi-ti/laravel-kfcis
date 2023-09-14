@@ -22,15 +22,10 @@ class AdminRoleUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('role');
+
         return [
-            'role_name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('roles', 'name')->where(function ($query) {
-                    $query->where('guard_name', 'web');
-                })->ignore($this->id)
-            ],
+            'role_name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $id],
         ];
     }
 }

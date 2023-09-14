@@ -74,6 +74,16 @@ function getArrayAllPermission()
         ['guard_name' => 'web', 'name' => 'translate trans', 'group_name' => 'Translate Permission'],
         ['guard_name' => 'web', 'name' => 'translate update', 'group_name' => 'Translate Permission'],
         ['guard_name' => 'web', 'name' => 'setting system', 'group_name' => 'Setting System Permission'],
+        ['guard_name' => 'web', 'name' => 'section create', 'group_name' => 'Section Permission'],
+        ['guard_name' => 'web', 'name' => 'section delete', 'group_name' => 'Section Permission'],
+        ['guard_name' => 'web', 'name' => 'section index', 'group_name' => 'Section Permission'],
+        ['guard_name' => 'web', 'name' => 'section restore', 'group_name' => 'Section Permission'],
+        ['guard_name' => 'web', 'name' => 'section update', 'group_name' => 'Section Permission'],
+        ['guard_name' => 'web', 'name' => 'department create', 'group_name' => 'Department Permission'],
+        ['guard_name' => 'web', 'name' => 'department delete', 'group_name' => 'Department Permission'],
+        ['guard_name' => 'web', 'name' => 'department index', 'group_name' => 'Department Permission'],
+        ['guard_name' => 'web', 'name' => 'department restore', 'group_name' => 'Department Permission'],
+        ['guard_name' => 'web', 'name' => 'department update', 'group_name' => 'Department Permission'],
     ];
 }
 
@@ -113,7 +123,7 @@ function setArrayRoleSekretarisPermission()
 
 function setStatusBadge($status)
 {
-    return $status == 1 ? 'info' : 'danger';
+    return $status == 1 ? 'success' : 'danger';
 }
 
 function setStatusText($status)

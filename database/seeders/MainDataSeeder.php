@@ -12,12 +12,13 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class MainDataSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+        $user = 'Super Admin';
+
         /** Reset Cached Roles and Permissions */
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
@@ -30,7 +31,7 @@ class MainDataSeeder extends Seeder
         /** Create Role */
         $role_super_admin = Role::create([
             'guard_name' => 'web',
-            'name' => 'Super Admin',
+            'name' => $user,
         ]);
 
         $role_ketua = Role::create([
@@ -53,8 +54,8 @@ class MainDataSeeder extends Seeder
 
         /** Create User */
         $user_super_admin = User::create([
-            'name' => 'Super Admin',
-            'slug' => Str::slug('Super Admin'),
+            'name' => $user,
+            'slug' => Str::slug($user),
             'email' => 'superadmin@mail.com',
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -62,7 +63,7 @@ class MainDataSeeder extends Seeder
             'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
-            'created_by' => 'Super Admin',
+            'created_by' => $user,
         ]);
 
         $user_ketua = User::create([
@@ -75,7 +76,7 @@ class MainDataSeeder extends Seeder
             'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
-            'created_by' => 'Super Admin',
+            'created_by' => $user,
         ]);
 
         $user_bendahara = User::create([
@@ -88,7 +89,7 @@ class MainDataSeeder extends Seeder
             'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
-            'created_by' => 'Super Admin',
+            'created_by' => $user,
         ]);
 
         $user_sekretaris = User::create([
@@ -101,7 +102,7 @@ class MainDataSeeder extends Seeder
             'approved_at' => saveDateTimeNow(),
             'status' => 1,
             'remember_token' => Str::random(10),
-            'created_by' => 'Super Admin',
+            'created_by' => $user,
         ]);
 
         /** Assign Role to User */

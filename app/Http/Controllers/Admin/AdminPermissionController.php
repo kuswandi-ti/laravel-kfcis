@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
+use App\Http\Requests\Admin\AdminPermissionRequest;
 use App\Http\Requests\Admin\AdminPermissionStoreRequest;
 use App\Http\Requests\Admin\AdminPermissionUpdateRequest;
 
@@ -31,21 +32,24 @@ class AdminPermissionController extends Controller
      */
     public function create()
     {
-        return view('admin.permission.index');
+        return view('admin.permission.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdminPermissionStoreRequest $request)
+    public function store(AdminPermissionRequest $request)
     {
-        $permission = new Permission();
+        $store = Permission::create([
+            'name' => $request->permission_name,
+            'group_name' => $request->group_name,
+        ]);
 
-        $permission->name = $request->permission_name;
-        $permission->group_name = $request->group_name;
-        $permission->save();
-
-        return redirect()->back()->with('success', __('Data permission berhasil dibuat'));
+        if ($store) {
+            return redirect()->route('admin.permission.index')->with('success', __('Data permission berhasil dibuat'));
+        } else {
+            return redirect()->route('admin.permission.index')->with('error', __('Data permission gagal dibuat'));
+        }
     }
 
     /**
@@ -63,7 +67,7 @@ class AdminPermissionController extends Controller
     {
         $permission = Permission::findOrFail($id);
 
-        return view('admin.permission.index', compact('permission'));
+        return view('admin.permission.edit', compact('permission'));
     }
 
     /**
@@ -72,12 +76,16 @@ class AdminPermissionController extends Controller
     public function update(AdminPermissionUpdateRequest $request, string $id)
     {
         $permission = Permission::findOrFail($id);
+        $update = $permission->update([
+            'name' => $request->permission_name,
+            'group_name' => $request->group_name,
+        ]);
 
-        $permission->name = $request->permission_name;
-        $permission->group_name = $request->group_name;
-        $permission->save();
-
-        return redirect()->back()->with('success', __('Data permission berhasil diupdate'));
+        if ($update) {
+            return redirect()->route('admin.permission.index')->with('success', __('Data permission berhasil diperbarui'));
+        } else {
+            return redirect()->route('admin.permission.index')->with('error', __('Data permission gagal diperbarui'));
+        }
     }
 
     /**
@@ -111,7 +119,7 @@ class AdminPermissionController extends Controller
                     $update = '
                         <li>
                             <a href="' . route('admin.permission.edit', $query->id) . '" class="dropdown-item border-bottom">
-                                <i class="bx bxs-edit-alt"></i> ' . __("Ubah") . '
+                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Ubah") . '
                             </a>
                         </li>
                     ';
@@ -120,15 +128,15 @@ class AdminPermissionController extends Controller
                     $delete = '
                         <li>
                             <a href="' . route('admin.permission.destroy', $query->id) . '" class="dropdown-item border-bottom delete_item">
-                                <i class="bx bxs-trash"></i> ' . __("Hapus") . '
+                                <i class="bx bx-trash fs-20"></i> ' . __("Hapus") . '
                             </a>
                         </li>
                     ';
                 }
                 if (canAccess(['permission update', 'permission delete'])) {
                     return '<div class="dropdown ms-3">
-                                <a href="javascript:void(0);" class="text-muted border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fe fe-more-vertical"></i>
+                                <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-dots-vertical-rounded fs-20"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="">' .
                                     (!empty($update) ? $update : '') .

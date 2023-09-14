@@ -160,7 +160,7 @@
                                         data.message,
                                         'success'
                                     ).then(() => {
-                                        window.history.back();
+                                        window.location.reload();
                                     });
                                 } else if (data.status == 'error') {
                                     Swal.fire(

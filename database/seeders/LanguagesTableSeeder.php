@@ -13,13 +13,15 @@ class LanguagesTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $user = 'Super Admin';
+
         $language = new Language();
         $language->name = 'Indonesian';
         $language->lang = 'id';
         $language->slug = 'id';
         $language->default = 1;
         $language->status = 1;
-        $language->created_by = 'Super Admin';
+        $language->created_by = $user;
         $language->save();
 
         $language = new Language();
@@ -28,7 +30,7 @@ class LanguagesTableSeeder extends Seeder
         $language->slug = 'en';
         $language->default = 0;
         $language->status = 1;
-        $language->created_by = 'Super Admin';
+        $language->created_by = $user;
         $language->save();
     }
 }

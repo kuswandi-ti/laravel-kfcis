@@ -47,6 +47,24 @@
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
+                <li class="slide {{ setSidebarActive(['admin.department.*']) }}">
+                    <a href="{{ route('admin.department.index') }}"
+                        class="side-menu__item {{ setSidebarActive(['admin.department.*']) }}">
+                        <span class="side-menu__icon">
+                            <i class='bx bx-copy'></i>
+                        </span>
+                        <span class="side-menu__label">{{ __('Departemen') }}</span>
+                    </a>
+                </li>
+                <li class="slide {{ setSidebarActive(['admin.section.*']) }}">
+                    <a href="{{ route('admin.section.index') }}"
+                        class="side-menu__item {{ setSidebarActive(['admin.section.*']) }}">
+                        <span class="side-menu__icon">
+                            <i class='bx bx-square'></i>
+                        </span>
+                        <span class="side-menu__label">{{ __('Bagian') }}</span>
+                    </a>
+                </li>
                 <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
                     <a href="{{ route('admin.product.index') }}"
                         class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">

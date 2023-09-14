@@ -13,14 +13,16 @@ class ReligionTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $user = 'Super Admin';
+
         $input = [
-            ['name' => 'Islam', 'created_by' => 'Super Admin'],
-            ['name' => 'Katolik', 'created_by' => 'Super Admin'],
-            ['name' => 'Protestan', 'created_by' => 'Super Admin'],
-            ['name' => 'Hindu', 'created_by' => 'Super Admin'],
-            ['name' => 'Budha', 'created_by' => 'Super Admin'],
-            ['name' => 'Konghucu', 'created_by' => 'Super Admin'],
-            ['name' => 'Other', 'created_by' => 'Super Admin'],
+            ['name' => 'Islam', 'created_by' => $user],
+            ['name' => 'Katolik', 'created_by' => $user],
+            ['name' => 'Protestan', 'created_by' => $user],
+            ['name' => 'Hindu', 'created_by' => $user],
+            ['name' => 'Budha', 'created_by' => $user],
+            ['name' => 'Konghucu', 'created_by' => $user],
+            ['name' => 'Other', 'created_by' => $user],
         ];
         foreach ($input as $item) {
             Religion::create($item);

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Area;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
@@ -36,7 +35,7 @@ class AdminRoleController extends Controller
     public function create()
     {
         $permissions = Permission::orderBy('name', 'ASC')->get()->groupBy('group_name');
-        return view('admin.role.index', compact('permissions'));
+        return view('admin.role.create', compact('permissions'));
     }
 
     /**
@@ -44,14 +43,16 @@ class AdminRoleController extends Controller
      */
     public function store(AdminRoleStoreRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $role = Role::create([
-                'name' => $request->role_name,
-            ]);
-            $role->syncPermissions($request->permissions);
-        });
+        $store = Role::create([
+            'name' => $request->role_name,
+        ]);
+        $store->syncPermissions($request->permissions);
 
-        return redirect()->back()->with('success', __('Data role berhasil dibuat'));
+        if ($store) {
+            return redirect()->route('admin.role.index')->with('success', __('Data role berhasil dibuat'));
+        } else {
+            return redirect()->route('admin.role.index')->with('error', __('Data role gagal dibuat'));
+        }
     }
 
     /**
@@ -65,7 +66,7 @@ class AdminRoleController extends Controller
         $roles_permissions = $role->permissions;
         $roles_permissions = $roles_permissions->pluck('name')->toArray();
 
-        return view('admin.role.index', compact('role', 'permissions', 'roles_permissions'));
+        return view('admin.role.edit', compact('role', 'permissions', 'roles_permissions'));
     }
 
     /**
@@ -74,12 +75,16 @@ class AdminRoleController extends Controller
     public function update(AdminRoleUpdateRequest $request, string $id)
     {
         $role = Role::findOrFail($id);
-        $role->update([
+        $update = $role->update([
             'name' => $request->role_name,
         ]);
         $role->syncPermissions($request->permissions);
 
-        return redirect()->back()->with('success', __('Data permission berhasil diupdate'));
+        if ($update) {
+            return redirect()->route('admin.role.index')->with('success', __('Data role berhasil diperbarui'));
+        } else {
+            return redirect()->route('admin.role.index')->with('error', __('Data role gagal diperbarui'));
+        }
     }
 
     /**
@@ -122,7 +127,7 @@ class AdminRoleController extends Controller
                     $update = '
                         <li>
                             <a href="' . route('admin.role.edit', $query->id) . '" class="dropdown-item border-bottom">
-                                <i class="bx bxs-edit-alt"></i> ' . __("Ubah") . '
+                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Ubah") . '
                             </a>
                         </li>
                     ';
@@ -131,15 +136,15 @@ class AdminRoleController extends Controller
                     $delete = '
                         <li>
                             <a href="' . route('admin.role.destroy', $query->id) . '" class="dropdown-item border-bottom delete_item">
-                                <i class="bx bxs-trash"></i> ' . __("Hapus") . '
+                                <i class="bx bx-trash fs-20"></i> ' . __("Hapus") . '
                             </a>
                         </li>
                     ';
                 }
                 if (canAccess(['role update', 'role delete'])) {
                     return '<div class="dropdown ms-3">
-                                <a href="javascript:void(0);" class="text-muted border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fe fe-more-vertical"></i>
+                                <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-dots-vertical-rounded fs-20"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="">' .
                                     (!empty($update) ? $update : '') .
@@ -150,7 +155,7 @@ class AdminRoleController extends Controller
                     return '<span class="badge rounded-pill bg-outline-danger">' . __("Tidak ada akses") . '</span>';
                 }
             })
-            ->rawColumns(['action', 'residence', 'area'])
+            ->rawColumns(['action'])
             ->escapeColumns([])
             ->make(true);
     }

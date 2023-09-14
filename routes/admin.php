@@ -1,19 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBankController;
 use App\Http\Controllers\Admin\AdminLanguageChange;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminPackageController;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminSectionController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminLanguageController;
 use App\Http\Controllers\Admin\AdminAdminUserController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminResidenceController;
 use App\Http\Controllers\Admin\AdminTranslateController;
+use App\Http\Controllers\Admin\AdminDepartmentController;
 use App\Http\Controllers\Admin\AdminMemberUserController;
 use App\Http\Controllers\Admin\AdminPermissionController;
 
@@ -92,6 +94,16 @@ Route::group([
     Route::post('extract-localize-string', [AdminTranslateController::class, 'extractLocalizationStrings'])->name('translate.extract_localize_string');
     Route::post('languange-string-update', [AdminTranslateController::class, 'updateLanguangeString'])->name('translate.update_languange_string');
     Route::post('translate-string', [AdminTranslateController::class, 'translateString'])->name('translate.translate_string');
+
+    /** Section Routes */
+    Route::get('section/data', [AdminSectionController::class, 'data'])->name('section.data');
+    Route::get('section/restore/{id}', [AdminSectionController::class, 'restore'])->name('section.restore');
+    Route::resource('section', AdminSectionController::class);
+
+    /** Department Routes */
+    Route::get('department/data', [AdminDepartmentController::class, 'data'])->name('department.data');
+    Route::get('department/restore/{department}', [AdminDepartmentController::class, 'restore'])->name('department.restore');
+    Route::resource('department', AdminDepartmentController::class);
 
     /** Product Routes */
     Route::get('product/data', [AdminProductController::class, 'data'])->name('product.data');

@@ -71,7 +71,7 @@ class AdminProfileController extends Controller
 
         $admin->save();
 
-        return redirect()->back()->with('success', __('Data profil berhasil diupdate'));
+        return redirect()->back()->with('success', __('Data profil berhasil diperbarui'));
     }
 
     /**
@@ -88,6 +88,6 @@ class AdminProfileController extends Controller
         $admin->password = bcrypt($request->password);
         $admin->save();
 
-        return redirect()->back()->with('success', __('Data password berhasil diupdate'));
+        return redirect()->back()->with('success', __('Data password berhasil diperbarui'));
     }
 }
