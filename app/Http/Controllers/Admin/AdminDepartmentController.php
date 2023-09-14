@@ -109,13 +109,13 @@ class AdminDepartmentController extends Controller
             } else {
                 return response([
                     'status' => 'error',
-                    'message' => __('Data role gagal dihapus')
+                    'message' => __('Data departemen gagal dihapus')
                 ]);
             }
         } catch (\Throwable $th) {
             return response([
                 'status' => 'error',
-                'message' => __('Data role gagal dihapus')
+                'message' => __('Data departemen gagal dihapus')
             ]);
         }
     }
@@ -141,8 +141,15 @@ class AdminDepartmentController extends Controller
 
         return datatables($query)
             ->addIndexColumn()
+            ->editColumn('sections', function ($query) {
+                $section = '';
+                foreach ($query->sections as $item) {
+                    $section .= '<span class="badge bg-outline-danger">' . $item->name . '</span>&nbsp;';
+                }
+                return $section;
+            })
             ->editColumn('status', function ($query) {
-                return '<span class="badge bg-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</span>';
+                return '<h6><span class="badge bg-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</span></h6>';
             })
             ->addColumn('action', function ($query) {
                 if (canAccess(['department update'])) {
@@ -175,15 +182,15 @@ class AdminDepartmentController extends Controller
                         ';
                     }
                 }
-                if (canAccess(['department update', 'department delete'])) {
+                if (canAccess(['department update', 'department delete', 'department restore'])) {
                     return '<div class="dropdown ms-3">
                                 <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bx bx-dots-vertical-rounded fs-20"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="">' .
-                                    (!empty($update) ? $update : '') .
-                                    (!empty($restore) ? $restore : '') .
-                                    (!empty($delete) ? $delete : '') . '
+                        (!empty($update) ? $update : '') .
+                        (!empty($restore) ? $restore : '') .
+                        (!empty($delete) ? $delete : '') . '
                                 </ul>
                             </div>';
                 } else {

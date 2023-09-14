@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBankController;
-use App\Http\Controllers\Admin\AdminLanguageChange;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Admin\AdminProductController;
@@ -97,7 +96,7 @@ Route::group([
 
     /** Section Routes */
     Route::get('section/data', [AdminSectionController::class, 'data'])->name('section.data');
-    Route::get('section/restore/{id}', [AdminSectionController::class, 'restore'])->name('section.restore');
+    Route::get('section/restore/{section}', [AdminSectionController::class, 'restore'])->name('section.restore');
     Route::resource('section', AdminSectionController::class);
 
     /** Department Routes */

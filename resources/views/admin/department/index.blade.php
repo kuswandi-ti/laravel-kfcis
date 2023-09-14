@@ -33,13 +33,14 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="mt-3 table-responsive">
+                    <div class="table-responsive">
                         <table class="table table-striped" id="table_data">
                             <thead>
                                 <tr>
                                     <th scope="col" width="5%">{{ __('Nomor') }}</th>
                                     <th scope="col" width="5%">{{ __('Aksi') }}</th>
                                     <th scope="col">{{ __('Nama Departemen') }}</th>
+                                    <th scope="col">{{ __('Bagian') }}</th>
                                     <th scope="col" width="10%">{{ __('Status') }}</th>
                                 </tr>
                             </thead>
@@ -83,6 +84,10 @@
                 sortable: false,
             }, {
                 data: 'name',
+                searchable: true,
+                sortable: true,
+            }, {
+                data: 'sections',
                 searchable: true,
                 sortable: true,
             }, {

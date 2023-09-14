@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="mt-3 table-responsive">
+                    <div class="table-responsive">
                         <table class="table table-striped" id="table_data">
                             <thead>
                                 <tr>

@@ -1,16 +1,16 @@
 @extends('layouts.admin.master')
 
 @section('page_title')
-    {{ __('Role') }}
+    {{ __('Bagian') }}
 @endsection
 
 @section('section_header_title')
-    {{ __('Role') }}
+    {{ __('Bagian') }}
 @endsection
 
 @section('section_header_breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Role') }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Bagian') }}</li>
 @endsection
 
 @section('page_content')
@@ -20,14 +20,14 @@
                 <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
                     <div class="flex-fill">
                         <div class="card-title">
-                            {{ __('Daftar Data Role') }}
+                            {{ __('Daftar Data Bagian') }}
                             <p class="subtitle text-muted fs-12 fw-normal">
-                                {{ __('Menampilkan semua role akses user') }}
+                                {{ __('Menampilkan semua data bagian') }}
                             </p>
                         </div>
                     </div>
                     <div class="d-flex" role="search">
-                        <a href="{{ route('admin.role.create') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.section.create') }}" class="btn btn-primary">
                             {{ __('Baru') }}
                         </a>
                     </div>
@@ -39,7 +39,9 @@
                                 <tr>
                                     <th scope="col" width="5%">{{ __('Nomor') }}</th>
                                     <th scope="col" width="5%">{{ __('Aksi') }}</th>
-                                    <th scope="col">{{ __('Nama Role') }}</th>
+                                    <th scope="col">{{ __('Nama Bagian') }}</th>
+                                    <th scope="col">{{ __('Departemen') }}</th>
+                                    <th scope="col" width="10%">{{ __('Status') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,7 +72,7 @@
                 sSearch: '',
             },
             ajax: {
-                url: '{{ route('admin.role.data') }}',
+                url: '{{ route('admin.section.data') }}',
             },
             columns: [{
                 data: 'DT_RowIndex',
@@ -82,6 +84,14 @@
                 sortable: false,
             }, {
                 data: 'name',
+                searchable: true,
+                sortable: true,
+            }, {
+                data: 'department',
+                searchable: true,
+                sortable: true,
+            }, {
+                data: 'status',
                 searchable: true,
                 sortable: true,
             }],

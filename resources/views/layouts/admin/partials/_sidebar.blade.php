@@ -51,7 +51,7 @@
                     <a href="{{ route('admin.department.index') }}"
                         class="side-menu__item {{ setSidebarActive(['admin.department.*']) }}">
                         <span class="side-menu__icon">
-                            <i class='bx bx-copy'></i>
+                            <i class='bx bx-square'></i>
                         </span>
                         <span class="side-menu__label">{{ __('Departemen') }}</span>
                     </a>
@@ -60,7 +60,7 @@
                     <a href="{{ route('admin.section.index') }}"
                         class="side-menu__item {{ setSidebarActive(['admin.section.*']) }}">
                         <span class="side-menu__icon">
-                            <i class='bx bx-square'></i>
+                            <i class='bx bx-copy'></i>
                         </span>
                         <span class="side-menu__label">{{ __('Bagian') }}</span>
                     </a>

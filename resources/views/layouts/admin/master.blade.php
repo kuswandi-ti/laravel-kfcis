@@ -120,6 +120,7 @@
                     .html(filename)
             })
 
+
             $('body').on('click', '.logout', function(e) {
                 e.preventDefault();
                 swalWithBootstrapButtons.fire({
