@@ -9,3 +9,12 @@ company_logo_light_big
 company_logo_light_small
 company_logo_dark_big
 company_logo_dark_small
+
+.env
+NO_IMAGE="/images/no_image.png"
+LOGO_COMPANY_MAIN="assets/images/default/logo-company-main.png"
+LOGO_COMPANY_DESKTOP="assets/images/default/logo-company-desktop.png"
+LOGO_COMPANY_TOGGLE="assets/images/default/logo-company-toggle.png"
+IMAGE_USER_PROFILE_SMALL="assets/images/default/image-profil-user-small.png"
+IMAGE_USER_PROFILE_BIG="assets/images/default/image-profil-user-big.png"
+IMAGE_PRODUCT="assets/images/default/image_product.png"

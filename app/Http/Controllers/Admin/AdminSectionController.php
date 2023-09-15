@@ -46,7 +46,7 @@ class AdminSectionController extends Controller
     public function store(AdminSectionRequest $request)
     {
         $store = Section::create([
-            'name' => $request->name,
+            'name' => capitalAllWord($request->name),
             'slug' => Str::slug($request->name),
             'department_id' => $request->department,
             'created_by' => auth()->user()->name,
@@ -85,7 +85,7 @@ class AdminSectionController extends Controller
     public function update(Section $section, AdminSectionRequest $request)
     {
         $update = $section->update([
-            'name' => $request->name,
+            'name' => capitalAllWord($request->name),
             'slug' => Str::slug($request->name),
             'department_id' => $request->department,
             'updated_by' => auth()->user()->name,

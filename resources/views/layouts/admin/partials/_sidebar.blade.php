@@ -3,14 +3,14 @@
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
         <a href="{{ route('admin.dashboard.index') }}" class="header-logo">
-            <img src="{{ url(!empty($setting_system['company_logo_desktop']) ? config('common.path_storage') . $setting_system['company_logo_desktop'] : config('common.path_template_admin') . 'assets/images/brand-logos/desktop-logo.png') }}"
-                alt="logo" class="desktop-logo">
-            <img src="{{ url(!empty($setting_system['company_logo_toggle']) ? config('common.path_storage') . $setting_system['company_logo_toggle'] : config('common.path_template_admin') . 'assets/images/brand-logos/toggle-logo.png') }}"
-                alt="logo" class="toggle-logo">
-            <img src="{{ url(!empty($setting_system['company_logo_desktop']) ? config('common.path_storage') . $setting_system['company_logo_desktop'] : config('common.path_template_admin') . 'assets/images/brand-logos/desktop-dark.png') }}"
-                alt="logo" class="desktop-dark">
-            <img src="{{ url(!empty($setting_system['company_logo_toggle']) ? config('common.path_storage') . $setting_system['company_logo_toggle'] : config('common.path_template_admin') . 'assets/images/brand-logos/toggle-dark.png') }}"
-                alt="logo" class="toggle-dark">
+            <img src="{{ !empty($setting_system['company_logo_dekstop']) ? url(config('common.path_storage') . $setting_system['company_logo_desktop']) : url(config('common.path_template_admin') . config('common.logo_company_desktop')) }}"
+                alt="logo" class="desktop-logo" width="125" height="33">
+            <img src="{{ !empty($setting_system['company_logo_toggle']) ? url(config('common.path_storage') . $setting_system['company_logo_toggle']) : url(config('common.path_template_admin') . config('common.logo_company_toggle')) }}"
+                alt="logo" class="toggle-logo" width="38" height="33">
+            <img src="{{ !empty($setting_system['company_logo_desktop']) ? url(config('common.path_storage') . $setting_system['company_logo_desktop']) : url(config('common.path_template_admin') . config('common.logo_company_desktop')) }}"
+                alt="logo" class="desktop-dark" width="125" height="33">
+            <img src="{{ !empty($setting_system['company_logo_toggle']) ? url(config('common.path_storage') . $setting_system['company_logo_toggle']) : url(config('common.path_template_admin') . config('common.logo_company_toggle')) }}"
+                alt="logo" class="toggle-dark" width="38" height="33">
         </a>
     </div>
     <!-- End::main-sidebar-header -->
@@ -71,7 +71,7 @@
                         <span class="side-menu__icon">
                             <i class='bx bx-archive'></i>
                         </span>
-                        <span class="side-menu__label">{{ __('Produk Penjualan') }}</span>
+                        <span class="side-menu__label">{{ __('Barang Penjualan') }}</span>
                     </a>
                 </li>
                 <!-- End::slide -->

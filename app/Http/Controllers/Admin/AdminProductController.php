@@ -2,17 +2,33 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Traits\FileUploadTrait;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminProductRequest;
 
 class AdminProductController extends Controller
 {
+    use FileUploadTrait;
+
+    function __construct()
+    {
+        $this->middleware(['permission:product create'])->only(['create', 'store']);
+        $this->middleware(['permission:product delete'])->only(['destroy']);
+        $this->middleware(['permission:product index'])->only(['index', 'show', 'data']);
+        $this->middleware(['permission:product restore'])->only(['restore']);
+        $this->middleware(['permission:product update'])->only(['edit', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $products = Product::where('status', 1)->orderBy('name')->get();
+        return view('admin.product.index', compact('products'));
     }
 
     /**
@@ -20,15 +36,31 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.product.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AdminProductRequest $request)
     {
-        //
+        $imagePath = $this->handleImageUpload($request, 'image_barang', $request->old_image_barang, 'products');
+
+        $store = Product::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'specification' => $request->specification,
+            'image' => !empty($imagePath) ? $imagePath : $request->old_image_barang,
+            'price_hpp' => $request->price_hpp,
+            'price_sell' => $request->price_sell,
+            'created_by' => auth()->user()->name,
+        ]);
+
+        if ($store) {
+            return redirect()->route('admin.product.index')->with('success', __('Data barang penjualan berhasil dibuat'));
+        } else {
+            return redirect()->route('admin.product.index')->with('error', __('Data barang penjualan gagal dibuat'));
+        }
     }
 
     /**

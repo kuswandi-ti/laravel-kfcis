@@ -23,9 +23,9 @@
                     <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
                         <div class="flex-fill">
                             <div class="card-title">
-                                {{ __('Membuat Data Departemen') }}
+                                {{ __('Menambah Data Departemen') }}
                                 <p class="subtitle text-muted fs-12 fw-normal">
-                                    {{ __('Silahkan input data untuk proses membuat data departemen') }}
+                                    {{ __('Silahkan input data untuk proses menambah data departemen') }}
                                 </p>
                             </div>
                         </div>

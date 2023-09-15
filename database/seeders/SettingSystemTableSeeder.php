@@ -27,7 +27,7 @@ class SettingSystemTableSeeder extends Seeder
             ['key' => 'default_date_format', 'value' => 'd-m-Y', 'created_by' => $user],
             ['key' => 'default_time_format', 'value' => 'H:i:s', 'created_by' => $user],
             ['key' => 'default_language', 'value' => 'id', 'created_by' => $user],
-            ['key' => 'company_logo', 'value' => config('common.no_image'), 'created_by' => $user],
+            // ['key' => 'company_logo', 'value' => config('common.no_image'), 'created_by' => $user],
             // ['key' => 'company_logo_desktop', 'value' => config('common.no_image'), 'created_by' => $user],
             // ['key' => 'company_logo_toggle', 'value' => config('common.no_image'), 'created_by' => $user],
             ['key' => 'site_microsoft_api_host', 'value' => config('common.site_microsoft_api_host'), 'created_by' => $user],

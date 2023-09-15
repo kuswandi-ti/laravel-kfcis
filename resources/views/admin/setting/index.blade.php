@@ -174,18 +174,19 @@
                                                                                             <div
                                                                                                 class="mb-2 file-format-icon">
                                                                                                 <div class="text-center">
-                                                                                                    <img src="{{ url(config('common.path_storage') . (!empty($setting_system['company_logo']) ? $setting_system['company_logo'] : config('common.no_image')) ?? config('common.no_image')) }}"
-                                                                                                        class="rounded object-fit-cover img-fluid preview-path_image_company_logo"
-                                                                                                        alt="...">
+                                                                                                    <img src="{{ !empty($setting_system['company_logo']) ? url(config('common.path_storage') . $setting_system['company_logo']) : url(config('common.path_template_admin') . config('common.logo_company_main')) }}"
+                                                                                                        class="img-fluid rounded preview-path_image_company_logo"
+                                                                                                        width="200"
+                                                                                                        height="200">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div>
                                                                                                 <span class="fw-semibold">
-                                                                                                    {{ __('Logo Koperasi') }}
+                                                                                                    {{ __('Logo Koperasi (Utama)') }}
                                                                                                 </span>
                                                                                                 <span
                                                                                                     class="fs-10 d-block text-muted">
-                                                                                                    {{ __('Utama') }}
+                                                                                                    (200 x 200)
                                                                                                 </span>
                                                                                                 <div class="mt-3">
                                                                                                     <input
@@ -213,18 +214,19 @@
                                                                                             <div
                                                                                                 class="mb-2 file-format-icon">
                                                                                                 <div class="text-center">
-                                                                                                    <img src="{{ url(config('common.path_storage') . (!empty($setting_system['company_logo_desktop']) ? $setting_system['company_logo_desktop'] : config('common.no_image')) ?? config('common.no_image')) }}"
-                                                                                                        class="rounded object-fit-cover img-fluid preview-path_image_company_logo_desktop"
-                                                                                                        alt="...">
+                                                                                                    <img src="{{ !empty($setting_system['company_logo_desktop']) ? url(config('common.path_storage') . $setting_system['company_logo_desktop']) : url(config('common.path_template_admin') . config('common.logo_company_desktop')) }}"
+                                                                                                        class="img-fluid rounded preview-path_image_company_logo_desktop"
+                                                                                                        width="125"
+                                                                                                        height="33">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div>
                                                                                                 <span class="fw-semibold">
-                                                                                                    {{ __('Logo Koperasi') }}
+                                                                                                    {{ __('Logo Koperasi (Desktop)') }}
                                                                                                 </span>
                                                                                                 <span
                                                                                                     class="fs-10 d-block text-muted">
-                                                                                                    {{ __('Desktop (125 x 33)') }}
+                                                                                                    (125 x 33)
                                                                                                 </span>
                                                                                                 <div class="mt-3">
                                                                                                     <input
@@ -252,18 +254,19 @@
                                                                                             <div
                                                                                                 class="mb-2 file-format-icon">
                                                                                                 <div class="text-center">
-                                                                                                    <img src="{{ url(config('common.path_storage') . (!empty($setting_system['company_logo_toggle']) ? $setting_system['company_logo_toggle'] : config('common.no_image')) ?? config('common.no_image')) }}"
-                                                                                                        class="rounded object-fit-cover img-fluid preview-path_image_company_logo_toggle"
-                                                                                                        alt="...">
+                                                                                                    <img src="{{ !empty($setting_system['company_logo_toggle']) ? url(config('common.path_storage') . $setting_system['company_logo_toggle']) : url(config('common.path_template_admin') . config('common.logo_company_toggle')) }}"
+                                                                                                        class="img-fluid rounded preview-path_image_company_logo_toggle"
+                                                                                                        width="38"
+                                                                                                        height="33">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div>
                                                                                                 <span class="fw-semibold">
-                                                                                                    {{ __('Logo Koperasi') }}
+                                                                                                    {{ __('Logo Koperasi (Toggle)') }}
                                                                                                 </span>
                                                                                                 <span
                                                                                                     class="fs-10 d-block text-muted">
-                                                                                                    {{ __('Toggle (35 x 33)') }}
+                                                                                                    (38 x 33)
                                                                                                 </span>
                                                                                                 <div class="mt-3">
                                                                                                     <input

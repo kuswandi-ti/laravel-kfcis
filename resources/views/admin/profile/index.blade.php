@@ -32,7 +32,7 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center">
-                            <p class="avatar avatar-xxxl avatar-rounded">
+                            {{-- <p class="avatar avatar-xxxl avatar-rounded">
                                 <img src="{{ url(config('common.path_storage') . (!empty(auth()->user()->image) ? auth()->user()->image : config('common.no_image')) ?? config('common.no_image')) }}"
                                     class="object-fit-cover preview-path_image">
                             </p>
@@ -41,6 +41,35 @@
                                 <input class="form-control" type="file" name="image"
                                     onchange="preview('.preview-path_image', this.files[0])">
                                 <input type="hidden" name="old_image" value="{{ $admin->image ?? '' }}">
+                            </div> --}}
+                            <div class="border shadow-none card custom-card border-dashed-primary">
+                                <div class="p-3 text-center card-body">
+                                    <a href="javascript:void(0);">
+                                        <div class="justify-content-between">
+                                            <div class="mb-2 file-format-icon">
+                                                <div class="text-center">
+                                                    <img src="{{ !empty(auth()->user()->image) ? url(config('common.path_storage') . auth()->user()->image) : url(config('common.path_template_admin') . config('common.image_user_profile_big')) }}"
+                                                        class="img-fluid rounded preview-path_image" width="150"
+                                                        height="175">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="fw-semibold">
+                                                    {{ __('Gambar Profil') }}
+                                                </span>
+                                                <span class="fs-10 d-block text-muted">
+                                                    (150 x 175)
+                                                </span>
+                                                <div class="mt-3">
+                                                    <input class="form-control" type="file" name="image"
+                                                        onchange="preview('.preview-path_image', this.files[0])">
+                                                    <input type="hidden" name="old_image"
+                                                        value="{{ auth()->user()->image ?? '' }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 

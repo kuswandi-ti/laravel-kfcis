@@ -15,8 +15,9 @@
                                 <div class="p-5 card-body rectangle3">
                                     <div class="text-center">
                                         <a href="{{ route('website.index') }}">
-                                            <img src="{{ url(config('common.path_storage') . (!empty($setting_system['company_logo']) ? $setting_system['company_logo'] : config('common.no_image')) ?? config('common.no_image')) }}"
-                                                alt="logo" class="desktop-dark" style="width: 60%">
+                                            <img src="{{ !empty($setting_system['company_logo']) ? url(config('common.path_storage') . $setting_system['company_logo']) : url(config('common.path_template_admin') . config('common.logo_company_main')) }}"
+                                                alt="logo" class="desktop-dark img-fluid rounded" width="200"
+                                                height="200">
                                         </a>
                                     </div>
                                     <h6 class="mt-4 fs-15 op-9 text-fixed-white">

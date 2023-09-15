@@ -492,8 +492,10 @@
                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <div class="d-sm-flex wd-100p">
-                            <div class="avatar avatar-sm"><img alt="avatar" class="rounded-circle"
-                                    src="{{ url(config('common.path_storage') . (!empty(auth()->user()->image) ? auth()->user()->image : config('common.no_image')) ?? config('common.no_image')) }}">
+                            <div class="avatar avatar-sm">
+                                <img alt="avatar" class="rounded-circle"
+                                    src="{{ !empty(auth()->user()->image) ? url(config('common.path_storage') . auth()->user()->image) : url(config('common.path_template_admin') . config('common.image_user_profile_small')) }}"
+                                    width="28" height="28">
                             </div>
                             <div class="my-auto ms-2 d-none d-xl-flex">
                                 <h6 class="mb-0 font-weight-semibold fs-13 user-name d-sm-block d-none">

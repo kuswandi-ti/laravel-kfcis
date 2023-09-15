@@ -43,7 +43,7 @@ class AdminDepartmentController extends Controller
     public function store(AdminDepartmentRequest $request)
     {
         $store = Department::create([
-            'name' => $request->name,
+            'name' => capitalAllWord($request->name),
             'slug' => Str::slug($request->name),
             'created_by' => auth()->user()->name,
         ]);
@@ -77,7 +77,7 @@ class AdminDepartmentController extends Controller
     public function update(Department $department, AdminDepartmentRequest $request)
     {
         $update = $department->update([
-            'name' => $request->name,
+            'name' => capitalAllWord($request->name),
             'slug' => Str::slug($request->name),
             'updated_by' => auth()->user()->name,
         ]);
