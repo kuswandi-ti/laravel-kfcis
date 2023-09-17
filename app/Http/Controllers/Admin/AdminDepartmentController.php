@@ -150,7 +150,7 @@ class AdminDepartmentController extends Controller
                 return '<h6><span class="badge bg-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</span></h6>';
             })
             ->addColumn('action', function ($query) {
-                if (canAccess(['department update'])) {
+                if (canAccess(['departemen update'])) {
                     $update = '
                         <li>
                             <a href="' . route('admin.department.edit', $query) . '" class="dropdown-item border-bottom">
@@ -160,7 +160,7 @@ class AdminDepartmentController extends Controller
                     ';
                 }
                 if ($query->status == 1) {
-                    if (canAccess(['department delete'])) {
+                    if (canAccess(['departemen delete'])) {
                         $delete = '
                             <li>
                                 <a href="' . route('admin.department.destroy', $query) . '" class="dropdown-item border-bottom delete_item">
@@ -170,7 +170,7 @@ class AdminDepartmentController extends Controller
                         ';
                     }
                 } else {
-                    if (canAccess(['department restore'])) {
+                    if (canAccess(['departemen restore'])) {
                         $restore = '
                             <li>
                                 <a href="' . route('admin.department.restore', $query) . '" class="dropdown-item border-bottom restore_item">
@@ -180,7 +180,7 @@ class AdminDepartmentController extends Controller
                         ';
                     }
                 }
-                if (canAccess(['department update', 'department delete', 'department restore'])) {
+                if (canAccess(['departemen update', 'departemen delete', 'departemen restore'])) {
                     return '<div class="dropdown ms-3">
                                 <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bx bx-dots-vertical-rounded fs-20"></i>

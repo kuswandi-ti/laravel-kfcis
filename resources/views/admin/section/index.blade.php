@@ -26,7 +26,7 @@
                             </p>
                         </div>
                     </div>
-                    @can('section create')
+                    @can('bagian create')
                         <div class="d-flex" role="search">
                             <a href="{{ route('admin.section.create') }}" class="btn btn-primary">
                                 {{ __('Baru') }}

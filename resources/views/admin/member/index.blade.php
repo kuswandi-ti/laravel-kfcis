@@ -227,7 +227,7 @@
                                     </a>
                                 @endcan
                             </div>
-                            <div class="dropdown contact-hover-dropdown">
+                            <div class="dropdown contact-hover-dropdown ms-2">
                                 <button aria-label="button"
                                     class="btn btn-sm btn-icon btn-primary btn-wave waves-effect waves-light"
                                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -248,6 +248,12 @@
                                             <a class="dropdown-item border-bottom" href="javascript:void(0);">
                                                 <i class="align-middle ri-checkbox-circle-line me-2 d-inline-block"></i>
                                                 {{ __('Menyetujui') }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item border-bottom" href="javascript:void(0);">
+                                                <i class="align-middle ri-close-circle-line me-2 d-inline-block"></i>
+                                                {{ __('Menolak') }}
                                             </a>
                                         </li>
                                         <li>

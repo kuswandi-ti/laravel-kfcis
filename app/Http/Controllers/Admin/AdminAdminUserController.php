@@ -59,6 +59,10 @@ class AdminAdminUserController extends Controller
             'account_number' => $request->account_number,
             'account_name' => $request->account_name,
             'start_work_date' => $request->start_work_date,
+            'simpanan_pokok' => $request->simpanan_pokok,
+            'simpanan_wajib' => $request->simpanan_wajib,
+            'simpanan_sukarela' => $request->simpanan_sukarela,
+            'simpanan_sukarela_tetap' => $request->simpanan_sukarela_tetap,
             'approved_at' => saveDateTimeNow(),
             'approved_by' => auth()->user()->name,
             'created_by' => auth()->user()->name,
@@ -112,6 +116,10 @@ class AdminAdminUserController extends Controller
             'account_number' => $request->account_number,
             'account_name' => $request->account_name,
             'start_work_date' => $request->start_work_date,
+            'simpanan_pokok' => $request->simpanan_pokok,
+            'simpanan_wajib' => $request->simpanan_wajib,
+            'simpanan_sukarela' => $request->simpanan_sukarela,
+            'simpanan_sukarela_tetap' => $request->simpanan_sukarela_tetap,
             'updated_by' => auth()->user()->name,
         ]);
 

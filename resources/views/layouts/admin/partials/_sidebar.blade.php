@@ -31,7 +31,7 @@
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
-                <li class="slide">
+                <li class="mb-4 slide">
                     <a href="{{ route('admin.dashboard.index') }}"
                         class="side-menu__item {{ setSidebarActive(['admin.dashboard.*']) }}">
                         <span class=" side-menu__icon">
@@ -43,13 +43,27 @@
                 <!-- End::slide -->
 
                 <!-- Start::slide__category -->
-                @if (canAccess(['department index', 'section index', 'product index', 'pengurus index', 'anggota index']))
+                @if (canAccess(['departemen index', 'bagian index', 'barang penjualan index', 'pengurus index', 'anggota index']))
                     <li class="slide__category"><span class="category-name">{{ __('Data Utama') }}</span></li>
                 @endif
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
-                @if (canAccess(['department index']))
+                @if (canAccess(['coa index']))
+                    <li class="slide {{ setSidebarActive(['admin.department.*']) }}">
+                        <a href="{{ route('admin.department.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.department.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-grid-alt'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Chart of Account') }}</span>
+                        </a>
+                    </li>
+                @endif
+                <!-- End::slide -->
+
+                <!-- Start::slide -->
+                @if (canAccess(['departemen index']))
                     <li class="slide {{ setSidebarActive(['admin.department.*']) }}">
                         <a href="{{ route('admin.department.index') }}"
                             class="side-menu__item {{ setSidebarActive(['admin.department.*']) }}">
@@ -60,7 +74,7 @@
                         </a>
                     </li>
                 @endif
-                @if (canAccess(['section index']))
+                @if (canAccess(['bagian index']))
                     <li class="slide {{ setSidebarActive(['admin.section.*']) }}">
                         <a href="{{ route('admin.section.index') }}"
                             class="side-menu__item {{ setSidebarActive(['admin.section.*']) }}">
@@ -71,7 +85,7 @@
                         </a>
                     </li>
                 @endif
-                @if (canAccess(['product index']))
+                @if (canAccess(['barang penjualan index']))
                     <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
                         <a href="{{ route('admin.product.index') }}"
                             class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
@@ -84,7 +98,7 @@
                 @endif
                 @if (canAccess(['pengurus index', 'anggota index']))
                     <li
-                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        class="mb-4 slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
                         <a href="javascript:void(0);"
                             class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
                             <span class=" side-menu__icon">
@@ -119,6 +133,195 @@
                 <!-- End::slide -->
 
                 <!-- Start::slide__category -->
+                @if (canAccess([
+                        'setor tabungan index',
+                        'tarik tabungan index',
+                        'pinjaman reguler index',
+                        'pinjaman pendanaan index',
+                        'pinjaman sosial index',
+                        'penjualan index',
+                    ]))
+                    <li class="slide__category"><span class="category-name">{{ __('Input Data') }}</span></li>
+                @endif
+                <!-- End::slide__category -->
+
+                <!-- Start::slide -->
+                @if (canAccess(['penjualan index']))
+                    <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
+                        <a href="{{ route('admin.product.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-store'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Penjualan') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if (canAccess(['setor tabungan index', 'tarik tabungan index']))
+                    <li
+                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        <a href="javascript:void(0);"
+                            class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <span class=" side-menu__icon">
+                                <i class='bx bx-wallet'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Tabungan') }}</span>
+                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                        </a>
+                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <li class="slide side-menu__label1">
+                                <a href="javascript:void(0)">{{ __('Tabungan') }}</a>
+                            </li>
+                            @if (canAccess(['setor tabungan index']))
+                                <li class="slide {{ setSidebarActive(['admin.admin.*']) }}">
+                                    <a href="{{ route('admin.admin.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.admin.*']) }}">
+                                        {{ __('Setor Tabungan') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canAccess(['tarik tabungan index']))
+                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
+                                    <a href="{{ route('admin.member.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                        {{ __('Tarik Tabungan') }}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endcan
+                @if (canAccess(['pinjaman reguler index', 'pinjaman pendanaan index', 'pinjaman sosial index']))
+                    <li
+                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        <a href="javascript:void(0);"
+                            class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <span class=" side-menu__icon">
+                                <i class='bx bx-dollar-circle'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Pinjaman') }}</span>
+                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                        </a>
+                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <li class="slide side-menu__label1">
+                                <a href="javascript:void(0)">{{ __('Pinjaman') }}</a>
+                            </li>
+                            @if (canAccess(['pinjaman reguler index']))
+                                <li class="slide {{ setSidebarActive(['admin.admin.*']) }}">
+                                    <a href="{{ route('admin.admin.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.admin.*']) }}">
+                                        {{ __('Reguler') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canAccess(['pinjaman pendanaan index']))
+                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
+                                    <a href="{{ route('admin.member.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                        {{ __('Pendanaan') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canAccess(['pinjaman sosial index']))
+                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
+                                    <a href="{{ route('admin.member.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                        {{ __('Sosial') }}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+                <!-- End::slide -->
+
+                <!-- Start::slide__category -->
+                @if (canAccess(['setor tabungan approve']))
+                    <li class="mt-4 slide__category"><span class="category-name">{{ __('Approve Data') }}</span>
+                    </li>
+                @endif
+                <!-- End::slide__category -->
+
+                <!-- Start::slide -->
+                @if (canAccess(['anggota approve']))
+                    <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
+                        <a href="{{ route('admin.product.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-check-square'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Anggota Baru') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if (canAccess(['setor tabungan approve']))
+                    <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
+                        <a href="{{ route('admin.product.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-check-square'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Setor Tabungan') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if (canAccess(['pinjaman reguler approve', 'pinjaman pendanaan approve', 'pinjaman sosial approve']))
+                    <li
+                        class="mb-4 slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        <a href="javascript:void(0);"
+                            class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <span class=" side-menu__icon">
+                                <i class='bx bx-check-square'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Pinjaman') }}</span>
+                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                        </a>
+                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <li class="slide side-menu__label1">
+                                <a href="javascript:void(0)">{{ __('Pinjaman') }}</a>
+                            </li>
+                            @if (canAccess(['pinjaman reguler approve']))
+                                <li class="slide {{ setSidebarActive(['admin.admin.*']) }}">
+                                    <a href="{{ route('admin.admin.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.admin.*']) }}">
+                                        {{ __('Reguler') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canAccess(['pinjaman pendanaan approve']))
+                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
+                                    <a href="{{ route('admin.member.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                        {{ __('Pendanaan') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canAccess(['pinjaman sosial approve']))
+                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
+                                    <a href="{{ route('admin.member.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                        {{ __('Sosial') }}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+                <!-- End::slide -->
+
+                <!-- Start::slide__category -->
+                @if (canAccess(['role index', 'permission index', 'setting system']))
+                    <li class="slide__category"><span class="category-name">{{ __('Posting Data') }}</span></li>
+                @endif
+                <!-- End::slide__category -->
+
+                <!-- Start::slide__category -->
+                @if (canAccess(['role index', 'permission index', 'setting system']))
+                    <li class="slide__category"><span class="category-name">{{ __('Laporan') }}</span></li>
+                @endif
+                <!-- End::slide__category -->
+
+                <!-- Start::slide__category -->
                 @if (canAccess(['role index', 'permission index', 'setting system']))
                     <li class="slide__category"><span class="category-name">{{ __('Pengaturan') }}</span></li>
                 @endif
@@ -136,7 +339,8 @@
                             <span class="side-menu__label">{{ __('Roles & Permissions') }}</span>
                             <i class="fe fe-chevron-right side-menu__angle"></i>
                         </a>
-                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
+                        <ul
+                            class="slide-menu child1 {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
                             <li class="slide side-menu__label1">
                                 <a href="javascript:void(0)">{{ __('Roles & Permissions') }}</a>
                             </li>
@@ -160,7 +364,7 @@
                     </li>
                 @endif
                 @if (canAccess(['setting system']))
-                    <li class="slide {{ setSidebarActive(['admin.setting.*']) }}">
+                    <li class="mb-4 slide {{ setSidebarActive(['admin.setting.*']) }}">
                         <a href="{{ route('admin.setting.index') }}"
                             class="side-menu__item {{ setSidebarActive(['admin.setting.*']) }}">
                             <span class="side-menu__icon">
@@ -171,760 +375,17 @@
                     </li>
                 @endif
                 <!-- End::slide -->
+        </ul>
+        <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
+                width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z">
+                </path>
+            </svg></div>
+    </nav>
+    <!-- End::nav -->
 
-                <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">Pages</span></li>
-                <!-- End::slide__category -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-food-menu'></i>
-                        </span>
-                        <span class="side-menu__label">Pages</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Pages</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Blog
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="blog.html" class="side-menu__item">Blog</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="blog-details.html" class="side-menu__item">Blog Details</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="blog-create.html" class="side-menu__item">Create Blog</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a href="chat.html" class="side-menu__item">Chat</a>
-                        </li>
-                        <li class="slide">
-                            <a href="contacts.html" class="side-menu__item">Contacts</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Ecommerce
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="add-products.html" class="side-menu__item">Add Products</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="cart.html" class="side-menu__item">Cart</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="checkout.html" class="side-menu__item">Checkout</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="edit-products.html" class="side-menu__item">Edit Products</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="orders.html" class="side-menu__item">Orders</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="order-details.html" class="side-menu__item">Order Details</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="products.html" class="side-menu__item">Products</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="product-details.html" class="side-menu__item">Product
-                                        Details</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="products-list.html" class="side-menu__item">Products List</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="wishlist.html" class="side-menu__item">Wishlist</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Email
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="mail.html" class="side-menu__item">Mail App</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="mail-chat.html" class="side-menu__item">Mail-chat</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="mail-settings.html" class="side-menu__item">Mail Settings</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a href="empty.html" class="side-menu__item">Empty</a>
-                        </li>
-                        <li class="slide">
-                            <a href="faq's.html" class="side-menu__item">FAQ's</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">File Manager
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="file-manager.html" class="side-menu__item">File Manager</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="file-details.html" class="side-menu__item">File Details</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Invoice
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="invoice-create.html" class="side-menu__item">Create Invoice</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="invoice-details.html" class="side-menu__item">Invoice
-                                        Details</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="invoice-list.html" class="side-menu__item">Invoice List</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Timeline
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="timeline.html" class="side-menu__item">Timeline-1</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="timeline2.html" class="side-menu__item">Timeline-2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a href="landing.html" class="side-menu__item">Landing</a>
-                        </li>
-                        <li class="slide">
-                            <a href="notifications.html" class="side-menu__item">Notifications</a>
-                        </li>
-                        <li class="slide">
-                            <a href="pricing.html" class="side-menu__item">Pricing</a>
-                        </li>
-                        <li class="slide">
-                            <a href="profile.html" class="side-menu__item">Profile</a>
-                        </li>
-                        <li class="slide">
-                            <a href="reviews.html" class="side-menu__item">Reviews</a>
-                        </li>
-                        <li class="slide">
-                            <a href="team.html" class="side-menu__item">Team</a>
-                        </li>
-                        <li class="slide">
-                            <a href="terms_conditions.html" class="side-menu__item">Terms & Conditions</a>
-                        </li>
-                        <li class="slide">
-                            <a href="to-do-list.html" class="side-menu__item">To Do List</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-magnet'></i>
-                        </span>
-                        <span class="side-menu__label">Utilities</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Utilities</a>
-                        </li>
-                        <li class="slide">
-                            <a href="avatars.html" class="side-menu__item">Avatars</a>
-                        </li>
-                        <li class="slide">
-                            <a href="borders.html" class="side-menu__item">Borders</a>
-                        </li>
-                        <li class="slide">
-                            <a href="breakpoints.html" class="side-menu__item">Breakpoints</a>
-                        </li>
-                        <li class="slide">
-                            <a href="colors.html" class="side-menu__item">Colors</a>
-                        </li>
-                        <li class="slide">
-                            <a href="columns.html" class="side-menu__item">Columns</a>
-                        </li>
-                        <li class="slide">
-                            <a href="flex.html" class="side-menu__item">Flex</a>
-                        </li>
-                        <li class="slide">
-                            <a href="gutters.html" class="side-menu__item">Gutters</a>
-                        </li>
-                        <li class="slide">
-                            <a href="helpers.html" class="side-menu__item">Helpers</a>
-                        </li>
-                        <li class="slide">
-                            <a href="position.html" class="side-menu__item">Position</a>
-                        </li>
-                        <li class="slide">
-                            <a href="more.html" class="side-menu__item">Additional Content</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-lock-alt'></i>
-                        </span>
-                        <span class="side-menu__label">Authentication</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Authentication</a>
-                        </li>
-                        <li class="slide">
-                            <a href="coming-soon.html" class="side-menu__item">Coming Soon</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Create Password
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="create-password-basic.html" class="side-menu__item">Basic</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="create-password-cover.html" class="side-menu__item">Cover</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="create-password-cover2.html" class="side-menu__item">Cover2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Lock Screen
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="lockscreen-basic.html" class="side-menu__item">Basic</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="lockscreen-cover.html" class="side-menu__item">Cover</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="lockscreen-cover2.html" class="side-menu__item">Cover2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Reset Password
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="reset-password-basic.html" class="side-menu__item">Basic</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="reset-password-cover.html" class="side-menu__item">Cover</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="reset-password-cover2.html" class="side-menu__item">Cover2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Sign Up
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="sign-up-basic.html" class="side-menu__item">Basic</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="sign-up-cover.html" class="side-menu__item">Cover</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="sign-up-cover2.html" class="side-menu__item">Cover2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Sign In
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="sign-in-basic.html" class="side-menu__item">Basic</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="sign-in-cover.html" class="side-menu__item">Cover</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="sign-in-cover2.html" class="side-menu__item">Cover2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Two Step Verification
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="two-step-verification-basic.html" class="side-menu__item">Basic</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="two-step-verification-cover.html" class="side-menu__item">Cover</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="two-step-verification-cover2.html" class="side-menu__item">Cover2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a href="under-maintenance.html" class="side-menu__item">Under Maintenance</a>
-                        </li>
-                        <li class="slide">
-                            <a href="no-internet.html" class="side-menu__item">no-internet</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-error-alt'></i>
-                        </span>
-                        <span class="side-menu__label">Error</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Error</a>
-                        </li>
-                        <li class="slide">
-                            <a href="401-error.html" class="side-menu__item">401 - Error</a>
-                        </li>
-                        <li class="slide">
-                            <a href="404-error.html" class="side-menu__item">404 - Error</a>
-                        </li>
-                        <li class="slide">
-                            <a href="500-error.html" class="side-menu__item">500 - Error</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-carousel'></i>
-                        </span>
-                        <span class="side-menu__label">Apps</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Apps</a>
-                        </li>
-                        <li class="slide">
-                            <a href="full-calendar.html" class="side-menu__item">Full Calendar</a>
-                        </li>
-                        <li class="slide">
-                            <a href="gallery.html" class="side-menu__item">Gallery</a>
-                        </li>
-                        <li class="slide">
-                            <a href="sweet_alerts.html" class="side-menu__item">Sweet Alerts</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide">
-                    <a href="icons.html" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-smile'></i>
-                        </span>
-                        <span class="side-menu__label">Icons</span>
-                    </a>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide">
-                    <a href="widgets.html" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-layout'></i>
-                        </span>
-                        <span class="side-menu__label">Widgets<span
-                                class="badge bg-danger-transparent ms-2 d-inline-block">Hot</span></span>
-                    </a>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">Web Apps</span></li>
-                <!-- End::slide__category -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-underline'></i>
-                        </span>
-                        <span class="side-menu__label">Ui Elements</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1 mega-menu">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Ui Elements</a>
-                        </li>
-                        <li class="slide">
-                            <a href="alerts.html" class="side-menu__item">Alerts</a>
-                        </li>
-                        <li class="slide">
-                            <a href="badge.html" class="side-menu__item">Badge</a>
-                        </li>
-                        <li class="slide">
-                            <a href="breadcrumb.html" class="side-menu__item">Breadcrumb</a>
-                        </li>
-                        <li class="slide">
-                            <a href="buttons.html" class="side-menu__item">Buttons</a>
-                        </li>
-                        <li class="slide">
-                            <a href="buttongroup.html" class="side-menu__item">Button Group</a>
-                        </li>
-                        <li class="slide">
-                            <a href="cards.html" class="side-menu__item">Cards</a>
-                        </li>
-                        <li class="slide">
-                            <a href="dropdowns.html" class="side-menu__item">Dropdowns</a>
-                        </li>
-                        <li class="slide">
-                            <a href="images_figures.html" class="side-menu__item">Images & Figures</a>
-                        </li>
-                        <li class="slide">
-                            <a href="listgroup.html" class="side-menu__item">List Group</a>
-                        </li>
-                        <li class="slide">
-                            <a href="navs_tabs.html" class="side-menu__item">Navs & Tabs</a>
-                        </li>
-                        <li class="slide">
-                            <a href="object-fit.html" class="side-menu__item">Object Fit</a>
-                        </li>
-                        <li class="slide">
-                            <a href="pagination.html" class="side-menu__item">Pagination</a>
-                        </li>
-                        <li class="slide">
-                            <a href="popovers.html" class="side-menu__item">Popovers</a>
-                        </li>
-                        <li class="slide">
-                            <a href="progress.html" class="side-menu__item">Progress</a>
-                        </li>
-                        <li class="slide">
-                            <a href="spinners.html" class="side-menu__item">Spinners</a>
-                        </li>
-                        <li class="slide">
-                            <a href="toasts.html" class="side-menu__item">Toasts</a>
-                        </li>
-                        <li class="slide">
-                            <a href="tooltips.html" class="side-menu__item">Tooltips</a>
-                        </li>
-                        <li class="slide">
-                            <a href="typography.html" class="side-menu__item">Typography</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-menu'></i>
-                        </span>
-                        <span class="side-menu__label">Nested Menu</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Nested Menu</a>
-                        </li>
-                        <li class="slide">
-                            <a href="javascript:void(0);" class="side-menu__item">Nested-1</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Nested-2
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="javascript:void(0);" class="side-menu__item">Nested-2-1</a>
-                                </li>
-                                <li class="slide has-sub">
-                                    <a href="javascript:void(0);" class="side-menu__item">Nested-2-2
-                                        <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                                    <ul class="slide-menu child3">
-                                        <li class="slide">
-                                            <a href="javascript:void(0);" class="side-menu__item">Nested-2-2-1</a>
-                                        </li>
-                                        <li class="slide">
-                                            <a href="javascript:void(0);" class="side-menu__item">Nested-2-2-2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">Maps & Charts</span></li>
-                <!-- End::slide__category -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-map-pin'></i>
-                        </span>
-                        <span class="side-menu__label">Maps</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Maps</a>
-                        </li>
-                        <li class="slide">
-                            <a href="google-maps.html" class="side-menu__item">Google Maps</a>
-                        </li>
-                        <li class="slide">
-                            <a href="leaflet-maps.html" class="side-menu__item">Leaflet Maps</a>
-                        </li>
-                        <li class="slide">
-                            <a href="vector-maps.html" class="side-menu__item">Vector Maps</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-scatter-chart'></i>
-                        </span>
-                        <span class="side-menu__label">Charts</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Charts</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Apex Charts
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="apex-line-charts.html" class="side-menu__item">Line Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-area-charts.html" class="side-menu__item">Area Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-column-charts.html" class="side-menu__item">Column
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-bar-charts.html" class="side-menu__item">Bar Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-mixed-charts.html" class="side-menu__item">Mixed
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-rangearea-charts.html" class="side-menu__item">Range Area
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-timeline-charts.html" class="side-menu__item">Timeline
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-candlestick-charts.html" class="side-menu__item">CandleStick
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-boxplot-charts.html" class="side-menu__item">Boxplot
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-bubble-charts.html" class="side-menu__item">Bubble
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-scatter-charts.html" class="side-menu__item">Scatter
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-heatmap-charts.html" class="side-menu__item">Heatmap
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-treemap-charts.html" class="side-menu__item">Treemap
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-pie-charts.html" class="side-menu__item">Pie Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-radialbar-charts.html" class="side-menu__item">Radialbar
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-radar-charts.html" class="side-menu__item">Radar
-                                        Charts</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="apex-polararea-charts.html" class="side-menu__item">Polararea
-                                        Charts</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a href="chartjs-Charts.html" class="side-menu__item">Chartjs Charts</a>
-                        </li>
-                        <li class="slide">
-                            <a href="echarts.html" class="side-menu__item">Echart Charts</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">Forms & Tables </span></li>
-                <!-- End::slide__category -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-file'></i>
-                        </span>
-                        <span class="side-menu__label">Forms</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Forms</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Form Elements
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="form_inputs.html" class="side-menu__item">Inputs</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="form_check_radios.html" class="side-menu__item">Checks &
-                                        Radios</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="form_input_group.html" class="side-menu__item">Input Group</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="form_select.html" class="side-menu__item">Form Select</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="form_range.html" class="side-menu__item">Range Slider</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="form_input_masks.html" class="side-menu__item">Input Masks</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="form_file_uploads.html" class="side-menu__item">File
-                                        Uploads</a>
-                                </li>
-                                <li class="slide">
-                                    <a href="form_dateTime_pickers.html" class="side-menu__item">Date,color
-                                        Picker</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a href="floating_labels.html" class="side-menu__item">Floating Labels</a>
-                        </li>
-                        <li class="slide">
-                            <a href="form_layout.html" class="side-menu__item">Form Layouts</a>
-                        </li>
-                        <li class="slide has-sub">
-                            <a href="javascript:void(0);" class="side-menu__item">Form Editors
-                                <i class="fe fe-chevron-right side-menu__angle"></i></a>
-                            <ul class="slide-menu child2">
-                                <li class="slide">
-                                    <a href="quill_editor.html" class="side-menu__item">Quill Editor</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="slide">
-                            <a href="form_validation.html" class="side-menu__item">Validation</a>
-                        </li>
-                        <li class="slide">
-                            <a href="form_select2.html" class="side-menu__item">Select2</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bx-table'></i>
-                        </span>
-                        <span class="side-menu__label">Tables<span
-                                class="badge bg-success-transparent ms-2 d-inline-block">3</span></span>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">Tables</a>
-                        </li>
-                        <li class="slide">
-                            <a href="tables.html" class="side-menu__item">Tables</a>
-                        </li>
-                        <li class="slide">
-                            <a href="grid-tables.html" class="side-menu__item">Grid JS Tables</a>
-                        </li>
-                        <li class="slide">
-                            <a href="data-tables.html" class="side-menu__item">Data Tables</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End::slide -->
-            </ul>
-            <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
-                    width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z">
-                    </path>
-                </svg></div>
-        </nav>
-        <!-- End::nav -->
-
-    </div>
-    <!-- End::main-sidebar -->
+</div>
+<!-- End::main-sidebar -->
 
 </aside>
 <!-- End::app-sidebar -->

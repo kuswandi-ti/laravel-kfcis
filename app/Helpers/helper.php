@@ -1,11 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use App\Models\Setting;
 use Illuminate\Support\Str;
-use App\Models\SettingMember;
 use App\Models\SettingSystem;
-use Illuminate\Support\Facades\Auth;
 
 function setSidebarActive(array $routes): ?string
 {
@@ -47,21 +44,26 @@ function capitalFirstLetter(string $text = null): ?string
 function getArrayAllPermission()
 {
     return [
-        ['guard_name' => 'web', 'name' => 'department create', 'group_name' => 'Departemen Permission'],
-        ['guard_name' => 'web', 'name' => 'department delete', 'group_name' => 'Departemen Permission'],
-        ['guard_name' => 'web', 'name' => 'department index', 'group_name' => 'Departemen Permission'],
-        ['guard_name' => 'web', 'name' => 'department restore', 'group_name' => 'Departemen Permission'],
-        ['guard_name' => 'web', 'name' => 'department update', 'group_name' => 'Departemen Permission'],
-        ['guard_name' => 'web', 'name' => 'section create', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section delete', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section index', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section restore', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section update', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'product create', 'group_name' => 'Barang Penjualan Permission'],
-        ['guard_name' => 'web', 'name' => 'product delete', 'group_name' => 'Barang Penjualan Permission'],
-        ['guard_name' => 'web', 'name' => 'product index', 'group_name' => 'Barang Penjualan Permission'],
-        ['guard_name' => 'web', 'name' => 'product restore', 'group_name' => 'Barang Penjualan Permission'],
-        ['guard_name' => 'web', 'name' => 'product update', 'group_name' => 'Barang Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'coa create', 'group_name' => 'Chart of Account Permission'],
+        ['guard_name' => 'web', 'name' => 'coa delete', 'group_name' => 'Chart of Account Permission'],
+        ['guard_name' => 'web', 'name' => 'coa index', 'group_name' => 'Chart of Account Permission'],
+        ['guard_name' => 'web', 'name' => 'coa restore', 'group_name' => 'Chart of Account Permission'],
+        ['guard_name' => 'web', 'name' => 'coa update', 'group_name' => 'Chart of Account Permission'],
+        ['guard_name' => 'web', 'name' => 'departemen create', 'group_name' => 'Departemen Permission'],
+        ['guard_name' => 'web', 'name' => 'departemen delete', 'group_name' => 'Departemen Permission'],
+        ['guard_name' => 'web', 'name' => 'departemen index', 'group_name' => 'Departemen Permission'],
+        ['guard_name' => 'web', 'name' => 'departemen restore', 'group_name' => 'Departemen Permission'],
+        ['guard_name' => 'web', 'name' => 'departemen update', 'group_name' => 'Departemen Permission'],
+        ['guard_name' => 'web', 'name' => 'bagian create', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'bagian delete', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'bagian index', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'bagian restore', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'bagian update', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'barang penjualan create', 'group_name' => 'Barang Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'barang penjualan delete', 'group_name' => 'Barang Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'barang penjualan index', 'group_name' => 'Barang Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'barang penjualan restore', 'group_name' => 'Barang Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'barang penjualan update', 'group_name' => 'Barang Penjualan Permission'],
         ['guard_name' => 'web', 'name' => 'pengurus create', 'group_name' => 'Pengurus Permission'],
         ['guard_name' => 'web', 'name' => 'pengurus delete', 'group_name' => 'Pengurus Permission'],
         ['guard_name' => 'web', 'name' => 'pengurus index', 'group_name' => 'Pengurus Permission'],
@@ -81,6 +83,38 @@ function getArrayAllPermission()
         ['guard_name' => 'web', 'name' => 'permission delete', 'group_name' => 'Permission Permission'],
         ['guard_name' => 'web', 'name' => 'permission index', 'group_name' => 'Permission Permission'],
         ['guard_name' => 'web', 'name' => 'permission update', 'group_name' => 'Permission Permission'],
+        ['guard_name' => 'web', 'name' => 'tabungan create', 'group_name' => 'Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'tabungan delete', 'group_name' => 'Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'tabungan index', 'group_name' => 'Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'tabungan update', 'group_name' => 'Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'setor tabungan approve', 'group_name' => 'Setor Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'setor tabungan create', 'group_name' => 'Setor Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'setor tabungan delete', 'group_name' => 'Setor Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'setor tabungan index', 'group_name' => 'Setor Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'setor tabungan update', 'group_name' => 'Setor Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'tarik tabungan create', 'group_name' => 'Tarik Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'tarik tabungan delete', 'group_name' => 'Tarik Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'tarik tabungan index', 'group_name' => 'Tarik Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'tarik tabungan update', 'group_name' => 'Tarik Tabungan Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman reguler approve', 'group_name' => 'Pinjaman Reguler Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman reguler create', 'group_name' => 'Pinjaman Reguler Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman reguler delete', 'group_name' => 'Pinjaman Reguler Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman reguler index', 'group_name' => 'Pinjaman Reguler Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman reguler update', 'group_name' => 'Pinjaman Reguler Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman pendanaan approve', 'group_name' => 'Pinjaman Pendanaan Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman pendanaan create', 'group_name' => 'Pinjaman Pendanaan Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman pendanaan delete', 'group_name' => 'Pinjaman Pendanaan Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman pendanaan index', 'group_name' => 'Pinjaman Pendanaan Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman pendanaan update', 'group_name' => 'Pinjaman Pendanaan Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman sosial approve', 'group_name' => 'Pinjaman Sosial Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman sosial create', 'group_name' => 'Pinjaman Sosial Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman sosial delete', 'group_name' => 'Pinjaman Sosial Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman sosial index', 'group_name' => 'Pinjaman Sosial Permission'],
+        ['guard_name' => 'web', 'name' => 'pinjaman sosial update', 'group_name' => 'Pinjaman Sosial Permission'],
+        ['guard_name' => 'web', 'name' => 'penjualan create', 'group_name' => 'Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'penjualan delete', 'group_name' => 'Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'penjualan index', 'group_name' => 'Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'penjualan update', 'group_name' => 'Penjualan Permission'],
         ['guard_name' => 'web', 'name' => 'setting system', 'group_name' => 'Setting System Permission'],
     ];
 }
@@ -88,11 +122,11 @@ function getArrayAllPermission()
 function setArrayRoleKetuaPermission()
 {
     return [
-        'department create',
-        'department delete',
-        'department index',
-        'department restore',
-        'department update',
+        'departemen create',
+        'departemen delete',
+        'departemen index',
+        'departemen restore',
+        'departemen update',
         'setting system',
     ];
 }
@@ -100,11 +134,11 @@ function setArrayRoleKetuaPermission()
 function setArrayRoleBendaharaPermission()
 {
     return [
-        'section create',
-        'section delete',
-        'section index',
-        'section restore',
-        'section update',
+        'bagian create',
+        'bagian delete',
+        'bagian index',
+        'bagian restore',
+        'bagian update',
     ];
 }
 

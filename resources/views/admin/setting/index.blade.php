@@ -175,7 +175,7 @@
                                                                                                 class="mb-2 file-format-icon">
                                                                                                 <div class="text-center">
                                                                                                     <img src="{{ !empty($setting_system['company_logo']) ? url(config('common.path_storage') . $setting_system['company_logo']) : url(config('common.path_template_admin') . config('common.logo_company_main')) }}"
-                                                                                                        class="img-fluid rounded preview-path_image_company_logo"
+                                                                                                        class="rounded img-fluid preview-path_image_company_logo"
                                                                                                         width="200"
                                                                                                         height="200">
                                                                                                 </div>
@@ -215,7 +215,7 @@
                                                                                                 class="mb-2 file-format-icon">
                                                                                                 <div class="text-center">
                                                                                                     <img src="{{ !empty($setting_system['company_logo_desktop']) ? url(config('common.path_storage') . $setting_system['company_logo_desktop']) : url(config('common.path_template_admin') . config('common.logo_company_desktop')) }}"
-                                                                                                        class="img-fluid rounded preview-path_image_company_logo_desktop"
+                                                                                                        class="rounded img-fluid preview-path_image_company_logo_desktop"
                                                                                                         width="125"
                                                                                                         height="33">
                                                                                                 </div>
@@ -255,7 +255,7 @@
                                                                                                 class="mb-2 file-format-icon">
                                                                                                 <div class="text-center">
                                                                                                     <img src="{{ !empty($setting_system['company_logo_toggle']) ? url(config('common.path_storage') . $setting_system['company_logo_toggle']) : url(config('common.path_template_admin') . config('common.logo_company_toggle')) }}"
-                                                                                                        class="img-fluid rounded preview-path_image_company_logo_toggle"
+                                                                                                        class="rounded img-fluid preview-path_image_company_logo_toggle"
                                                                                                         width="38"
                                                                                                         height="33">
                                                                                                 </div>
@@ -323,8 +323,8 @@
                                                                 </div>
                                                                 <div class="col-xl-9">
                                                                     <div class="input-group">
-                                                                        <input type="text"
-                                                                            class="form-control @error('jasa_pinjaman_reguler') is-invalid @enderror"
+                                                                        <input type="number"
+                                                                            class="form-control default-number @error('jasa_pinjaman_reguler') is-invalid @enderror"
                                                                             name="jasa_pinjaman_reguler"
                                                                             id="jasa_pinjaman_reguler"
                                                                             value="{{ old('jasa_pinjaman_reguler') ?? (!empty($setting_system['jasa_pinjaman_reguler']) ? $setting_system['jasa_pinjaman_reguler'] : '0') }}"
@@ -351,8 +351,8 @@
                                                                 </div>
                                                                 <div class="col-xl-9">
                                                                     <div class="input-group">
-                                                                        <input type="text"
-                                                                            class="form-control @error('jasa_pinjaman_pendanaan') is-invalid @enderror"
+                                                                        <input type="number"
+                                                                            class="form-control default-number @error('jasa_pinjaman_pendanaan') is-invalid @enderror"
                                                                             name="jasa_pinjaman_pendanaan"
                                                                             id="jasa_pinjaman_pendanaan"
                                                                             value="{{ old('jasa_pinjaman_pendanaan') ?? (!empty($setting_system['jasa_pinjaman_pendanaan']) ? $setting_system['jasa_pinjaman_pendanaan'] : '0') }}"
@@ -379,8 +379,8 @@
                                                                 </div>
                                                                 <div class="col-xl-9">
                                                                     <div class="input-group">
-                                                                        <input type="text"
-                                                                            class="form-control @error('jasa_pinjaman_sosial') is-invalid @enderror"
+                                                                        <input type="number"
+                                                                            class="form-control default-number @error('jasa_pinjaman_sosial') is-invalid @enderror"
                                                                             name="jasa_pinjaman_sosial"
                                                                             id="jasa_pinjaman_sosial"
                                                                             value="{{ old('jasa_pinjaman_sosial') ?? (!empty($setting_system['jasa_pinjaman_sosial']) ? $setting_system['jasa_pinjaman_sosial'] : '0') }}"
@@ -418,3 +418,26 @@
 @endsection
 
 <x-web-sweet-alert />
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $(".default-number").keyup(
+                function() {
+                    var jasa_pinjaman_reguler = $("#jasa_pinjaman_reguler").val();
+                    var jasa_pinjaman_pendanaan = $("#jasa_pinjaman_pendanaan").val();
+                    var jasa_pinjaman_sosial = $("#jasa_pinjaman_sosial").val();
+
+                    if (jasa_pinjaman_reguler.length == 0) {
+                        $("#jasa_pinjaman_reguler").val(0);
+                    }
+                    if (jasa_pinjaman_pendanaan.length == 0) {
+                        $("#jasa_pinjaman_pendanaan").val(0);
+                    }
+                    if (jasa_pinjaman_sosial.length == 0) {
+                        $("#jasa_pinjaman_sosial").val(0);
+                    }
+                });
+        });
+    </script>
+@endpush

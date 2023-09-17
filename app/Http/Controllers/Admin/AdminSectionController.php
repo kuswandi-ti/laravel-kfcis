@@ -157,7 +157,7 @@ class AdminSectionController extends Controller
                 return '<h6><span class="badge bg-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</span></h6>';
             })
             ->addColumn('action', function ($query) {
-                if (canAccess(['section update'])) {
+                if (canAccess(['bagian update'])) {
                     $update = '
                         <li>
                             <a href="' . route('admin.section.edit', $query) . '" class="dropdown-item border-bottom">
@@ -167,7 +167,7 @@ class AdminSectionController extends Controller
                     ';
                 }
                 if ($query->status == 1) {
-                    if (canAccess(['section delete'])) {
+                    if (canAccess(['bagian delete'])) {
                         $delete = '
                             <li>
                                 <a href="' . route('admin.section.destroy', $query) . '" class="dropdown-item border-bottom delete_item">
@@ -177,7 +177,7 @@ class AdminSectionController extends Controller
                         ';
                     }
                 } else {
-                    if (canAccess(['section restore'])) {
+                    if (canAccess(['bagian restore'])) {
                         $restore = '
                             <li>
                                 <a href="' . route('admin.section.restore', $query) . '" class="dropdown-item border-bottom restore_item">
@@ -187,7 +187,7 @@ class AdminSectionController extends Controller
                         ';
                     }
                 }
-                if (canAccess(['section update', 'section delete', 'section restore'])) {
+                if (canAccess(['bagian update', 'bagian delete', 'bagian restore'])) {
                     return '<div class="dropdown ms-3">
                                 <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bx bx-dots-vertical-rounded fs-20"></i>

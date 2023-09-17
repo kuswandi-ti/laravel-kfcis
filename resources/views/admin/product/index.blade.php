@@ -50,7 +50,7 @@
                         <a href="{{ route('admin.product.index') }}" class="btn btn-secondary ms-2">
                             {{ __('Refresh') }}
                         </a>
-                        @can('product create')
+                        @can('barang penjualan create')
                             <a href="{{ route('admin.product.create') }}" class="btn btn-primary ms-2">
                                 {{ __('Baru') }}
                             </a>
@@ -108,7 +108,7 @@
                                             <span
                                                 class="badge bg-{{ setStatusBadge($product->status) }}">{{ setStatusText($product->status) }}</span>
                                             <div class="mt-4 text-center">
-                                                @can('product update')
+                                                @can('barang penjualan update')
                                                     <a href="{{ route('admin.product.edit', $product) }}"
                                                         class="btn btn-sm btn-info-light me-1" data-bs-toggle="tooltip"
                                                         data-bs-placement="bottom"
@@ -117,7 +117,7 @@
                                                     </a>
                                                 @endcan
                                                 @if ($product->status == 1)
-                                                    @can('product delete')
+                                                    @can('barang penjualan delete')
                                                         <a href="{{ route('admin.product.destroy', $product) }}"
                                                             class="btn btn-sm btn-danger-light me-1 delete_item"
                                                             data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -126,7 +126,7 @@
                                                         </a>
                                                     @endcan
                                                 @else
-                                                    @can('product restore')
+                                                    @can('barang penjualan restore')
                                                         <a href="{{ route('admin.product.restore', $product) }}"
                                                             class="btn btn-sm btn-warning-light me-1" data-bs-toggle="tooltip"
                                                             data-bs-placement="bottom"
@@ -136,7 +136,7 @@
                                                     @endcan
                                                 @endif
 
-                                                @can('product index')
+                                                @can('barang penjualan index')
                                                     <a href="{{ route('admin.product.show', $product) }}"
                                                         class="btn btn-sm btn-success-light" data-bs-toggle="tooltip"
                                                         data-bs-placement="bottom"

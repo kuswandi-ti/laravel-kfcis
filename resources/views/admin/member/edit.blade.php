@@ -215,6 +215,66 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-6">
+                                <label for="simpanan_pokok"
+                                    class="form-label text-default">{{ __('Simpanan Pokok') }}</label>
+                                <input type="number"
+                                    class="form-control default-number @error('simpanan_pokok') is-invalid @enderror"
+                                    name="simpanan_pokok" id="simpanan_pokok"
+                                    value="{{ old('simpanan_pokok') ?? ($member->simpanan_pokok ?? 0) }}"
+                                    placeholder="{{ __('Simpanan Pokok') }}">
+                                @error('simpanan_pokok')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-xl-6">
+                                <label for="simpanan_wajib"
+                                    class="form-label text-default">{{ __('Simpanan Wajib') }}</label>
+                                <input type="number"
+                                    class="form-control default-number @error('simpanan_wajib') is-invalid @enderror"
+                                    name="simpanan_wajib" id="simpanan_wajib"
+                                    value="{{ old('simpanan_wajib') ?? ($member->simpanan_wajib ?? 0) }}"
+                                    placeholder="{{ __('Simpanan Wajib') }}">
+                                @error('simpanan_wajib')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-6">
+                                <label for="simpanan_sukarela"
+                                    class="form-label text-default">{{ __('Simpanan Sukarela') }}</label>
+                                <input type="number"
+                                    class="form-control default-number @error('simpanan_sukarela') is-invalid @enderror"
+                                    name="simpanan_sukarela" id="simpanan_sukarela"
+                                    value="{{ old('simpanan_sukarela') ?? ($member->simpanan_sukarela ?? 0) }}"
+                                    placeholder="{{ __('Simpanan Sukarela') }}">
+                                @error('simpanan_sukarela')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-xl-6">
+                                <label for="simpanan_sukarela_tetap"
+                                    class="form-label text-default">{{ __('Simpanan Sukarela Tetap') }}</label>
+                                <input type="number"
+                                    class="form-control default-number @error('simpanan_sukarela_tetap') is-invalid @enderror"
+                                    name="simpanan_sukarela_tetap" id="simpanan_sukarela_tetap"
+                                    value="{{ old('simpanan_sukarela_tetap') ?? ($member->simpanan_sukarela_tetap ?? 0) }}"
+                                    placeholder="{{ __('Simpanan Sukarela Tetap') }}">
+                                @error('simpanan_sukarela_tetap')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">
@@ -229,3 +289,30 @@
 
 @include('layouts.admin.includes.select2')
 @include('layouts.admin.includes.flatpickr')
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $(".default-number").keyup(
+                function() {
+                    var simpanan_pokok = $("#simpanan_pokok").val();
+                    var simpanan_wajib = $("#simpanan_wajib").val();
+                    var simpanan_sukarela = $("#simpanan_sukarela").val();
+                    var simpanan_sukarela_tetap = $("#simpanan_sukarela_tetap").val();
+
+                    if (simpanan_pokok.length == 0) {
+                        $("#simpanan_pokok").val(0);
+                    }
+                    if (simpanan_wajib.length == 0) {
+                        $("#simpanan_wajib").val(0);
+                    }
+                    if (simpanan_sukarela.length == 0) {
+                        $("#simpanan_sukarela").val(0);
+                    }
+                    if (simpanan_sukarela_tetap.length == 0) {
+                        $("#simpanan_sukarela_tetap").val(0);
+                    }
+                });
+        });
+    </script>
+@endpush

@@ -75,8 +75,7 @@
                                     <div class="col-xl-12">
                                         <label for="price_hpp" class="form-label text-default">{{ __('Harga HPP') }}
                                             <x-all-not-null /></label>
-                                        <input type="text"
-                                            class="form-control number-only @error('price_hpp') is-invalid @enderror"
+                                        <input type="number" class="form-control @error('price_hpp') is-invalid @enderror"
                                             name="price_hpp" id="price_hpp" value="{{ old('price_hpp') ?? 0 }}"
                                             placeholder="{{ __('Harga HPP') }}" required>
                                         @error('price_hpp')
@@ -90,7 +89,7 @@
                                     <div class="col-xl-12">
                                         <label for="price_sell" class="form-label text-default">{{ __('Harga Jual') }}
                                             <x-all-not-null /></label>
-                                        <input type="text" class="form-control @error('price_sell') is-invalid @enderror"
+                                        <input type="number" class="form-control @error('price_sell') is-invalid @enderror"
                                             name="price_sell" id="price_sell" value="{{ old('price_sell') ?? 0 }}"
                                             placeholder="{{ __('Harga Jual') }}" required>
                                         @error('price_sell')
@@ -164,6 +163,16 @@
             $("#price_hpp, #price_sell").keyup(function() {
                 var price_hpp = $("#price_hpp").val();
                 var price_sell = $("#price_sell").val();
+
+                if (price_hpp.length == 0) {
+                    price_hpp = 0;
+                    $("#price_hpp").val(0);
+                }
+
+                if (price_sell.length == 0) {
+                    price_sell = 0
+                    $("#price_sell").val(0)
+                }
 
                 var margin = parseInt(price_sell) - parseInt(price_hpp);
                 $("#margin").val(margin);

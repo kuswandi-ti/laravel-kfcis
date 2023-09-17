@@ -32,6 +32,10 @@ return new class extends Migration
             $table->date('start_work_date')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->string('approved_by')->nullable();
+            $table->float('simpanan_pokok', 8, 2)->default(0);
+            $table->float('simpanan_wajib', 8, 2)->default(0);
+            $table->float('simpanan_sukarela', 8, 2)->default(0);
+            $table->float('simpanan_sukarela_tetap', 8, 2)->default(0);
             $table->boolean('status')->default(1)->comment('1 = Active, 0 = Inactive Status');
             $table->rememberToken();
             $table->timestamps();

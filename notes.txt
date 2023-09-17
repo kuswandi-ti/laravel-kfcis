@@ -107,3 +107,6 @@ MIDTRANS_SERVER_KEY=SB-Mid-server-wqi7Qz4u9kNIMpxnwW1LLTsC
 # MIDTRANS_CLIENT_KEY=Mid-client-9VatgRzOBhxiVTDx
 # MIDTRANS_SERVER_KEY=Mid-server-aIcbql824rydGuK_Pz1NT7ex
 
+Table
+- tabel simpanan wajib, pokok, dll : dbKoperasi
+- tabel semua transaksi : SummaryReport

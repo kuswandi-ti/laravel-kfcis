@@ -26,7 +26,7 @@
                             </p>
                         </div>
                     </div>
-                    @can('department create')
+                    @can('departemen create')
                         <div class="d-flex" role="search">
                             <a href="{{ route('admin.department.create') }}" class="btn btn-primary">
                                 {{ __('Baru') }}
