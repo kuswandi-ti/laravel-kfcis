@@ -10,7 +10,12 @@
 
 @section('section_header_breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Departemen') }}</li>
+    <li class="breadcrumb-item">
+        <a href="{{ route('admin.department.index') }}" class="text-white-50">
+            {{ __('Departemen') }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Memperbarui Data Departemen') }}</li>
 @endsection
 
 @section('page_content')

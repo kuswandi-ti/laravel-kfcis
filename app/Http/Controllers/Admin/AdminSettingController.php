@@ -7,7 +7,6 @@ use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminJasaSettingUpdateRequest;
 use App\Http\Requests\Admin\AdminGeneralSettingUpdateRequest;
-use App\Http\Requests\Admin\AdminPaymentSettingUpdateRequest;
 
 class AdminSettingController extends Controller
 {
@@ -15,7 +14,7 @@ class AdminSettingController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:system setting', ['only' => ['index', 'generalSettingIndex', 'generalSettingUpdate', 'notificationSettingIndex', 'paymentSettingUpdate']]);
+        $this->middleware('permission:system setting', ['only' => ['index', 'generalSettingUpdate', 'jasaSettingUpdate']]);
     }
 
     public function index()

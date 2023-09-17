@@ -109,6 +109,10 @@
         }
 
         $(document).ready(function() {
+            $('.number-only').keyup(function() {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            });
+
             $('.custom-file-input').on('change', function() {
                 let filename = $(this)
                     .val()

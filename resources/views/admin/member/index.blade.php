@@ -1,106 +1,296 @@
 @extends('layouts.admin.master')
 
 @section('page_title')
-    {{ __('admin.Member User') }}
+    {{ __('Anggota Koperasi') }}
 @endsection
 
 @section('section_header_title')
-    {{ __('admin.Member User') }}
+    {{ __('Anggota Koperasi') }}
 @endsection
 
 @section('section_header_breadcrumb')
     @parent
-    <div class="breadcrumb-item">{{ __('admin.Member User') }}</div>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Daftar Data Anggota Koperasi') }}</li>
 @endsection
 
-@section('section_body_title')
-    {{ __('admin.Member User') }}
-@endsection
-
-@section('section_body_lead')
-    {{ __('admin.View information about member user on this page') }}
-@endsection
-
-@section('content')
+@section('page_content')
     <div class="row">
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h4>{{ __('admin.All Member User') }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="mt-3 table-responsive">
-                        <table class="table table-striped" id="table_data">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" width="10%"><i class="fas fa-list-ol"></i></th>
-                                    <th class="text-center" width="12%"><i class="fas fa-cogs"></i></th>
-                                    <th class="text-center"></th>
-                                    <th>{{ __('admin.Member User Name') }}</th>
-                                    <th class="text-center">{{ __('admin.Email') }}</th>
-                                    <th class="text-center">{{ __('admin.Role') }}</th>
-                                    <th class="text-center" width="8%">{{ __('admin.Active') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
+                    <div class="flex-fill">
+                        <div class="card-title">
+                            {{ __('Daftar Data Anggota Koperasi') }}
+                            <p class="subtitle text-muted fs-12 fw-normal">
+                                {{ __('Menampilkan semua data anggota koperasi') }}
+                            </p>
+                        </div>
                     </div>
+                    @can('anggota create')
+                        <div class="mt-2 d-flex mt-sm-0 align-items-center">
+                            <a href="{{ route('admin.member.create') }}" class="btn btn-primary ms-2">
+                                {{ __('Baru') }}
+                            </a>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="p-0 card-body">
+                    <nav class="bg-white navbar navbar-expand-xxl">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse navbar-justified collapse" id="navbarSupportedContent"
+                                style="">
+                                <ul class="mb-2 navbar-nav me-auto mb-lg-0 align-items-xxl-center">
+                                    <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
+                                        <div class="btn-group d-xxl-flex d-block">
+                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ __('Departemen') }}
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                @if ($departments->count() == 0)
+                                                    <li>
+                                                        <a class="dropdown-item">{{ __('Tidak ada data') }}</a>
+                                                    </li>
+                                                @else
+                                                    @foreach ($departments as $department)
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="/admin/member/?department={{ $department->slug ?? '' }}">{{ $department->name ?? '' }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
+                                        <div class="btn-group d-xxl-flex d-block">
+                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ __('Bagian') }}
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                @if ($sections->count() == 0)
+                                                    <li>
+                                                        <a class="dropdown-item">{{ __('Tidak ada data') }}</a>
+                                                    </li>
+                                                @else
+                                                    @foreach ($sections as $section)
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="/admin/member/?section={{ $section->slug ?? '' }}">{{ $section->name ?? '' }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
+                                        <div class="btn-group d-xxl-flex d-block">
+                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ __('Jenis Karyawan') }}
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="/admin/member/?employee_group=Bulanan">{{ __('Bulanan') }}</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="/admin/member/?employee_group=Harian">{{ __('Harian') }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
+                                        <div class="btn-group d-xxl-flex d-block">
+                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ __('Approve') }}
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="/admin/member/?approve=1">{{ __('Sudah Approve') }}</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="/admin/member/?approve=0">{{ __('Belum Approve') }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item mb-xxl-0 ms-xxl-0 ms-3">
+                                        <div class="btn-group d-xxl-flex d-block">
+                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ __('Status') }}
+                                            </button>
+                                            <div class="m-2">&nbsp;</div>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="/admin/member/?status=1">{{ __('Aktif') }}</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="/admin/member/?status=0">{{ __('Tidak Aktif') }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <form action="{{ route('admin.member.index') }}" method="GET" id="form-search">
+                                    <div class="mt-2 mb-2 input-group">
+                                        <input type="text" class="form-control bg-light"
+                                            placeholder="{{ __('Cari Data ...') }}" value="{{ old('search') }}"
+                                            name="search">
+                                    </div>
+                                </form>
+                                <a href="{{ route('admin.member.index') }}" class="mt-2 mb-2 btn btn-secondary ms-2">
+                                    {{ __('Refresh') }}
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        @if ($members->count() == 0)
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card custom-card product-card bg-danger">
+                    <div class="card-body">
+                        <h3 class="mt-2 text-center">
+                            {{ __('Tidak ada data') }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        @else
+            @foreach ($members as $member)
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-sm-6">
+                    <div class="text-center card custom-card">
+                        <div class="card-body contact-action">
+                            <div class="contact-overlay"></div>
+                            <div class="align-items-top">
+                                <div class="text-center">
+                                    <div>
+                                        <h6 class="mb-3 fw-semibold">
+                                            {{ $member->name ?? '' }}
+                                        </h6>
+                                    </div>
+                                    <img src="{{ !empty($member->image) ? url(config('common.path_storage') . $member->image) : url(config('common.path_template_admin') . config('common.image_square_200x200')) }}"
+                                        class="mb-3 img-fluid rounded-pill preview-path_image_member" width="120"
+                                        height="120">
+                                    <div>
+                                        <h6 class="mb-2 fw-semibold">
+                                            <span
+                                                class="badge bg-{{ $member->employee_group == 'Bulanan' ? 'success' : 'warning' }}">{{ $member->employee_group ?? '' }}</span>
+                                        </h6>
+                                        <p class="mb-2 fw-semibold fs-11 text-primary contact-mail text-truncate">
+                                            {{ $member->email ?? '' }}
+                                        </p>
+                                        <p class="mb-2 text-muted contact-mail text-truncate">
+                                            <span
+                                                class="badge bg-primary">{{ formatDate($member->join_date) ?? '' }}</span>
+                                            <span class="badge bg-secondary">{{ $member->section->name ?? '' }}</span>
+                                        </p>
+                                        <p class="mb-0 fw-semibold fs-11">
+                                            <span
+                                                class="badge bg-{{ setStatusBadge($member->status) }}">{{ setStatusText($member->status) }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @can('anggota index')
+                                    <a href="{{ route('admin.member.show', $member) }}"
+                                        class="btn btn-sm btn-icon contact-hover-fave btn-primary btn-wave waves-effect waves-light"
+                                        type="button" aria-expanded="false" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-original-title="Lihat">
+                                        <i class="ri-eye-line fs-16 text-fixed-white"></i>
+                                    </a>
+                                @endcan
+                            </div>
+                            <div class="dropdown contact-hover-dropdown">
+                                <button aria-label="button"
+                                    class="btn btn-sm btn-icon btn-primary btn-wave waves-effect waves-light"
+                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ri-more-2-fill"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @can('anggota update')
+                                        <li>
+                                            <a class="dropdown-item border-bottom"
+                                                href="{{ route('admin.member.edit', $member) }}">
+                                                <i class="align-middle ri-edit-2-line me-2 d-inline-block"></i>
+                                                {{ __('Perbarui') }}
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('anggota approve')
+                                        <li>
+                                            <a class="dropdown-item border-bottom" href="javascript:void(0);">
+                                                <i class="align-middle ri-checkbox-circle-line me-2 d-inline-block"></i>
+                                                {{ __('Menyetujui') }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item border-bottom" href="javascript:void(0);">
+                                                <i class="align-middle ri-mail-send-line me-2 d-inline-block"></i>
+                                                {{ __('Kirim Ulang Tautan Verifikasi') }}
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    <li>
+                                        <a class="dropdown-item border-bottom" href="javascript:void(0);">
+                                            <i class="align-middle ri-chat-2-line me-2 d-inline-block"></i>
+                                            {{ __('Kirim Pesan') }}
+                                        </a>
+                                    </li>
+                                    @can('anggota delete')
+                                        <li>
+                                            <a class="dropdown-item border-bottom delete_item"
+                                                href="{{ route('admin.member.destroy', $member) }}">
+                                                <i class="align-middle ri-delete-bin-5-line me-2 d-inline-block"></i>
+                                                {{ __('Hapus') }}
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('anggota restore')
+                                        <li>
+                                            <a class="dropdown-item border-bottom"
+                                                href="{{ route('admin.member.restore', $member) }}">
+                                                <i class="align-middle ri-refresh-line me-2 d-inline-block"></i>
+                                                {{ __('Pulihkan') }}
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif
+    </div>
+
+    {!! $members->withQueryString()->links('pagination::bootstrap-5') !!}
 @endsection
 
-<x-swal />
-
-@include('layouts.admin.includes.datatable')
-
-@push('scripts')
-    <script>
-        let table_data;
-
-        table_data = $('#table_data').DataTable({
-            processing: true,
-            autoWidth: false,
-            responsive: true,
-            serverSide: true,
-            ajax: {
-                url: '{{ route('admin.member.data') }}',
-            },
-            columns: [{
-                data: 'DT_RowIndex',
-                searchable: false,
-                sortable: false,
-            }, {
-                data: 'action',
-                searchable: false,
-                sortable: false,
-            }, {
-                data: 'image',
-                searchable: false,
-                sortable: false,
-            }, {
-                data: 'name',
-                searchable: true,
-                sortable: true,
-            }, {
-                data: 'email',
-                searchable: true,
-                sortable: true,
-            }, {
-                data: 'role',
-                searchable: true,
-                sortable: true,
-            }, {
-                data: 'status',
-                searchable: true,
-                sortable: true,
-            }],
-            columnDefs: [{
-                className: 'text-center',
-                targets: [0, 1, 2, 4, 5, 6]
-            }],
-        });
-    </script>
-@endpush
+<x-web-sweet-alert />

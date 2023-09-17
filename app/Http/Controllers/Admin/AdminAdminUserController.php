@@ -2,26 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin;
+use App\Models\User;
+use App\Models\Section;
+use App\Models\Department;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\AdminRegisterVerifyMail;
-use App\Http\Requests\Admin\AdminAdminUserStoreRequest;
-use App\Http\Requests\Admin\AdminAdminUserUpdateRequest;
+use App\Http\Requests\Admin\AdminAdminUserRequest;
 
 class AdminAdminUserController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:sytem admin user create,' . getGuardNameAdmin(), ['only' => ['create', 'store']]);
-        $this->middleware('permission:sytem admin user delete,' . getGuardNameAdmin(), ['only' => ['destroy']]);
-        $this->middleware('permission:sytem admin user index,' . getGuardNameAdmin(), ['only' => ['index', 'show', 'data']]);
-        $this->middleware('permission:sytem admin user restore,' . getGuardNameAdmin(), ['only' => ['restore']]);
-        $this->middleware('permission:sytem admin user update,' . getGuardNameAdmin(), ['only' => ['edit', 'update']]);
+        $this->middleware('permission:pengurus create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:pengurus delete', ['only' => ['destroy']]);
+        $this->middleware('permission:pengurus index', ['only' => ['index', 'show', 'data']]);
+        $this->middleware('permission:pengurus restore', ['only' => ['restore']]);
+        $this->middleware('permission:pengurus update', ['only' => ['edit', 'update']]);
     }
 
     /**
@@ -37,42 +35,50 @@ class AdminAdminUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('guard_name', 'admin')->orderBy('name', 'DESC')->pluck('name', 'name');
-        return view('admin.admin.create', compact('roles'));
+        $roles = Role::where('name', '!=', 'Super Admin')->orderBy('name')->pluck('name', 'name');
+        $departments = Department::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $sections = Section::where('status', '1')->orderBy('name')->pluck('name', 'id');
+
+        return view('admin.admin.create', compact('roles', 'departments', 'sections'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdminAdminUserStoreRequest $request)
+    public function store(AdminAdminUserRequest $request)
     {
-        $token = Str::random(64);
+        $store = User::create([
+            'nik' => $request->nik,
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'email' => $request->email,
+            'employee_group' => $request->employee_group,
+            'join_date' => $request->join_date,
+            'department_id' => $request->department,
+            'section_id' => $request->section,
+            'account_number' => $request->account_number,
+            'account_name' => $request->account_name,
+            'start_work_date' => $request->start_work_date,
+            'approved_at' => saveDateTimeNow(),
+            'approved_by' => auth()->user()->name,
+            'created_by' => auth()->user()->name,
+        ]);
 
-        DB::transaction(function () use ($request) {
-            $admin = new Admin();
+        $store->assignRole($request->role);
 
-            $admin->name = $request->name;
-            $admin->slug = Str::slug($request->name);
-            $admin->email = $request->email;
-            $admin->image = config('common.default_image_circle');
-            $admin->area_id = getLoggedUserAreaId();
-            $admin->register_token = $token;
-            $admin->created_by = getLoggedUser()->name;
-            $admin->status = 1;
-            $admin->save();
+        // TODO : Send email verifikasi
 
-            $admin->assignRole($request->role);
-
-            Mail::to($request->email)->send(new AdminRegisterVerifyMail($token));
-        });
-
-        return redirect()->route('admin.admin.index')->with('success', __('admin.Created admin user successfully'));
+        if ($store) {
+            return redirect()->route('admin.admin.index')->with('success', __('Data pengurus koperasi berhasil dibuat'));
+        } else {
+            return redirect()->route('admin.admin.index')->with('error', __('Data pengurus koperasi gagal dibuat'));
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $admin)
     {
         //
     }
@@ -80,129 +86,164 @@ class AdminAdminUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $admin)
     {
-        $admin = Admin::findOrFail($id);
-        $roles = Role::where('guard_name', 'admin')->orderBy('name', 'DESC')->pluck('name', 'name');
-        $admin_role = $admin->roles->pluck('name', 'name')->all();
+        $roles = Role::where('name', '!=', 'Super Admin')->orderBy('name')->pluck('name', 'id');
+        $departments = Department::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $sections = Section::where('status', '1')->orderBy('name')->pluck('name', 'id');
 
-        return view('admin.admin.edit', compact('admin', 'roles', 'admin_role'));
+        return view('admin.admin.edit', compact('admin', 'roles', 'departments', 'sections'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminAdminUserUpdateRequest $request, string $id)
+    public function update(User $admin, AdminAdminUserRequest $request)
     {
-        $admin = Admin::findOrFail($id);
+        $update = $admin->update([
+            'nik' => $request->nik,
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'email' => $request->email,
+            'employee_group' => $request->employee_group,
+            'join_date' => $request->join_date,
+            'department_id' => $request->department,
+            'section_id' => $request->section,
+            'account_number' => $request->account_number,
+            'account_name' => $request->account_name,
+            'start_work_date' => $request->start_work_date,
+            'updated_by' => auth()->user()->name,
+        ]);
 
-        DB::transaction(function () use ($request) {
-            $admin->update([
-                'name' => $request->name,
-                'slug' => Str::slug($request->name),
-                'email' => $request->email,
-                'updated_by' => getLoggedUser()->name,
-                'status' => 1,
-            ]);
-            $admin->syncRoles($request->role);
-        });
+        $admin->syncRoles($request->role);
 
-        return redirect()->route('admin.admin.index')->with('success', __('admin.Updated admin user successfully'));
+        if ($update) {
+            return redirect()->route('admin.admin.index')->with('success', __('Data pengurus koperasi berhasil diperbarui'));
+        } else {
+            return redirect()->route('admin.admin.index')->with('error', __('Data pengurus koperasi gagal diperbarui'));
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $admin)
     {
         try {
-            $admin = Admin::findOrFail($id);
+            $destroy = $admin->update([
+                'status' => 0,
+                'deleted_at' => saveDateTimeNow(),
+                'deleted_by' => auth()->user()->name,
+            ]);
 
-            if ($admin->roles->first()->name == 'Super Admin') {
+            if ($destroy) {
+                return response([
+                    'status' => 'success',
+                    'message' => __('Data pengurus koperasi berhasil dihapus')
+                ]);
+            } else {
                 return response([
                     'status' => 'error',
-                    'message' => __('admin.Cannot delete this user becase role is Super Admin')
+                    'message' => __('Data pengurus koperasi gagal dihapus')
                 ]);
             }
-
-            $admin->status = 0;
-            $admin->deleted_at = saveDateTimeNow();
-            $admin->deleted_by = getLoggedUser()->name;
-            $admin->save();
-
-            return response([
-                'status' => 'success',
-                'message' => __('admin.Deleted admin user successfully')
-            ]);
         } catch (\Throwable $th) {
             return response([
                 'status' => 'error',
-                'message' => __('admin.Deleted admin user is error')
+                'message' => __('Data pengurus koperasi gagal dihapus')
             ]);
         }
     }
 
-    public function restore($id)
+    public function restore(User $admin)
     {
-        $admin = Admin::findOrFail($id);
+        $restore = $admin->update([
+            'status' => 1,
+            'restored_at' => saveDateTimeNow(),
+            'restored_by' => auth()->user()->name,
+        ]);
 
-        $admin->status = 1;
-        $admin->restored_at = saveDateTimeNow();
-        $admin->restored_by = getLoggedUser()->name;
-        $admin->save();
-
-        return redirect()->route('admin.admin.index')->with('success', __('admin.Restore admin user successfully'));
+        if ($restore) {
+            return redirect()->route('admin.admin.index')->with('success', __('Data pengurus koperasi berhasil dipulihkan'));
+        } else {
+            return redirect()->route('admin.admin.index')->with('error', __('Data pengurus koperasi gagal dipulihkan'));
+        }
     }
 
     public function data(Request $request)
     {
-        $query = Admin::orderBy('name', 'ASC');
+        $query = User::orderBy('name', 'ASC')
+            ->with('department')
+            ->with('section')
+            ->get()->filter(
+                fn ($user) => $user->roles->where('name', '!=', 'Super Admin')->toArray()
+            );
 
         return datatables($query)
             ->addIndexColumn()
             ->editColumn('image', function ($query) {
                 if (!empty($query->image)) {
-                    return '<figure class="avatar"><img src="' . url(config('common.path_storage') . $query->image) . '"></figure>';
+                    return '<img src="' . url(config('common.path_storage') . $query->image) . '" class="img-fluid rounded-pill" width="45" height="45">';
                 } else {
-                    return '<figure class="avatar"><img src="' . url(config('common.path_storage') . config('common.default_image_circle')) . '"></figure>';
+                    return '<img src="' . url(config('common.path_template_admin') . config('common.image_user_profile_small')) . '" class="img-fluid rounded-pill" width="45" height="45">';
                 }
             })
+            ->editColumn('department', function ($query) {
+                return $query->department->name;
+            })
+            ->editColumn('section', function ($query) {
+                return $query->section->name;
+            })
             ->editColumn('role', function ($query) {
-                $badge = $query->roles->pluck('name')->first() == 'Super Admin' ? 'danger' : 'dark';
-                return '<div class="badge badge-' . $badge . '">' . $query->roles->pluck('name')->first() . '</div>';
+                return $query->getRoleNames()->first();
             })
             ->editColumn('status', function ($query) {
-                return '<div class="badge badge-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</div>';
+                return '<h6><span class="badge bg-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</span></h6>';
             })
             ->addColumn('action', function ($query) {
-                if ($query->roles->pluck('name')->first() == 'Super Admin') {
-                    return '<div class="badge badge-danger">'  . __('No Action') . '</div>';
-                } else {
-                    if ($query->status == 1) {
-                        if (canAccess(['sytem admin user update'])) {
-                            $update = '
-                                <a href="' . route('admin.admin.edit', $query->id) . '" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-edit"></i>
+                if (canAccess(['pengurus update'])) {
+                    $update = '
+                        <li>
+                            <a href="' . route('admin.admin.edit', $query) . '" class="dropdown-item border-bottom">
+                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
+                            </a>
+                        </li>
+                    ';
+                }
+                if ($query->status == 1) {
+                    if (canAccess(['pengurus delete'])) {
+                        $delete = '
+                            <li>
+                                <a href="' . route('admin.admin.destroy', $query) . '" class="dropdown-item border-bottom delete_item">
+                                    <i class="bx bx-trash fs-20"></i> ' . __("Hapus") . '
                                 </a>
-                            ';
-                        }
-                        if (canAccess(['sytem admin user delete'])) {
-                            $delete = '
-                                <a href="' . route('admin.admin.destroy', $query->id) . '" class="btn btn-danger btn-sm delete_item">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            ';
-                        }
-                        return (!empty($update) ? $update : '') . (!empty($delete) ? $delete : '');
-                    } else {
-                        if (canAccess(['sytem admin user restore'])) {
-                            return '
-                                <a href="' . route('admin.admin.restore', $query->id) . '" class="btn btn-warning btn-sm" data-toggle="tooltip" title="' . __('Restore to Active') . '">
-                                    <i class="fas fa-undo"></i>
-                                </a>
-                            ';
-                        }
+                            </li>
+                        ';
                     }
+                } else {
+                    if (canAccess(['pengurus restore'])) {
+                        $restore = '
+                            <li>
+                                <a href="' . route('admin.admin.restore', $query) . '" class="dropdown-item border-bottom restore_item">
+                                    <i class="bx bx-sync fs-20"></i> ' . __("Pulihkan") . '
+                                </a>
+                            </li>
+                        ';
+                    }
+                }
+                if (canAccess(['pengurus update', 'pengurus delete', 'pengurus restore'])) {
+                    return '<div class="dropdown ms-3">
+                                <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-dots-vertical-rounded fs-20"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="">' .
+                        (!empty($update) ? $update : '') .
+                        (!empty($restore) ? $restore : '') .
+                        (!empty($delete) ? $delete : '') . '
+                                </ul>
+                            </div>';
+                } else {
+                    return '<span class="badge rounded-pill bg-outline-danger">' . __("Tidak ada akses") . '</span>';
                 }
             })
             ->rawColumns(['action'])

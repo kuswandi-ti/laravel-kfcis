@@ -10,7 +10,7 @@
 
 @section('section_header_breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Permission') }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Daftar Data Permission') }}</li>
 @endsection
 
 @section('page_content')
@@ -26,11 +26,13 @@
                             </p>
                         </div>
                     </div>
-                    <div class="d-flex" role="search">
-                        <a href="{{ route('admin.permission.create') }}" class="btn btn-primary">
-                            {{ __('Baru') }}
-                        </a>
-                    </div>
+                    @can('permission create')
+                        <div class="d-flex" role="search">
+                            <a href="{{ route('admin.permission.create') }}" class="btn btn-primary">
+                                {{ __('Baru') }}
+                            </a>
+                        </div>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

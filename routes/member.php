@@ -33,7 +33,7 @@ Route::group(['middleware' => ['set_language']], function () {
 });
 
 Route::group([
-    'middleware' => ['member']
+    'middleware' => ['member', 'prevent_back_history']
 ], function () {
     /** Auth Member Routes */
     Route::post('logout', [MemberAuthController::class, 'logout'])->name('logout');

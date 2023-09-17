@@ -10,33 +10,51 @@
 
 @section('section_header_breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Barang Penjualan') }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Daftar Data Barang Penjualan') }}</li>
 @endsection
 
 @section('page_content')
-    <!-- Start::row-1 -->
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
                 <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
                     <div class="flex-fill">
                         <div class="card-title">
-                            {{ __('Daftar Data Bagian') }}
+                            {{ __('Daftar Data Barang Penjualan') }}
                             <p class="subtitle text-muted fs-12 fw-normal">
-                                {{ __('Menampilkan semua data bagian') }}
+                                {{ __('Menampilkan semua data barang penjualan') }}
                             </p>
                         </div>
                     </div>
-                    <div class="d-flex mt-sm-0 mt-2 align-items-center">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light" placeholder="{{ __('Cari Data ...') }}"
-                                aria-describedby="search-contact-member">
-                            <button aria-label="button" class="btn btn-warning" type="button" id="search-contact-member"><i
-                                    class="ri-search-line"></i></button>
+                    <div class="mt-2 d-flex mt-sm-0 align-items-center">
+                        <div class="m-2 btn-group d-xxl-flex d-block">
+                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ __('Status') }}
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="/admin/product/?status=1">{{ __('Aktif') }}</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/admin/product/?status=0">{{ __('Tidak Aktif') }}</a>
+                                </li>
+                            </ul>
                         </div>
-                        <a href="{{ route('admin.product.create') }}" class="btn btn-primary ms-2">
-                            {{ __('Baru') }}
+                        <form action="{{ route('admin.product.index') }}" method="GET" id="form-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light" placeholder="{{ __('Cari Data ...') }}"
+                                    value="{{ old('search') }}" name="search">
+                            </div>
+                        </form>
+                        <a href="{{ route('admin.product.index') }}" class="btn btn-secondary ms-2">
+                            {{ __('Refresh') }}
                         </a>
+                        @can('product create')
+                            <a href="{{ route('admin.product.create') }}" class="btn btn-primary ms-2">
+                                {{ __('Baru') }}
+                            </a>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -47,7 +65,7 @@
                     <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         <div class="card custom-card product-card bg-danger">
                             <div class="card-body">
-                                <h3 class="text-center mt-2">
+                                <h3 class="mt-2 text-center">
                                     {{ __('Tidak ada data') }}
                                 </h3>
                             </div>
@@ -55,62 +73,78 @@
                     </div>
                 @else
                     @foreach ($products as $product)
-                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                        <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12">
                             <div class="card custom-card product-card">
                                 <div class="card-body">
-                                    <div class="d-sm-flex align-items-center mb-4">
+                                    <div class="mb-4 d-sm-flex align-items-center">
                                         <img src="{{ !empty($product->image) ? url(config('common.path_storage') . $product->image) : url(config('common.path_template_admin') . config('common.image_product')) }}"
-                                            class="img-fluid rounded preview-path_image_company_logo_toggle" width="500"
+                                            class="rounded img-fluid preview-path_image_company_logo_toggle" width="500"
                                             height="360">
                                     </div>
                                     <div class="d-sm-flex align-items-center">
                                         <div class="mt-2 mt-sm-0">
-                                            <h5 class="product-name fs-16 fw-semibold mb-1 align-items-center">
-                                                {{ truncateString('RL Classic Color Pencil 36 Long Tin Case (Creative Design) (FSC) (AU)', 57) }}
+                                            <h5 class="mb-1 product-name fs-16 fw-semibold align-items-center">
+                                                {{ truncateString($product->name ?? '', 25) }}
                                             </h5>
-                                            <p class="product-description fs-13 text-muted mb-2">
-                                                {{ truncateString(
-                                                    '476, 487, 430, 404, 407, 414, 416, 421, 419, 434, 443, 447, 448, 452, 459, 466, 496,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        499',
-                                                    80,
-                                                ) }}
+                                            <p class="mb-2 product-description fs-13 text-muted">
+                                                {{ truncateString($product->specification ?? '', 65) }}
                                             </p>
                                             <h4 class="mb-2 fw-semibold">
                                                 <span>
-                                                    26.000
-                                                    <span class="text-muted ms-1  fs-14 op-6">
-                                                        20.000
+                                                    {{ formatAmount($product->price_sell, 1) }}
+                                                    <span class="text-muted ms-1 fs-14 op-6">
+                                                        {{ formatAmount($product->price_hpp, 1) }}
                                                     </span>
                                                 </span>
                                             </h4>
-                                            <p class="badge bg-secondary-transparent fs-11 rounded-1 mb-0">72%</p>
-                                            <span class="text-muted">(212 Penjualan)</span>
-                                            <p class="fs-11 text-success fw-semibold mb-0 align-items-center mt-1">
-                                                Active / Inactive
+                                            <p class="mb-0 badge bg-warning-transparent fs-11 rounded-1">
+                                                {{ formatAmount($product->margin, 1) }}</p>
+                                            <p class="mb-0 badge bg-secondary-transparent fs-11 rounded-1">
+                                                @php
+                                                    $persen_margin = ($product->margin / $product->price_sell) * 100;
+                                                @endphp
+                                                {{ formatAmount($persen_margin, 2) }}%
                                             </p>
-                                            <div class="mt-2 text-center">
-                                                <a href="wishlist.html" class="btn btn-sm btn-info-light me-1"
-                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    data-bs-original-title="{{ __('Ubah') }}">
-                                                    <i class="bx bx-edit-alt fs-20"></i>
-                                                </a>
-                                                <a href="cart.html" class="btn btn-sm btn-danger-light me-1"
-                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    data-bs-original-title="{{ __('Hapus') }}">
-                                                    <i class="bx bx-trash fs-20"></i>
-                                                </a>
-                                                <a href="cart.html" class="btn btn-sm btn-warning-light me-1"
-                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    data-bs-original-title="{{ __('Pulihkan') }}">
-                                                    <i class="bx bx-sync fs-20"></i>
-                                                </a>
-                                                <a href="product-details.html" class="btn btn-sm btn-success-light"
-                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    data-bs-original-title="{{ __('Lihat') }}">
-                                                    <i class="bx bx-show fs-20"></i>
-                                                </a>
-                                            </div>
+                                            <span
+                                                class="badge bg-{{ setStatusBadge($product->status) }}">{{ setStatusText($product->status) }}</span>
+                                            <div class="mt-4 text-center">
+                                                @can('product update')
+                                                    <a href="{{ route('admin.product.edit', $product) }}"
+                                                        class="btn btn-sm btn-info-light me-1" data-bs-toggle="tooltip"
+                                                        data-bs-placement="bottom"
+                                                        data-bs-original-title="{{ __('Perbarui') }}">
+                                                        <i class="bx bx-edit-alt fs-20"></i>
+                                                    </a>
+                                                @endcan
+                                                @if ($product->status == 1)
+                                                    @can('product delete')
+                                                        <a href="{{ route('admin.product.destroy', $product) }}"
+                                                            class="btn btn-sm btn-danger-light me-1 delete_item"
+                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                            data-bs-original-title="{{ __('Hapus') }}">
+                                                            <i class="bx bx-trash fs-20"></i>
+                                                        </a>
+                                                    @endcan
+                                                @else
+                                                    @can('product restore')
+                                                        <a href="{{ route('admin.product.restore', $product) }}"
+                                                            class="btn btn-sm btn-warning-light me-1" data-bs-toggle="tooltip"
+                                                            data-bs-placement="bottom"
+                                                            data-bs-original-title="{{ __('Pulihkan') }}">
+                                                            <i class="bx bx-sync fs-20"></i>
+                                                        </a>
+                                                    @endcan
+                                                @endif
 
+                                                @can('product index')
+                                                    <a href="{{ route('admin.product.show', $product) }}"
+                                                        class="btn btn-sm btn-success-light" data-bs-toggle="tooltip"
+                                                        data-bs-placement="bottom"
+                                                        data-bs-original-title="{{ __('Lihat') }}">
+                                                        <i class="bx bx-show fs-20"></i>
+                                                    </a>
+                                                @endcan
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -121,35 +155,8 @@
             </div>
         </div>
     </div>
-    <!--End::row-1 -->
 
-    <!-- Start: pagination -->
-    <div class="float-end mb-4">
-        <nav aria-label="Page navigation" class="pagination-style-4">
-            <ul class="pagination mb-0 gap-2">
-                <li class="page-item disabled">
-                    <a class="page-link" href="javascript:void(0);">
-                        Prev
-                    </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);">
-                        <i class="bi bi-three-dots"></i>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">16</a></li>
-                <li class="page-item d-none d-sm-flex"><a class="page-link" href="javascript:void(0);">17</a></li>
-                <li class="page-item">
-                    <a class="page-link text-primary" href="javascript:void(0);">
-                        Next
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <!-- End: pagination -->
+    {!! $products->withQueryString()->links('pagination::bootstrap-5') !!}
 @endsection
 
 <x-web-sweet-alert />

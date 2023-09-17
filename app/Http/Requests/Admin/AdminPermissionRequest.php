@@ -21,8 +21,7 @@ class AdminPermissionRequest extends FormRequest
      */
     public function rules(): array
     {
-        switch ($this->method())
-        {
+        switch ($this->method()) {
             case 'POST':
                 return [
                     'permission_name' => ['required', 'string', 'max:255', 'unique:permissions,name'],
@@ -32,8 +31,9 @@ class AdminPermissionRequest extends FormRequest
 
             case 'PATCH':
             case 'PUT':
+                $permission_id = $this->route('permission');
                 return [
-                    'permission_name' => ['required', 'string', 'max:255', 'unique:permissions,name,' . $this->permission->id],
+                    'permission_name' => ['required', 'string', 'max:255', 'unique:permissions,name,' . $permission_id],
                     'group_name' => ['required', 'string', 'max:255'],
                 ];
                 break;

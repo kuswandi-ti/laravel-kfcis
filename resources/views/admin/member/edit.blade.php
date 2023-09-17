@@ -1,112 +1,231 @@
 @extends('layouts.admin.master')
 
 @section('page_title')
-    {{ __('admin.Member User') }}
+    {{ __('Anggota Koperasi') }}
 @endsection
 
 @section('section_header_title')
-    {{ __('admin.Member User') }}
+    {{ __('Anggota Koperasi') }}
 @endsection
 
 @section('section_header_breadcrumb')
     @parent
-    <div class="breadcrumb-item">{{ __('admin.Member User') }}</div>
+    <li class="breadcrumb-item">
+        <a href="{{ route('admin.member.index') }}" class="text-white-50">
+            {{ __('Anggota Koperasi') }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Memperbarui Data Anggota Koperasi') }}</li>
 @endsection
 
-@section('section_body_title')
-    {{ __('admin.Edit Member User') }}
-@endsection
-
-@section('section_body_lead')
-    {{ __('admin.Update information about user on this page') }}
-@endsection
-
-@section('content')
+@section('page_content')
     <div class="row">
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h4>{{ __('admin.Update Member User') }}</h4>
-                    <div class="card-header-action">
-                        <a href="{{ route('admin.member.index') }}" class="btn btn-warning">
-                            <i class="fas fa-chevron-circle-left"></i> {{ __('admin.Back') }}
-                        </a>
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <form method="POST" action="{{ route('admin.member.update', $member) }}">
+                @csrf
+                @method('PUT')
+
+                <div class="card custom-card">
+                    <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
+                        <div class="flex-fill">
+                            <div class="card-title">
+                                {{ __('Memperbarui Data Anggota Koperasi') }}
+                                <p class="subtitle text-muted fs-12 fw-normal">
+                                    {{ __('Silahkan input data untuk proses memperbarui data anggota koperasi') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <a href="{{ route('admin.member.index') }}" class="btn btn-warning">
+                                {{ __('Kembali') }}
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <form method="POST" action="{{ route('admin.member.update', $member->id) }}">
-                    @csrf
-                    @method('PUT')
                     <div class="card-body">
-                        <div class="form-group">
-                            <label>{{ __('admin.Member Name') }} <x-fill-field /></label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') ?? $member->name }}" required>
-                            @error('name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-12">
+                                <label for="nik" class="form-label text-default">{{ __('NIK Anggota') }}
+                                    <x-all-not-null /></label>
+                                <input type="text" class="form-control @error('nik') is-invalid @enderror" name="nik"
+                                    value="{{ old('nik') ?? ($member->nik ?? '') }}" placeholder="{{ __('NIK Anggota') }}"
+                                    required autofocus>
+                                @error('nik')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-
-                        <div class="form-group">
-                            <label>{{ __('admin.Member Email') }} <x-fill-field /></label>
-                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') ?? $member->email }}" required>
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-12">
+                                <label for="name" class="form-label text-default">{{ __('Nama Anggota') }}
+                                    <x-all-not-null /></label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    name="name" value="{{ old('name') ?? ($member->name ?? '') }}"
+                                    placeholder="{{ __('Nama Anggota') }}" required>
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-
-                        <div class="form-group">
-                            <label>{{ __('admin.Area') }} <x-fill-field /></label>
-                            <select class="form-control select2 @error('area') is-invalid @enderror" name="area"
-                                id="area" placeholder="Choose ...">
-                                <option value="" disabled selected>
-                                    {{ __('admin.Choose one ...') }}</option>
-                                @foreach ($areas as $id => $name)
-                                    <option value="{{ $id }}" {{ $member->area_id == $id ? 'selected' : '' }}>
-                                        {{ $name }}</option>
-                                @endforeach
-                            </select>
-                            @error('area')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-12">
+                                <label for="email"
+                                    class="form-label text-default">{{ __('Email (Sebagai identikasi saat login)') }}
+                                    <x-all-not-null /></label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') ?? ($member->email ?? '') }}"
+                                    placeholder="{{ __('Email') }}" required>
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-
-                        <div class="form-group">
-                            <div class="control-label">{{ __('admin.Member Role') }} <x-fill-field /></div>
-                            <div class="mt-2 custom-switches-stacked">
-                                @foreach ($roles as $key => $item)
-                                    <label class="custom-switch">
-                                        <input type="radio" name="role" value="{{ $key }}"
-                                            class="custom-switch-input"
-                                            {{ in_array($item, $member_role) ? 'checked' : '' }}>
-                                        <span class="custom-switch-indicator"></span>
-                                        <span class="custom-switch-description text-primary">{{ $item }}</span>
-                                    </label>
-                                @endforeach
-                                @error('role')
-                                    <div>
-                                        <p class="text-danger">{{ $message }}</p>
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-12">
+                                <label for="name" class="form-label text-default">{{ __('Jenis Karyawan') }}
+                                    <x-all-not-null /></label>
+                                <select
+                                    class="js-example-placeholder-single js-states form-control select2 @error('employee_group') is-invalid @enderror"
+                                    name="employee_group" id="employee_group" required>
+                                    <option value="Bulanan"
+                                        {{ old('employee_group') == 'Bulanan' ? 'selected' : ($member->employee_group == 'Bulanan' ? 'selected' : '') }}>
+                                        {{ __('Bulanan') }}
+                                    </option>
+                                    <option value="Harian"
+                                        {{ old('employee_group') == 'Harian' ? 'selected' : ($member->employee_group == 'Harian' ? 'selected' : '') }}>
+                                        {{ __('Harian') }}
+                                    </option>
+                                </select>
+                                @error('employee_group')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-6">
+                                <label for="join_date" class="form-label text-default">{{ __('Tanggal Bergabung') }}
+                                    <x-all-not-null /></label>
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted">
+                                        <i class="ri-calendar-line"></i>
+                                    </div>
+                                    <input type="text"
+                                        class="form-control flatpickr @error('join_date') is-invalid @enderror"
+                                        name="join_date"
+                                        value="{{ old('join_date') ?? (formatDate($member->join_date) ?? '') }}"
+                                        placeholder="{{ __('Tanggal Bergabung') }}" required>
+                                    @error('join_date')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <label for="start_work_date"
+                                    class="form-label text-default">{{ __('Tanggal Mulai Bekerja') }}
+                                    <x-all-not-null /></label>
+                                <div class="input-group">
+                                    <div class="input-group-text text-muted">
+                                        <i class="ri-calendar-line"></i>
+                                    </div>
+                                    <input type="text"
+                                        class="form-control flatpickr @error('start_work_date') is-invalid @enderror"
+                                        name="start_work_date"
+                                        value="{{ old('start_work_date') ?? (formatDate($member->start_work_date) ?? '') }}"
+                                        placeholder="{{ __('Tanggal Mulai Bekerja') }}" required>
+                                    @error('start_work_date')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-6">
+                                <label for="department" class="form-label text-default">{{ __('Departemen') }}
+                                    <x-all-not-null /></label>
+                                <select
+                                    class="js-example-placeholder-single js-states form-control select2 @error('department') is-invalid @enderror"
+                                    name="department" id="department" required>
+                                    @foreach ($departments as $key => $value)
+                                        <option value="{{ $key }}"
+                                            {{ old('department') == $key ? 'selected' : ($member->department_id == $key ? 'selected' : '') }}>
+                                            {{ $value }}</option>
+                                    @endforeach
+                                </select>
+                                @error('department')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-xl-6">
+                                <label for="section" class="form-label text-default">{{ __('Bagian') }}
+                                    <x-all-not-null /></label>
+                                <select
+                                    class="js-example-placeholder-single js-states form-control select2 @error('section') is-invalid @enderror"
+                                    name="section" id="section" required>
+                                    @foreach ($sections as $key => $value)
+                                        <option value="{{ $key }}"
+                                            {{ old('section') == $key ? 'selected' : ($member->section_id == $key ? 'selected' : '') }}>
+                                            {{ $value }}</option>
+                                    @endforeach
+                                </select>
+                                @error('section')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-6">
+                                <label for="account_number" class="form-label text-default">{{ __('Nomor Rekening') }}
+                                    <x-all-not-null /></label>
+                                <input type="text" class="form-control @error('account_number') is-invalid @enderror"
+                                    name="account_number"
+                                    value="{{ old('account_number') ?? ($member->account_number ?? '') }}"
+                                    placeholder="{{ __('Nomor Rekening') }}" required>
+                                @error('account_number')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-xl-6">
+                                <label for="account_name" class="form-label text-default">{{ __('Nama Rekening') }}
+                                    <x-all-not-null /></label>
+                                <input type="text" class="form-control @error('account_name') is-invalid @enderror"
+                                    name="account_name"
+                                    value="{{ old('account_name') ?? ($member->account_name ?? '') }}"
+                                    placeholder="{{ __('Nama Rekening') }}" required>
+                                @error('account_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                         </div>
                     </div>
-
-                    <div class="card-footer bg-light">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-save"></i> {{ __('admin.Update') }}
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Simpan') }}
                         </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
 
 @include('layouts.admin.includes.select2')
+@include('layouts.admin.includes.flatpickr')

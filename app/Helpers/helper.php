@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use App\Models\Setting;
 use Illuminate\Support\Str;
 use App\Models\SettingMember;
+use App\Models\SettingSystem;
 use Illuminate\Support\Facades\Auth;
 
 function setSidebarActive(array $routes): ?string
@@ -46,60 +47,52 @@ function capitalFirstLetter(string $text = null): ?string
 function getArrayAllPermission()
 {
     return [
-        ['guard_name' => 'web', 'name' => 'anggota create', 'group_name' => 'Anggota Permission'],
-        ['guard_name' => 'web', 'name' => 'anggota delete', 'group_name' => 'Anggota Permission'],
-        ['guard_name' => 'web', 'name' => 'anggota index', 'group_name' => 'Anggota Permission'],
-        ['guard_name' => 'web', 'name' => 'anggota restore', 'group_name' => 'Anggota Permission'],
-        ['guard_name' => 'web', 'name' => 'anggota update', 'group_name' => 'Anggota Permission'],
-        ['guard_name' => 'web', 'name' => 'permission create', 'group_name' => 'Permission Permission'],
-        ['guard_name' => 'web', 'name' => 'permission delete', 'group_name' => 'Permission Permission'],
-        ['guard_name' => 'web', 'name' => 'permission index', 'group_name' => 'Permission Permission'],
-        ['guard_name' => 'web', 'name' => 'permission update', 'group_name' => 'Permission Permission'],
-        ['guard_name' => 'web', 'name' => 'role create', 'group_name' => 'Role Permission'],
-        ['guard_name' => 'web', 'name' => 'role delete', 'group_name' => 'Role Permission'],
-        ['guard_name' => 'web', 'name' => 'role index', 'group_name' => 'Role Permission'],
-        ['guard_name' => 'web', 'name' => 'role update', 'group_name' => 'Role Permission'],
-        ['guard_name' => 'web', 'name' => 'user create', 'group_name' => 'User Permission'],
-        ['guard_name' => 'web', 'name' => 'user delete', 'group_name' => 'User Permission'],
-        ['guard_name' => 'web', 'name' => 'user index', 'group_name' => 'User Permission'],
-        ['guard_name' => 'web', 'name' => 'user restore', 'group_name' => 'User Permission'],
-        ['guard_name' => 'web', 'name' => 'user update', 'group_name' => 'User Permission'],
-        ['guard_name' => 'web', 'name' => 'bahasa create', 'group_name' => 'Bahasa Permission'],
-        ['guard_name' => 'web', 'name' => 'bahasa delete', 'group_name' => 'Bahasa Permission'],
-        ['guard_name' => 'web', 'name' => 'bahasa index', 'group_name' => 'Bahasa Permission'],
-        ['guard_name' => 'web', 'name' => 'bahasa restore', 'group_name' => 'Bahasa Permission'],
-        ['guard_name' => 'web', 'name' => 'bahasa update', 'group_name' => 'Bahasa Permission'],
-        ['guard_name' => 'web', 'name' => 'translate generate', 'group_name' => 'Translate Permission'],
-        ['guard_name' => 'web', 'name' => 'translate index', 'group_name' => 'Translate Permission'],
-        ['guard_name' => 'web', 'name' => 'translate trans', 'group_name' => 'Translate Permission'],
-        ['guard_name' => 'web', 'name' => 'translate update', 'group_name' => 'Translate Permission'],
-        ['guard_name' => 'web', 'name' => 'setting system', 'group_name' => 'Setting System Permission'],
-        ['guard_name' => 'web', 'name' => 'section create', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section delete', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section index', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section restore', 'group_name' => 'Bagian Permission'],
-        ['guard_name' => 'web', 'name' => 'section update', 'group_name' => 'Bagian Permission'],
         ['guard_name' => 'web', 'name' => 'department create', 'group_name' => 'Departemen Permission'],
         ['guard_name' => 'web', 'name' => 'department delete', 'group_name' => 'Departemen Permission'],
         ['guard_name' => 'web', 'name' => 'department index', 'group_name' => 'Departemen Permission'],
         ['guard_name' => 'web', 'name' => 'department restore', 'group_name' => 'Departemen Permission'],
         ['guard_name' => 'web', 'name' => 'department update', 'group_name' => 'Departemen Permission'],
+        ['guard_name' => 'web', 'name' => 'section create', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'section delete', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'section index', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'section restore', 'group_name' => 'Bagian Permission'],
+        ['guard_name' => 'web', 'name' => 'section update', 'group_name' => 'Bagian Permission'],
         ['guard_name' => 'web', 'name' => 'product create', 'group_name' => 'Barang Penjualan Permission'],
         ['guard_name' => 'web', 'name' => 'product delete', 'group_name' => 'Barang Penjualan Permission'],
         ['guard_name' => 'web', 'name' => 'product index', 'group_name' => 'Barang Penjualan Permission'],
         ['guard_name' => 'web', 'name' => 'product restore', 'group_name' => 'Barang Penjualan Permission'],
         ['guard_name' => 'web', 'name' => 'product update', 'group_name' => 'Barang Penjualan Permission'],
+        ['guard_name' => 'web', 'name' => 'pengurus create', 'group_name' => 'Pengurus Permission'],
+        ['guard_name' => 'web', 'name' => 'pengurus delete', 'group_name' => 'Pengurus Permission'],
+        ['guard_name' => 'web', 'name' => 'pengurus index', 'group_name' => 'Pengurus Permission'],
+        ['guard_name' => 'web', 'name' => 'pengurus restore', 'group_name' => 'Pengurus Permission'],
+        ['guard_name' => 'web', 'name' => 'pengurus update', 'group_name' => 'Pengurus Permission'],
+        ['guard_name' => 'web', 'name' => 'anggota approve', 'group_name' => 'Anggota Permission'],
+        ['guard_name' => 'web', 'name' => 'anggota create', 'group_name' => 'Anggota Permission'],
+        ['guard_name' => 'web', 'name' => 'anggota delete', 'group_name' => 'Anggota Permission'],
+        ['guard_name' => 'web', 'name' => 'anggota index', 'group_name' => 'Anggota Permission'],
+        ['guard_name' => 'web', 'name' => 'anggota restore', 'group_name' => 'Anggota Permission'],
+        ['guard_name' => 'web', 'name' => 'anggota update', 'group_name' => 'Anggota Permission'],
+        ['guard_name' => 'web', 'name' => 'role create', 'group_name' => 'Role Permission'],
+        ['guard_name' => 'web', 'name' => 'role delete', 'group_name' => 'Role Permission'],
+        ['guard_name' => 'web', 'name' => 'role index', 'group_name' => 'Role Permission'],
+        ['guard_name' => 'web', 'name' => 'role update', 'group_name' => 'Role Permission'],
+        ['guard_name' => 'web', 'name' => 'permission create', 'group_name' => 'Permission Permission'],
+        ['guard_name' => 'web', 'name' => 'permission delete', 'group_name' => 'Permission Permission'],
+        ['guard_name' => 'web', 'name' => 'permission index', 'group_name' => 'Permission Permission'],
+        ['guard_name' => 'web', 'name' => 'permission update', 'group_name' => 'Permission Permission'],
+        ['guard_name' => 'web', 'name' => 'setting system', 'group_name' => 'Setting System Permission'],
     ];
 }
 
 function setArrayRoleKetuaPermission()
 {
     return [
-        'user create',
-        'user delete',
-        'user index',
-        'user restore',
-        'user update',
+        'department create',
+        'department delete',
+        'department index',
+        'department restore',
+        'department update',
         'setting system',
     ];
 }
@@ -107,11 +100,11 @@ function setArrayRoleKetuaPermission()
 function setArrayRoleBendaharaPermission()
 {
     return [
-        'bahasa create',
-        'bahasa delete',
-        'bahasa index',
-        'bahasa restore',
-        'bahasa update',
+        'section create',
+        'section delete',
+        'section index',
+        'section restore',
+        'section update',
     ];
 }
 
@@ -133,7 +126,7 @@ function setStatusBadge($status)
 
 function setStatusText($status)
 {
-    return $status == 1 ? 'Active' : 'Inactive';
+    return $status == 1 ? __('Aktif') : __('Tidak Aktif');
 }
 
 function saveDateTimeNow()
@@ -179,6 +172,15 @@ function checkPermission(string $permission)
     return auth()->user()->hasPermissionTo($permission);
 }
 
+function formatDate($date = '')
+{
+    if (!is_null($date) && isset($date)) {
+        $date_create = date_create($date);
+        $formatDate = SettingSystem::where('key', 'default_date_format')->first();
+        return date_format($date_create, $formatDate->value);
+    }
+}
+
 function formatMonth($month_number)
 {
     $month_name = array(
@@ -189,9 +191,9 @@ function formatMonth($month_number)
     return $month_name[(int) $month_number];
 }
 
-function formatAmount($amount)
+function formatAmount($amount, $decimal = 0)
 {
-    return number_format((float)$amount, 0, ',', '.');
+    return number_format((float)$amount, $decimal, ',', '.');
 }
 
 function unformatAmount($str)

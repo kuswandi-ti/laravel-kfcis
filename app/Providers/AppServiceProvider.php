@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\SettingUser;
 use App\Models\SettingSystem;
+use Illuminate\Pagination\Paginator;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Debugbar::disable();
+
+        Paginator::useBootstrap();
     }
 }

@@ -2,34 +2,72 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Area;
-use App\Models\Member;
+use App\Models\User;
+use App\Models\Section;
+use App\Models\Department;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\Admin\AdminMemberUserStoreRequest;
-use App\Http\Requests\Admin\AdminMemberUserUpdateRequest;
+use App\Http\Requests\Admin\AdminMemberUserRequest;
 
 class AdminMemberUserController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:member admin user create,' . getGuardNameAdmin(), ['only' => ['create', 'store']]);
-        $this->middleware('permission:member admin user delete,' . getGuardNameAdmin(), ['only' => ['destroy']]);
-        $this->middleware('permission:member admin user index,' . getGuardNameAdmin(), ['only' => ['index', 'show', 'data']]);
-        $this->middleware('permission:member admin user restore,' . getGuardNameAdmin(), ['only' => ['restore']]);
-        $this->middleware('permission:member admin user update,' . getGuardNameAdmin(), ['only' => ['edit', 'update']]);
+        $this->middleware('permission:anggota approve', ['only' => ['approve']]);
+        $this->middleware('permission:anggota create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:anggota delete', ['only' => ['destroy']]);
+        $this->middleware('permission:anggota index', ['only' => ['index', 'show', 'data']]);
+        $this->middleware('permission:anggota restore', ['only' => ['restore']]);
+        $this->middleware('permission:anggota update', ['only' => ['edit', 'update']]);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.member.index');
+        $departments = Department::where('status', 1)->orderBy('name')->get();
+        $sections = Section::where('status', 1)->orderBy('name')->get();
+
+        $members = User::when($request->has('department') && $request->department != "", function ($query) use ($request) {
+            $query->whereHas('department', function ($q) use ($request) {
+                $q->where('slug', $request->department);
+            });
+        })
+            ->when($request->has('section') && $request->section != "", function ($query) use ($request) {
+                $query->whereHas('section', function ($q) use ($request) {
+                    $q->where('slug', $request->section);
+                });
+            })
+            ->when($request->has('employee_group') && $request->employee_group != "", function ($query) use ($request) {
+                $query->where('employee_group', $request->employee_group);
+            })
+            ->when($request->has('approve') && $request->approve != "", function ($query) use ($request) {
+                if ($request->approve == 1) {
+                    $query->where('approved_at', '!=', null);
+                } else {
+                    $query->where('approved_at', '==', null);
+                }
+            })
+            ->when($request->has('status') && $request->status != "", function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->when(
+                $request->search && $request->search != "",
+                function ($query) use ($request) {
+                    $query->where('nik', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('name', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('employee_group', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('account_number', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('account_name', 'LIKE', '%' . $request->search . '%');
+                }
+            )
+            ->orderBy('name', 'ASC')
+            ->paginate(8);
+
+        return view('admin.member.index', compact('departments', 'sections', 'members'));
     }
 
     /**
@@ -37,172 +75,132 @@ class AdminMemberUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::orderBy('name', 'DESC')->where('guard_name', 'member')->pluck('name', 'name');
-        $areas = Area::orderBy('name', 'ASC')->pluck('name', 'id');
-        return view('admin.member.create', compact('roles', 'areas'));
+        $departments = Department::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $sections = Section::where('status', '1')->orderBy('name')->pluck('name', 'id');
+
+        return view('admin.member.create', compact('departments', 'sections'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdminMemberUserStoreRequest $request)
+    public function store(AdminMemberUserRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $member = new Member();
+        $store = User::create([
+            'nik' => $request->nik,
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'email' => $request->email,
+            'employee_group' => $request->employee_group,
+            'join_date' => $request->join_date,
+            'department_id' => $request->department,
+            'section_id' => $request->section,
+            'account_number' => $request->account_number,
+            'account_name' => $request->account_name,
+            'start_work_date' => $request->start_work_date,
+            'approved_at' => saveDateTimeNow(),
+            'approved_by' => auth()->user()->name,
+            'created_by' => auth()->user()->name,
+        ]);
 
-            $member->name = $request->name;
-            $member->slug = Str::slug($request->name);
-            $member->email = $request->email;
-            $member->password = Hash::make($request->password);
-            $member->image = config('common.default_image_circle');
-            $member->area_id = $request->area;
-            $member->email_verified_at = saveDateTimeNow();
-            $member->created_by = getLoggedUser()->name;
-            $member->status = 1;
-            $member->save();
+        // TODO : Send email verifikasi saat approve, tidak disini saat create
 
-            $member->assignRole($request->role);
-        });
-
-        return redirect()->route('admin.member.index')->with('success', __('Created member user successfully'));
+        if ($store) {
+            return redirect()->route('admin.member.index')->with('success', __('Data anggota koperasi berhasil dibuat'));
+        } else {
+            return redirect()->route('admin.member.index')->with('error', __('Data anggota koperasi gagal dibuat'));
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $member)
     {
-        //
+        return view('admin.member.show', compact('member'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $member)
     {
-        $member = Member::findOrFail($id);
-        $roles = Role::orderBy('name', 'DESC')->where('guard_name', 'member')->pluck('name', 'name');
-        $member_role = $member->roles->pluck('name', 'name')->all();
-        $areas = Area::orderBy('name', 'ASC')->pluck('name', 'id');
+        $departments = Department::where('status', 1)->orderBy('name')->pluck('name', 'id');
+        $sections = Section::where('status', '1')->orderBy('name')->pluck('name', 'id');
 
-        return view('admin.member.edit', compact('member', 'roles', 'member_role', 'areas'));
+        return view('admin.member.edit', compact('member', 'departments', 'sections'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminMemberUserUpdateRequest $request, string $id)
+    public function update(AdminMemberUserRequest $request, User $member)
     {
-        $member = Member::findOrFail($id);
+        $update = $member->update([
+            'nik' => $request->nik,
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'email' => $request->email,
+            'employee_group' => $request->employee_group,
+            'join_date' => $request->join_date,
+            'department_id' => $request->department,
+            'section_id' => $request->section,
+            'account_number' => $request->account_number,
+            'account_name' => $request->account_name,
+            'start_work_date' => $request->start_work_date,
+            'updated_by' => auth()->user()->name,
+        ]);
 
-        DB::transaction(function () use ($request) {
-            $member->update([
-                'name' => $request->name,
-                'slug' => Str::slug($request->name),
-                'email' => $request->email,
-                'area_id' => $request->area,
-                'updated_by' => getLoggedUser()->name,
-                'status' => 1,
-            ]);
-            $member->syncRoles($request->role);
-        });
-
-        return redirect()->route('admin.member.index')->with('success', __('Updated member user successfully'));
+        if ($update) {
+            return redirect()->route('admin.member.index')->with('success', __('Data anggota koperasi berhasil diperbarui'));
+        } else {
+            return redirect()->route('admin.member.index')->with('error', __('Data anggota koperasi gagal diperbarui'));
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $member)
     {
         try {
-            $member = Member::findOrFail($id);
+            $destroy = $member->update([
+                'status' => 0,
+                'deleted_at' => saveDateTimeNow(),
+                'deleted_by' => auth()->user()->name,
+            ]);
 
-            if ($member->roles->first()->name == 'Admin') {
+            if ($destroy) {
+                return response([
+                    'status' => 'success',
+                    'message' => __('Data anggota koperasi berhasil dihapus')
+                ]);
+            } else {
                 return response([
                     'status' => 'error',
-                    'message' => __('admin.Cannot delete this user because role is Admin')
+                    'message' => __('Data anggota koperasi gagal dihapus')
                 ]);
             }
-
-            $member->status = 0;
-            $member->deleted_at = saveDateTimeNow();
-            $member->deleted_by = getLoggedUser()->name;
-            $member->save();
-
-            return response([
-                'status' => 'success',
-                'message' => __('admin.Deleted member user successfully')
-            ]);
         } catch (\Throwable $th) {
             return response([
                 'status' => 'error',
-                'message' => __('admin.Deleted member user is error')
+                'message' => __('Data anggota koperasi gagal dihapus')
             ]);
         }
     }
 
-    public function restore($id)
+    public function restore(User $member)
     {
-        $member = Member::findOrFail($id);
+        $restore = $member->update([
+            'status' => 1,
+            'restored_at' => saveDateTimeNow(),
+            'restored_by' => auth()->user()->name,
+        ]);
 
-        $member->status = 1;
-        $member->restored_at = saveDateTimeNow();
-        $member->restored_by = getLoggedUser()->name;
-        $member->save();
-
-        return redirect()->route('admin.member.index')->with('success', __('admin.Restore member user successfully'));
-    }
-
-    public function data(Request $request)
-    {
-        $query = Member::orderBy('name', 'ASC');
-
-        return datatables($query)
-            ->addIndexColumn()
-            ->editColumn('image', function ($query) {
-                if (!empty($query->image)) {
-                    return '<figure class="avatar"><img src="' . url(config('common.path_storage') . $query->image) . '"></figure>';
-                } else {
-                    return '<figure class="avatar"><img src="' . url(config('common.path_storage') . config('common.default_image_circle')) . '"></figure>';
-                }
-            })
-            ->editColumn('role', function ($query) {
-                $badge = $query->roles->pluck('name')->first() == getGuardTextAdmin() ? 'danger' : 'dark';
-                return '<div class="badge badge-' . $badge . '">' . $query->roles->pluck('name')->first() . '</div>';
-            })
-            ->editColumn('status', function ($query) {
-                return '<div class="badge badge-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</div>';
-            })
-            ->addColumn('action', function ($query) {
-                if ($query->status == 1) {
-                    if (canAccess(['member admin user update'])) {
-                        $update = '
-                            <a href="' . route('admin.member.edit', $query->id) . '" class="btn btn-primary btn-sm">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                        ';
-                    }
-                    if (canAccess(['member admin user delete'])) {
-                        $delete = '
-                            <a href="' . route('admin.member.destroy', $query->id) . '" class="btn btn-danger btn-sm delete_item">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        ';
-                    }
-                    return (!empty($update) ? $update : '') . (!empty($delete) ? $delete : '');
-                } else {
-                    if (canAccess(['member admin user restore'])) {
-                        return '
-                            <a href="' . route('admin.member.restore', $query->id) . '" class="btn btn-warning btn-sm" data-toggle="tooltip" title="' . __('Restore to Active') . '">
-                                <i class="fas fa-undo"></i>
-                            </a>
-                        ';
-                    }
-                }
-            })
-            ->rawColumns(['action'])
-            ->escapeColumns([])
-            ->make(true);
+        if ($restore) {
+            return redirect()->route('admin.member.index')->with('success', __('Data anggota koperasi berhasil dipulihkan'));
+        } else {
+            return redirect()->route('admin.member.index')->with('error', __('Data anggota koperasi gagal dipulihkan'));
+        }
     }
 }

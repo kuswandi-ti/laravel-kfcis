@@ -10,7 +10,12 @@
 
 @section('section_header_breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Bagian') }}</li>
+    <li class="breadcrumb-item">
+        <a href="{{ route('admin.section.index') }}" class="text-white-50">
+            {{ __('Bagian') }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Menambah Data Bagian') }}</li>
 @endsection
 
 @section('page_content')
@@ -52,7 +57,7 @@
                         </div>
                         <div class="row gy-4">
                             <div class="col-xl-12">
-                                <label for="name" class="form-label text-default">{{ __('Departemen') }}
+                                <label for="department" class="form-label text-default">{{ __('Departemen') }}
                                     <x-all-not-null /></label>
                                 <select
                                     class="js-example-placeholder-single js-states form-control select2 @error('department') is-invalid @enderror"

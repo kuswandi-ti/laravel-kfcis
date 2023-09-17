@@ -43,105 +43,133 @@
                 <!-- End::slide -->
 
                 <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">{{ __('Data Utama') }}</span></li>
+                @if (canAccess(['department index', 'section index', 'product index', 'pengurus index', 'anggota index']))
+                    <li class="slide__category"><span class="category-name">{{ __('Data Utama') }}</span></li>
+                @endif
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
-                <li class="slide {{ setSidebarActive(['admin.department.*']) }}">
-                    <a href="{{ route('admin.department.index') }}"
-                        class="side-menu__item {{ setSidebarActive(['admin.department.*']) }}">
-                        <span class="side-menu__icon">
-                            <i class='bx bx-square'></i>
-                        </span>
-                        <span class="side-menu__label">{{ __('Departemen') }}</span>
-                    </a>
-                </li>
-                <li class="slide {{ setSidebarActive(['admin.section.*']) }}">
-                    <a href="{{ route('admin.section.index') }}"
-                        class="side-menu__item {{ setSidebarActive(['admin.section.*']) }}">
-                        <span class="side-menu__icon">
-                            <i class='bx bx-copy'></i>
-                        </span>
-                        <span class="side-menu__label">{{ __('Bagian') }}</span>
-                    </a>
-                </li>
-                <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
-                    <a href="{{ route('admin.product.index') }}"
-                        class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
-                        <span class="side-menu__icon">
-                            <i class='bx bx-archive'></i>
-                        </span>
-                        <span class="side-menu__label">{{ __('Barang Penjualan') }}</span>
-                    </a>
-                </li>
+                @if (canAccess(['department index']))
+                    <li class="slide {{ setSidebarActive(['admin.department.*']) }}">
+                        <a href="{{ route('admin.department.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.department.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-square'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Departemen') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if (canAccess(['section index']))
+                    <li class="slide {{ setSidebarActive(['admin.section.*']) }}">
+                        <a href="{{ route('admin.section.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.section.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-copy'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Bagian') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if (canAccess(['product index']))
+                    <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
+                        <a href="{{ route('admin.product.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-archive'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Barang Penjualan') }}</span>
+                        </a>
+                    </li>
+                @endif
+                @if (canAccess(['pengurus index', 'anggota index']))
+                    <li
+                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        <a href="javascript:void(0);"
+                            class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <span class=" side-menu__icon">
+                                <i class='bx bxs-user-plus'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Anggota Koperasi') }}</span>
+                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                        </a>
+                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            <li class="slide side-menu__label1">
+                                <a href="javascript:void(0)">{{ __('Anggota Koperasi') }}</a>
+                            </li>
+                            @if (canAccess(['pengurus index']))
+                                <li class="slide {{ setSidebarActive(['admin.admin.*']) }}">
+                                    <a href="{{ route('admin.admin.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.admin.*']) }}">
+                                        {{ __('Pengurus') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canAccess(['anggota index']))
+                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
+                                    <a href="{{ route('admin.member.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                        {{ __('Anggota') }}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
                 <!-- End::slide -->
 
                 <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">{{ __('Pengaturan') }}</span></li>
+                @if (canAccess(['role index', 'permission index', 'setting system']))
+                    <li class="slide__category"><span class="category-name">{{ __('Pengaturan') }}</span></li>
+                @endif
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
-                <li
-                    class="slide has-sub {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }} {{ setSidebarOpen(['admin.permission.*', 'admin.role.*']) }}">
-                    <a href="javascript:void(0);"
-                        class="side-menu__item {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
-                        <span class=" side-menu__icon">
-                            <i class='bx bxs-lock-open-alt'></i>
-                        </span>
-                        <span class="side-menu__label">{{ __('Roles & Permissions') }}</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1 {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">{{ __('Roles & Permissions') }}</a>
-                        </li>
-                        <li class="slide {{ setSidebarActive(['admin.role.*']) }}">
-                            <a href="{{ route('admin.role.index') }}"
-                                class="side-menu__item {{ setSidebarActive(['admin.role.*']) }}">
-                                {{ __('Roles') }}
-                            </a>
-                        </li>
-                        <li class="slide {{ setSidebarActive(['admin.permission.*']) }}">
-                            <a href="{{ route('admin.permission.index') }}"
-                                class="side-menu__item {{ setSidebarActive(['admin.permission.*']) }}">
-                                {{ __('Permissions') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="slide {{ setSidebarActive(['admin.setting.*']) }}">
-                    <a href="{{ route('admin.setting.index') }}"
-                        class="side-menu__item {{ setSidebarActive(['admin.setting.*']) }}">
-                        <span class="side-menu__icon">
-                            <i class='bx bx-cog'></i>
-                        </span>
-                        <span class="side-menu__label">{{ __('Pengaturan Sistem') }}</span>
-                    </a>
-                </li>
-                {{-- <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item">
-                        <span class=" side-menu__icon">
-                            <i class='bx bxs-user-plus'></i>
-                        </span>
-                        <span class="side-menu__label">{{ __('Users Management') }}</span>
-                        <i class="fe fe-chevron-right side-menu__angle"></i>
-                    </a>
-                    <ul class="slide-menu child1">
-                        <li class="slide side-menu__label1">
-                            <a href="javascript:void(0)">{{ __('Users Management') }}</a>
-                        </li>
-                        <li class="slide">
-                            <a href="accordions_collpase.html" class="side-menu__item">
-                                {{ __('Pengurus') }}
-                            </a>
-                        </li>
-                        <li class="slide">
-                            <a href="carousel.html" class="side-menu__item">
-                                {{ __('Anggota') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
+                @if (canAccess(['role index', 'permission index']))
+                    <li
+                        class="slide has-sub {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }} {{ setSidebarOpen(['admin.permission.*', 'admin.role.*']) }}">
+                        <a href="javascript:void(0);"
+                            class="side-menu__item {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
+                            <span class=" side-menu__icon">
+                                <i class='bx bxs-lock-open-alt'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Roles & Permissions') }}</span>
+                            <i class="fe fe-chevron-right side-menu__angle"></i>
+                        </a>
+                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
+                            <li class="slide side-menu__label1">
+                                <a href="javascript:void(0)">{{ __('Roles & Permissions') }}</a>
+                            </li>
+                            @if (canAccess(['role index']))
+                                <li class="slide {{ setSidebarActive(['admin.role.*']) }}">
+                                    <a href="{{ route('admin.role.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.role.*']) }}">
+                                        {{ __('Roles') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if (canAccess(['permission index']))
+                                <li class="slide {{ setSidebarActive(['admin.permission.*']) }}">
+                                    <a href="{{ route('admin.permission.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.permission.*']) }}">
+                                        {{ __('Permissions') }}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+                @if (canAccess(['setting system']))
+                    <li class="slide {{ setSidebarActive(['admin.setting.*']) }}">
+                        <a href="{{ route('admin.setting.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.setting.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-cog'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Pengaturan Sistem') }}</span>
+                        </a>
+                    </li>
+                @endif
                 <!-- End::slide -->
 
                 <!-- Start::slide__category -->

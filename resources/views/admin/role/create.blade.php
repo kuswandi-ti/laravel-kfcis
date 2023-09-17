@@ -10,7 +10,12 @@
 
 @section('section_header_breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Role') }}</li>
+    <li class="breadcrumb-item">
+        <a href="{{ route('admin.role.index') }}" class="text-white-50">
+            {{ __('Role') }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Menambah Data Role') }}</li>
 @endsection
 
 @section('page_content')
@@ -72,7 +77,7 @@
                                                         <div class="mt-1 row gy-1">
                                                             @foreach ($permission->sortBy('name') as $item)
                                                                 <div class="col-xl-2">
-                                                                    <div class="form-check form-switch mb-2">
+                                                                    <div class="mb-2 form-check form-switch">
                                                                         <input class="form-check-input"
                                                                             value="{{ $item->name }}" type="checkbox"
                                                                             role="switch" name="permissions[]"

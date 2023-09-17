@@ -21,8 +21,7 @@ class AdminRoleRequest extends FormRequest
      */
     public function rules(): array
     {
-        switch ($this->method())
-        {
+        switch ($this->method()) {
             case 'POST':
                 return [
                     'role_name' => ['required', 'string', 'max:255', 'unique:roles,name'],
@@ -31,8 +30,9 @@ class AdminRoleRequest extends FormRequest
 
             case 'PATCH':
             case 'PUT':
+                $role_id = $this->route('role');
                 return [
-                    'role_name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $this->role->id],
+                    'role_name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $role_id],
                 ];
                 break;
         }

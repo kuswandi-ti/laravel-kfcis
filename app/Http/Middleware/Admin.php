@@ -19,14 +19,14 @@ class Admin
         if (!Auth::check()) {
             return redirect()->route('admin.login')->with('error', 'Anda tidak bisa mengakses halaman yang dituju. Silahkan login terlebih dahulu');
         } else {
-            if (!Auth::user()->email_verified_at) {
-                Auth::logout();
-                return redirect()->route('admin.login')
-                    ->with('error', 'Anda perlu mengonfirmasi akun Anda. Kami telah mengirimkan Anda kode aktivasi, silakan periksa email Anda');
-            } else if (!Auth::user()->approved_at) {
+            if (!Auth::user()->approved_at) {
                 Auth::logout();
                 return redirect()->route('admin.login')
                     ->with('error', 'Akun anda belum aktif. Perlu approve dari admin agar akun anda bisa digunakan. Silahkan hubungi admin');
+            } else if (!Auth::user()->email_verified_at) {
+                Auth::logout();
+                return redirect()->route('admin.login')
+                    ->with('error', 'Anda perlu mengonfirmasi akun Anda. Kami telah mengirimkan Anda kode aktivasi, silakan periksa email Anda');
             }
         }
 

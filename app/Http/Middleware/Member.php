@@ -16,13 +16,17 @@ class Member
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard(getGuardNameMember())->check()) {
-            return redirect()->route('member.login')->with('error', 'Please login first !');
+        if (!Auth::check()) {
+            return redirect()->route('member.login')->with('error', 'Anda tidak bisa mengakses halaman yang dituju. Silahkan login terlebih dahulu');
         } else {
-            if (!Auth::guard(getGuardNameMember())->user()->email_verified_at) {
-                Auth::guard(getGuardNameMember())->logout();
+            if (!Auth::user()->approved_at) {
+                Auth::logout();
                 return redirect()->route('member.login')
-                    ->with('error', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+                    ->with('error', 'Akun anda belum aktif. Perlu approve dari admin agar akun anda bisa digunakan. Silahkan hubungi admin');
+            } else if (!Auth::user()->email_verified_at) {
+                Auth::logout();
+                return redirect()->route('member.login')
+                    ->with('error', 'Anda perlu mengonfirmasi akun Anda. Kami telah mengirimkan Anda kode aktivasi, silakan periksa email Anda');
             }
         }
 

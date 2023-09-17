@@ -15,22 +15,23 @@
             {{ __('Barang Penjualan') }}
         </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Menambah Data Barang Penjualan') }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Memperbarui Data Barang Penjualan') }}</li>
 @endsection
 
 @section('page_content')
     <div class="row">
         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-            <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.product.update', $product) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <div class="card custom-card">
                     <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
                         <div class="flex-fill">
                             <div class="card-title">
-                                {{ __('Menambah Data Barang Penjualan') }}
+                                {{ __('Memperbarui Data Barang Penjualan') }}
                                 <p class="subtitle text-muted fs-12 fw-normal">
-                                    {{ __('Silahkan input data untuk proses menambah data barang penjualan') }}
+                                    {{ __('Silahkan input data untuk proses pembaruan data barang penjualan') }}
                                 </p>
                             </div>
                         </div>
@@ -46,8 +47,8 @@
                                 <label for="name" class="form-label text-default">{{ __('Nama Barang') }}
                                     <x-all-not-null /></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    name="name" value="{{ old('name') }}" placeholder="{{ __('Nama Barang') }}"
-                                    required autofocus>
+                                    name="name" value="{{ old('name') ?? ($product->name ?? '') }}"
+                                    placeholder="{{ __('Nama Barang') }}" required autofocus>
                                 @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -63,7 +64,7 @@
                                             class="form-label text-default">{{ __('Spesifikasi Barang') }}
                                             <x-all-not-null /></label>
                                         <textarea class="form-control @error('specification') is-invalid @enderror" name="specification" id="specification"
-                                            rows="8" placeholder="{{ __('Spesifikasi Barang') }}" required>{{ old('specification') }}</textarea>
+                                            rows="8" placeholder="{{ __('Spesifikasi Barang') }}" required>{{ old('specification') ?? ($product->specification ?? '') }}</textarea>
                                         @error('specification')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -75,9 +76,9 @@
                                     <div class="col-xl-12">
                                         <label for="price_hpp" class="form-label text-default">{{ __('Harga HPP') }}
                                             <x-all-not-null /></label>
-                                        <input type="text"
-                                            class="form-control number-only @error('price_hpp') is-invalid @enderror"
-                                            name="price_hpp" id="price_hpp" value="{{ old('price_hpp') ?? 0 }}"
+                                        <input type="text" class="form-control @error('price_hpp') is-invalid @enderror"
+                                            name="price_hpp" id="price_hpp"
+                                            value="{{ old('price_hpp') ?? ($product->price_hpp ?? 0) }}"
                                             placeholder="{{ __('Harga HPP') }}" required>
                                         @error('price_hpp')
                                             <div class="invalid-feedback">
@@ -91,7 +92,8 @@
                                         <label for="price_sell" class="form-label text-default">{{ __('Harga Jual') }}
                                             <x-all-not-null /></label>
                                         <input type="text" class="form-control @error('price_sell') is-invalid @enderror"
-                                            name="price_sell" id="price_sell" value="{{ old('price_sell') ?? 0 }}"
+                                            name="price_sell" id="price_sell"
+                                            value="{{ old('price_sell') ?? ($product->price_sell ?? 0) }}"
                                             placeholder="{{ __('Harga Jual') }}" required>
                                         @error('price_sell')
                                             <div class="invalid-feedback">
@@ -104,7 +106,8 @@
                                     <div class="col-xl-12">
                                         <label for="margin" class="form-label text-default">{{ __('Margin') }}</label>
                                         <input type="text" class="form-control @error('margin') is-invalid @enderror"
-                                            name="margin" id="margin" value="{{ old('margin') ?? 0 }}"
+                                            name="margin" id="margin"
+                                            value="{{ old('margin') ?? ($product->margin ?? 0) }}"
                                             placeholder="{{ __('Margin') }}" readonly>
                                         @error('margin')
                                             <div class="invalid-feedback">
@@ -121,7 +124,7 @@
                                             <div class="justify-content-between">
                                                 <div class="mb-2 file-format-icon">
                                                     <div class="text-center">
-                                                        <img src="{{ url(config('common.path_template_admin') . config('common.image_product')) }}"
+                                                        <img src="{{ !empty($product->image) ? url(config('common.path_storage') . $product->image) : url(config('common.path_template_admin') . config('common.image_product')) }}"
                                                             class="rounded img-fluid preview-path_image_barang"
                                                             width="500" height="360">
                                                     </div>
@@ -137,7 +140,7 @@
                                                         <input class="form-control" type="file" name="image_barang"
                                                             onchange="preview('.preview-path_image_barang', this.files[0])">
                                                         <input type="hidden" name="old_image_barang"
-                                                            value="{{ $setting_system['company_logo_toggle'] ?? '' }}">
+                                                            value="{{ $product->image ?? '' }}">
                                                     </div>
                                                 </div>
                                             </div>

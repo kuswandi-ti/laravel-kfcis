@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(BankTableSeeder::class);
-        $this->call(DepartmentSectionTableSeeder::class);
+        // $this->call(DepartmentSectionTableSeeder::class);
         $this->call(FormatDateTableSeeder::class);
         $this->call(FormatTimeTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);
@@ -37,8 +37,5 @@ class DatabaseSeeder extends Seeder
         $this->call(ReligionTableSeeder::class);
         $this->call(SettingSystemTableSeeder::class);
         $this->call(IndonesiaDatabaseSeeder::class);
-
-
-
     }
 }

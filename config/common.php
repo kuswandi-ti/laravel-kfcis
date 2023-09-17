@@ -4,13 +4,13 @@ return [
 
     'path_storage' => env('PATH_STORAGE'),
 
-    'no_image' => env('NO_IMAGE'),
     'logo_company_main' => env('LOGO_COMPANY_MAIN'),
     'logo_company_desktop' => env('LOGO_COMPANY_DESKTOP'),
     'logo_company_toggle' => env('LOGO_COMPANY_TOGGLE'),
     'image_user_profile_small' => env('IMAGE_USER_PROFILE_SMALL'),
     'image_user_profile_big' => env('IMAGE_USER_PROFILE_BIG'),
     'image_product' => env('IMAGE_PRODUCT'),
+    'image_square_200x200' => env('IMAGE_SUARE_200x200'),
 
     'path_template' => env('PATH_TEMPLATE'),
     'path_template_admin' => env('PATH_TEMPLATE_ADMIN'),

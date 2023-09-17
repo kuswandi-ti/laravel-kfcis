@@ -161,7 +161,7 @@ class AdminSectionController extends Controller
                     $update = '
                         <li>
                             <a href="' . route('admin.section.edit', $query) . '" class="dropdown-item border-bottom">
-                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Ubah") . '
+                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
                             </a>
                         </li>
                     ';

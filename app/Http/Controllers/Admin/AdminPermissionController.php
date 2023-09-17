@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
 use App\Http\Requests\Admin\AdminPermissionRequest;
-use App\Http\Requests\Admin\AdminPermissionStoreRequest;
-use App\Http\Requests\Admin\AdminPermissionUpdateRequest;
 
 class AdminPermissionController extends Controller
 {
@@ -73,7 +71,7 @@ class AdminPermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminPermissionUpdateRequest $request, string $id)
+    public function update(AdminPermissionRequest $request, string $id)
     {
         $permission = Permission::findOrFail($id);
         $update = $permission->update([
@@ -119,7 +117,7 @@ class AdminPermissionController extends Controller
                     $update = '
                         <li>
                             <a href="' . route('admin.permission.edit', $query->id) . '" class="dropdown-item border-bottom">
-                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Ubah") . '
+                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
                             </a>
                         </li>
                     ';
@@ -139,8 +137,8 @@ class AdminPermissionController extends Controller
                                     <i class="bx bx-dots-vertical-rounded fs-20"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="">' .
-                                    (!empty($update) ? $update : '') .
-                                    (!empty($delete) ? $delete : '') . '
+                        (!empty($update) ? $update : '') .
+                        (!empty($delete) ? $delete : '') . '
                                 </ul>
                             </div>';
                 } else {

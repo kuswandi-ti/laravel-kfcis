@@ -1,52 +1,54 @@
 @extends('layouts.admin.master')
 
 @section('page_title')
-    {{ __('admin.Admin User') }}
+    {{ __('Pengurus Koperasi') }}
 @endsection
 
 @section('section_header_title')
-    {{ __('admin.Admin User') }}
+    {{ __('Pengurus Koperasi') }}
 @endsection
 
 @section('section_header_breadcrumb')
     @parent
-    <div class="breadcrumb-item">{{ __('admin.Admin User') }}</div>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Daftar Data Pengurus Koperasi') }}</li>
 @endsection
 
-@section('section_body_title')
-    {{ __('admin.Admin User') }}
-@endsection
-
-@section('section_body_lead')
-    {{ __('admin.View information about admin user on this page') }}
-@endsection
-
-@section('content')
+@section('page_content')
     <div class="row">
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h4>{{ __('admin.All Admin User') }}</h4>
-                    @if (canAccess(['sytem admin user create']))
-                        <div class="card-header-action">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="card custom-card">
+                <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
+                    <div class="flex-fill">
+                        <div class="card-title">
+                            {{ __('Daftar Data Pengurus Koperasi') }}
+                            <p class="subtitle text-muted fs-12 fw-normal">
+                                {{ __('Menampilkan semua data pengurus koperasi') }}
+                            </p>
+                        </div>
+                    </div>
+                    @can('pengurus create')
+                        <div class="d-flex" role="search">
                             <a href="{{ route('admin.admin.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus-circle"></i> {{ __('admin.Create') }}
+                                {{ __('Baru') }}
                             </a>
                         </div>
-                    @endif
+                    @endcan
+
                 </div>
                 <div class="card-body">
-                    <div class="mt-3 table-responsive">
+                    <div class="table-responsive">
                         <table class="table table-striped" id="table_data">
                             <thead>
                                 <tr>
-                                    <th class="text-center" width="10%"><i class="fas fa-list-ol"></i></th>
-                                    <th class="text-center" width="12%"><i class="fas fa-cogs"></i></th>
-                                    <th class="text-center"></th>
-                                    <th>{{ __('admin.Admin User Name') }}</th>
-                                    <th class="text-center">{{ __('admin.Email') }}</th>
-                                    <th class="text-center">{{ __('admin.Role') }}</th>
-                                    <th class="text-center" width="8%">{{ __('admin.Status') }}</th>
+                                    <th scope="col" width="5%">{{ __('Nomor') }}</th>
+                                    <th scope="col" width="5%">{{ __('Aksi') }}</th>
+                                    <th scope="col" width="7%"></th>
+                                    <th scope="col">{{ __('NIK') }}</th>
+                                    <th scope="col">{{ __('Nama') }}</th>
+                                    <th scope="col">{{ __('Departemen') }}</th>
+                                    <th scope="col">{{ __('Bagian') }}</th>
+                                    <th scope="col">{{ __('Role') }}</th>
+                                    <th scope="col" width="10%">{{ __('Status') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,7 +61,7 @@
     </div>
 @endsection
 
-<x-swal />
+<x-web-sweet-alert />
 
 @include('layouts.admin.includes.datatable')
 
@@ -72,6 +74,10 @@
             autoWidth: false,
             responsive: true,
             serverSide: true,
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            },
             ajax: {
                 url: '{{ route('admin.admin.data') }}',
             },
@@ -85,14 +91,22 @@
                 sortable: false,
             }, {
                 data: 'image',
-                searchable: false,
-                sortable: false,
+                searchable: true,
+                sortable: true,
+            }, {
+                data: 'nik',
+                searchable: true,
+                sortable: true,
             }, {
                 data: 'name',
                 searchable: true,
                 sortable: true,
             }, {
-                data: 'email',
+                data: 'department',
+                searchable: true,
+                sortable: true,
+            }, {
+                data: 'section',
                 searchable: true,
                 sortable: true,
             }, {
@@ -103,10 +117,6 @@
                 data: 'status',
                 searchable: true,
                 sortable: true,
-            }],
-            columnDefs: [{
-                className: 'text-center',
-                targets: [0, 1, 2, 4, 5, 6]
             }],
         });
     </script>

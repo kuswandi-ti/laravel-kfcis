@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Area;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
-use App\Http\Requests\Admin\AdminRoleStoreRequest;
-use App\Http\Requests\Admin\AdminRoleUpdateRequest;
+use App\Http\Requests\Admin\AdminRoleRequest;
 
 class AdminRoleController extends Controller
 {
     function __construct()
     {
-        $this->middleware(['permission:role admin create'])->only(['create', 'store']);
-        $this->middleware(['permission:role admin delete'])->only(['destroy']);
-        $this->middleware(['permission:role admin index'])->only(['index', 'show', 'data']);
-        $this->middleware(['permission:role admin update'])->only(['edit', 'update']);
+        $this->middleware(['permission:role create'])->only(['create', 'store']);
+        $this->middleware(['permission:role delete'])->only(['destroy']);
+        $this->middleware(['permission:role index'])->only(['index', 'show', 'data']);
+        $this->middleware(['permission:role update'])->only(['edit', 'update']);
     }
 
     /**
@@ -41,7 +39,7 @@ class AdminRoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdminRoleStoreRequest $request)
+    public function store(AdminRoleRequest $request)
     {
         $store = Role::create([
             'name' => $request->role_name,
@@ -72,7 +70,7 @@ class AdminRoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminRoleUpdateRequest $request, string $id)
+    public function update(AdminRoleRequest $request, string $id)
     {
         $role = Role::findOrFail($id);
         $update = $role->update([
@@ -127,7 +125,7 @@ class AdminRoleController extends Controller
                     $update = '
                         <li>
                             <a href="' . route('admin.role.edit', $query->id) . '" class="dropdown-item border-bottom">
-                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Ubah") . '
+                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
                             </a>
                         </li>
                     ';
@@ -147,8 +145,8 @@ class AdminRoleController extends Controller
                                     <i class="bx bx-dots-vertical-rounded fs-20"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="">' .
-                                    (!empty($update) ? $update : '') .
-                                    (!empty($delete) ? $delete : '') . '
+                        (!empty($update) ? $update : '') .
+                        (!empty($delete) ? $delete : '') . '
                                 </ul>
                             </div>';
                 } else {
