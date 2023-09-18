@@ -19,7 +19,7 @@
 
     <!-- Favicon -->
     <link rel="icon"
-        href="{{ url(config('common.path_storage') . (!empty($setting_system['company_logo']) ? $setting_system['company_logo'] : config('common.no_image')) ?? config('common.no_image')) }}"
+        href="{{ !empty($setting_system['company_logo']) ? url(config('common.path_storage') . $setting_system['company_logo']) : url(config('common.path_template_admin') . config('common.logo_company_main')) }}"
         type="image/png">
 
     @include('layouts.admin.partials._styles')
@@ -161,7 +161,89 @@
                             success: function(data) {
                                 if (data.status == 'success') {
                                     Swal.fire(
-                                        'Deleted!',
+                                        "{{ __('Terhapus !') }}",
+                                        data.message,
+                                        'success'
+                                    ).then(() => {
+                                        window.location.reload();
+                                    });
+                                } else if (data.status == 'error') {
+                                    Swal.fire(
+                                        'Error!',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                })
+            })
+
+            $('body').on('click', '.approve', function(e) {
+                e.preventDefault();
+                swalWithBootstrapButtons.fire({
+                    title: "{{ __('Anda yakin akan menyetujui ?') }}",
+                    text: "{{ __('Setelah data terproses, status akan berubah menjadi approve') }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "{{ __('Ya, setujui !') }}",
+                    cancelButtonText: "{{ __('Batal') }}",
+                    reverseButtons: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url = $(this).attr('href');
+                        $.ajax({
+                            method: 'POST',
+                            url: url,
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    Swal.fire(
+                                        "{{ __('Disetujui !') }}",
+                                        data.message,
+                                        'success'
+                                    ).then(() => {
+                                        window.location.reload();
+                                    });
+                                } else if (data.status == 'error') {
+                                    Swal.fire(
+                                        'Error!',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                })
+            })
+
+            $('body').on('click', '.reject', function(e) {
+                e.preventDefault();
+                swalWithBootstrapButtons.fire({
+                    title: "{{ __('Anda yakin akan menolak ?') }}",
+                    text: "{{ __('Setelah data terproses, status akan berubah menjadi reject') }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "{{ __('Ya, tolak !') }}",
+                    cancelButtonText: "{{ __('Batal') }}",
+                    reverseButtons: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url = $(this).attr('href');
+                        $.ajax({
+                            method: 'POST',
+                            url: url,
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    Swal.fire(
+                                        "{{ __('Ditolak !') }}",
                                         data.message,
                                         'success'
                                     ).then(() => {

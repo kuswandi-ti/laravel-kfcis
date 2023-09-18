@@ -240,8 +240,11 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             // 'image' => config('common.no_image'),
+            'employee_group' => 'Bulanan',
             'department_id' => $accounting->id,
             'section_id' => 2,
+            'join_date' => saveDateNow(),
+            'approved' => 1,
             'approved_at' => saveDateTimeNow(),
             'approved_by' => $user,
             'status' => 1,
@@ -257,8 +260,11 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             // 'image' => config('common.no_image'),
+            'employee_group' => 'Harian',
             'department_id' => $accounting->id,
             'section_id' => 2,
+            'join_date' => saveDateNow(),
+            'approved' => 1,
             'approved_at' => saveDateTimeNow(),
             'approved_by' => $user,
             'status' => 1,
@@ -274,8 +280,11 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             // 'image' => config('common.no_image'),
+            'employee_group' => 'Harian',
             'department_id' => $accounting->id,
             'section_id' => 2,
+            'join_date' => saveDateNow(),
+            'approved' => 1,
             'approved_at' => saveDateTimeNow(),
             'approved_by' => $user,
             'status' => 1,
@@ -291,8 +300,11 @@ class MainDataSeeder extends Seeder
             'email_verified_at' => saveDateTimeNow(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             // 'image' => config('common.no_image'),
+            'employee_group' => 'Harian',
             'department_id' => $accounting->id,
             'section_id' => 2,
+            'join_date' => saveDateNow(),
+            'approved' => 1,
             'approved_at' => saveDateTimeNow(),
             'approved_by' => $user,
             'status' => 1,
@@ -305,5 +317,25 @@ class MainDataSeeder extends Seeder
         $user_ketua->assignRole($role_ketua);
         $user_bendahara->assignRole($role_bendahara);
         $user_sekretaris->assignRole($role_sekretaris);
+
+        /** Anggota */
+        $user_anggota = User::create([
+            'nik' => '420037',
+            'name' => 'Kuswandi',
+            'slug' => Str::slug('Kuswandi'),
+            'email' => 'kuswandi@mail.com',
+            // 'email_verified_at' => saveDateTimeNow(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            // 'image' => config('common.no_image'),
+            'employee_group' => 'Harian',
+            'department_id' => $accounting->id,
+            'section_id' => 2,
+            'join_date' => saveDateNow(),
+            // 'approved_at' => saveDateTimeNow(),
+            // 'approved_by' => $user,
+            // 'status' => 1,
+            'remember_token' => Str::random(10),
+            'created_by' => $user,
+        ]);
     }
 }

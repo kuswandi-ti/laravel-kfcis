@@ -63,6 +63,7 @@ class AdminAdminUserController extends Controller
             'simpanan_wajib' => $request->simpanan_wajib,
             'simpanan_sukarela' => $request->simpanan_sukarela,
             'simpanan_sukarela_tetap' => $request->simpanan_sukarela_tetap,
+            'approved' => 1,
             'approved_at' => saveDateTimeNow(),
             'approved_by' => auth()->user()->name,
             'created_by' => auth()->user()->name,

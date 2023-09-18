@@ -30,6 +30,11 @@
                             <i class="align-middle bx bx-hive me-2 fs-18"></i>
                             {{ __('Persentase Jasa') }}
                         </a>
+                        <a class="mt-3 nav-link" data-bs-toggle="tab" role="tab" aria-current="page" href="#tab3"
+                            aria-selected="false" tabindex="-1">
+                            <i class="align-middle bx bx-cog me-2 fs-18"></i>
+                            {{ __('Lainnya') }}
+                        </a>
                     </nav>
                 </div>
                 <div class="col-xl-9 col-lg-8">
@@ -410,6 +415,80 @@
                                 </div>
                             </form>
                         </div>
+
+                        <div class="tab-pane text-muted" id="tab3" role="tabpanel">
+                            <form method="POST" action="{{ route('admin.other_setting.update') }}">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="p-3">
+                                    <div class="mb-3 row">
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                                            <div class="border shadow-none card custom-card border-dashed-primary">
+                                                <div class="p-3 card-body">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Digit Desimal Nominal') }}
+                                                                        <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-9">
+                                                                    <input type="number"
+                                                                        class="form-control default-number @error('decimal_digit_amount') is-invalid @enderror"
+                                                                        name="decimal_digit_amount"
+                                                                        id="decimal_digit_amount"
+                                                                        value="{{ old('decimal_digit_amount') ?? (!empty($setting_system['decimal_digit_amount']) ? $setting_system['decimal_digit_amount'] : '0') }}"
+                                                                        placeholder="{{ __('Digit Desimal Nominal') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('decimal_digit_amount')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Digit Desimal Persen') }} <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-9">
+                                                                    <input type="number"
+                                                                        class="form-control default-number @error('decimal_digit') is-invalid @enderror"
+                                                                        name="decimal_digit_percent"
+                                                                        id="decimal_digit_percent"
+                                                                        value="{{ old('decimal_digit_percent') ?? (!empty($setting_system['decimal_digit_percent']) ? $setting_system['decimal_digit_percent'] : '0') }}"
+                                                                        placeholder="{{ __('Digit Desimal Persen') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('decimal_digit_percent')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="gap-2 mt-2 d-grid">
+                                                        <button class="btn btn-primary" type="submit">
+                                                            {{ __('Simpan') }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -427,6 +506,8 @@
                     var jasa_pinjaman_reguler = $("#jasa_pinjaman_reguler").val();
                     var jasa_pinjaman_pendanaan = $("#jasa_pinjaman_pendanaan").val();
                     var jasa_pinjaman_sosial = $("#jasa_pinjaman_sosial").val();
+                    var decimal_digit_amount = $("#decimal_digit_amount").val();
+                    var decimal_digit_percent = $("#decimal_digit_percent").val();
 
                     if (jasa_pinjaman_reguler.length == 0) {
                         $("#jasa_pinjaman_reguler").val(0);
@@ -436,6 +517,12 @@
                     }
                     if (jasa_pinjaman_sosial.length == 0) {
                         $("#jasa_pinjaman_sosial").val(0);
+                    }
+                    if (decimal_digit_amount.length == 0) {
+                        $("#decimal_digit_amount").val(0);
+                    }
+                    if (decimal_digit_percent.length == 0) {
+                        $("#decimal_digit_percent").val(0);
                     }
                 });
         });

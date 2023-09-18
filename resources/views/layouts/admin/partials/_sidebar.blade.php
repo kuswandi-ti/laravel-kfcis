@@ -26,12 +26,15 @@
                 </svg>
             </div>
             <ul class="main-menu">
+                {{-- ======================================================================================================= --}}
+                {{-- DASHBOARD - BEGIN --}}
+                {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
-                <li class="slide__category"><span class="category-name">{{ __('Dashboard') }}</span></li>
+                <li class="slide__category mt-4"><span class="category-name">{{ __('Dashboard') }}</span></li>
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
-                <li class="mb-4 slide">
+                <li class="slide">
                     <a href="{{ route('admin.dashboard.index') }}"
                         class="side-menu__item {{ setSidebarActive(['admin.dashboard.*']) }}">
                         <span class=" side-menu__icon">
@@ -41,10 +44,17 @@
                     </a>
                 </li>
                 <!-- End::slide -->
+                {{-- ======================================================================================================= --}}
+                {{-- DASHBOARD - END --}}
+                {{-- ======================================================================================================= --}}
 
+
+                {{-- ======================================================================================================= --}}
+                {{-- DATA UTAMA - BEGIN --}}
+                {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
                 @if (canAccess(['departemen index', 'bagian index', 'barang penjualan index', 'pengurus index', 'anggota index']))
-                    <li class="slide__category"><span class="category-name">{{ __('Data Utama') }}</span></li>
+                    <li class="slide__category mt-4"><span class="category-name">{{ __('Data Utama') }}</span></li>
                 @endif
                 <!-- End::slide__category -->
 
@@ -98,7 +108,7 @@
                 @endif
                 @if (canAccess(['pengurus index', 'anggota index']))
                     <li
-                        class="mb-4 slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
                         <a href="javascript:void(0);"
                             class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
                             <span class=" side-menu__icon">
@@ -131,7 +141,14 @@
                     </li>
                 @endif
                 <!-- End::slide -->
+                {{-- ======================================================================================================= --}}
+                {{-- DATA UTAMA - BEGIN --}}
+                {{-- ======================================================================================================= --}}
 
+
+                {{-- ======================================================================================================= --}}
+                {{-- INPUT DATA - BEGIN --}}
+                {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
                 @if (canAccess([
                         'setor tabungan index',
@@ -141,12 +158,12 @@
                         'pinjaman sosial index',
                         'penjualan index',
                     ]))
-                    <li class="slide__category"><span class="category-name">{{ __('Input Data') }}</span></li>
+                    <li class="slide__category mt-4"><span class="category-name">{{ __('Input Data') }}</span></li>
                 @endif
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
-                @if (canAccess(['penjualan index']))
+                {{-- @if (canAccess(['penjualan index']))
                     <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
                         <a href="{{ route('admin.product.index') }}"
                             class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
@@ -156,8 +173,8 @@
                             <span class="side-menu__label">{{ __('Penjualan') }}</span>
                         </a>
                     </li>
-                @endif
-                @if (canAccess(['setor tabungan index', 'tarik tabungan index']))
+                @endif --}}
+                {{-- @if (canAccess(['setor tabungan index', 'tarik tabungan index']))
                     <li
                         class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
                         <a href="javascript:void(0);"
@@ -190,8 +207,8 @@
                             @endif
                         </ul>
                     </li>
-                @endcan
-                @if (canAccess(['pinjaman reguler index', 'pinjaman pendanaan index', 'pinjaman sosial index']))
+                @endcan --}}
+                {{-- @if (canAccess(['pinjaman reguler index', 'pinjaman pendanaan index', 'pinjaman sosial index']))
                     <li
                         class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
                         <a href="javascript:void(0);"
@@ -232,21 +249,28 @@
                             @endif
                         </ul>
                     </li>
-                @endif
+                @endif --}}
                 <!-- End::slide -->
+                {{-- ======================================================================================================= --}}
+                {{-- INPUT DATA - END --}}
+                {{-- ======================================================================================================= --}}
 
+
+                {{-- ======================================================================================================= --}}
+                {{-- APPROVE DATA - BEGIN --}}
+                {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
-                @if (canAccess(['setor tabungan approve']))
-                    <li class="mt-4 slide__category"><span class="category-name">{{ __('Approve Data') }}</span>
+                @if (canAccess(['anggota approve', 'setor tabungan approve']))
+                    <li class="slide__category mt-4"><span class="category-name">{{ __('Approve Data') }}</span>
                     </li>
                 @endif
                 <!-- End::slide__category -->
 
                 <!-- Start::slide -->
                 @if (canAccess(['anggota approve']))
-                    <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
-                        <a href="{{ route('admin.product.index') }}"
-                            class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                    <li class="slide {{ setSidebarActive(['admin.approve.member.*']) }}">
+                        <a href="{{ route('admin.approve.member.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.approve.member.*']) }}">
                             <span class="side-menu__icon">
                                 <i class='bx bx-check-square'></i>
                             </span>
@@ -254,7 +278,7 @@
                         </a>
                     </li>
                 @endif
-                @if (canAccess(['setor tabungan approve']))
+                {{-- @if (canAccess(['setor tabungan approve']))
                     <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
                         <a href="{{ route('admin.product.index') }}"
                             class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
@@ -264,10 +288,10 @@
                             <span class="side-menu__label">{{ __('Setor Tabungan') }}</span>
                         </a>
                     </li>
-                @endif
-                @if (canAccess(['pinjaman reguler approve', 'pinjaman pendanaan approve', 'pinjaman sosial approve']))
+                @endif --}}
+                {{-- @if (canAccess(['pinjaman reguler approve', 'pinjaman pendanaan approve', 'pinjaman sosial approve']))
                     <li
-                        class="mb-4 slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
                         <a href="javascript:void(0);"
                             class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
                             <span class=" side-menu__icon">
@@ -306,24 +330,48 @@
                             @endif
                         </ul>
                     </li>
-                @endif
+                @endif --}}
                 <!-- End::slide -->
+                {{-- ======================================================================================================= --}}
+                {{-- APPROVE DATA - END --}}
+                {{-- ======================================================================================================= --}}
 
+
+                {{-- ======================================================================================================= --}}
+                {{-- POSTING DATA - BEGIN --}}
+                {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
-                @if (canAccess(['role index', 'permission index', 'setting system']))
-                    <li class="slide__category"><span class="category-name">{{ __('Posting Data') }}</span></li>
+                @if (canAccess(['posting']))
+                    <li class="slide__category mt-4"><span class="category-name">{{ __('Posting Data') }}</span>
+                    </li>
                 @endif
                 <!-- End::slide__category -->
+                {{-- ======================================================================================================= --}}
+                {{-- POSTING DATA - END --}}
+                {{-- ======================================================================================================= --}}
 
+
+                {{-- ======================================================================================================= --}}
+                {{-- LAPORAN - BEGIN --}}
+                {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
-                @if (canAccess(['role index', 'permission index', 'setting system']))
-                    <li class="slide__category"><span class="category-name">{{ __('Laporan') }}</span></li>
+                @if (canAccess(['laporan']))
+                    <li class="slide__category mt-4"><span class="category-name">{{ __('Laporan') }}</span>
+                    </li>
                 @endif
                 <!-- End::slide__category -->
+                {{-- ======================================================================================================= --}}
+                {{-- LAPORAN - END --}}
+                {{-- ======================================================================================================= --}}
 
+
+                {{-- ======================================================================================================= --}}
+                {{-- PENGATURAN - BEGIN --}}
+                {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
                 @if (canAccess(['role index', 'permission index', 'setting system']))
-                    <li class="slide__category"><span class="category-name">{{ __('Pengaturan') }}</span></li>
+                    <li class="slide__category mt-4"><span class="category-name">{{ __('Pengaturan') }}</span>
+                    </li>
                 @endif
                 <!-- End::slide__category -->
 
@@ -339,8 +387,7 @@
                             <span class="side-menu__label">{{ __('Roles & Permissions') }}</span>
                             <i class="fe fe-chevron-right side-menu__angle"></i>
                         </a>
-                        <ul
-                            class="slide-menu child1 {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
+                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.permission.*', 'admin.role.*']) }}">
                             <li class="slide side-menu__label1">
                                 <a href="javascript:void(0)">{{ __('Roles & Permissions') }}</a>
                             </li>
@@ -364,7 +411,7 @@
                     </li>
                 @endif
                 @if (canAccess(['setting system']))
-                    <li class="mb-4 slide {{ setSidebarActive(['admin.setting.*']) }}">
+                    <li class="slide {{ setSidebarActive(['admin.setting.*']) }}">
                         <a href="{{ route('admin.setting.index') }}"
                             class="side-menu__item {{ setSidebarActive(['admin.setting.*']) }}">
                             <span class="side-menu__icon">
@@ -375,17 +422,20 @@
                     </li>
                 @endif
                 <!-- End::slide -->
-        </ul>
-        <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
-                width="24" height="24" viewBox="0 0 24 24">
-                <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z">
-                </path>
-            </svg></div>
-    </nav>
-    <!-- End::nav -->
+                {{-- ======================================================================================================= --}}
+                {{-- PENGATURAN - END --}}
+                {{-- ======================================================================================================= --}}
+            </ul>
+            <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
+                    width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z">
+                    </path>
+                </svg></div>
+        </nav>
+        <!-- End::nav -->
 
-</div>
-<!-- End::main-sidebar -->
+    </div>
+    <!-- End::main-sidebar -->
 
 </aside>
 <!-- End::app-sidebar -->

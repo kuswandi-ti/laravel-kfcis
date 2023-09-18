@@ -6,6 +6,7 @@ use App\Models\SettingSystem;
 use App\Traits\FileUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminJasaSettingUpdateRequest;
+use App\Http\Requests\Admin\AdminOtherSettingUpdateRequest;
 use App\Http\Requests\Admin\AdminGeneralSettingUpdateRequest;
 
 class AdminSettingController extends Controller
@@ -68,5 +69,17 @@ class AdminSettingController extends Controller
         }
 
         return redirect()->route('admin.setting.index')->with('success', __('Pengaturan persentase jasa berhasil diperbarui'));
+    }
+
+    public function otherSettingUpdate(AdminOtherSettingUpdateRequest $request)
+    {
+        foreach ($request->only('decimal_digit_amount', 'decimal_digit_percent') as $key => $value) {
+            SettingSystem::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value, 'updated_by' => auth()->user()->name],
+            );
+        }
+
+        return redirect()->route('admin.setting.index')->with('success', __('Pengaturan lainnya berhasil diperbarui'));
     }
 }

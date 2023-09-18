@@ -78,7 +78,9 @@ Route::group([
     Route::resource('admin', AdminAdminUserController::class);
 
     /** Anggota Routes */
-    Route::get('member/data', [AdminMemberUserController::class, 'data'])->name('member.data');
+    Route::get('member/approve', [AdminMemberUserController::class, 'indexApprove'])->name('approve.member.index');
+    Route::post('member/approve/{member}', [AdminMemberUserController::class, 'postApprove'])->name('approve.member.post');
+    Route::post('member/reject/{member}', [AdminMemberUserController::class, 'postReject'])->name('reject.member.post');
     Route::get('member/restore/{member}', [AdminMemberUserController::class, 'restore'])->name('member.restore');
     Route::resource('member', AdminMemberUserController::class);
 
@@ -94,6 +96,7 @@ Route::group([
     Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
     Route::put('general-setting', [AdminSettingController::class, 'generalSettingUpdate'])->name('general_setting.update');
     Route::put('jasa-setting', [AdminSettingController::class, 'jasaSettingUpdate'])->name('jasa_setting.update');
+    Route::put('other-setting', [AdminSettingController::class, 'otherSettingUpdate'])->name('other_setting.update');
 
     /** Bank Routes */
     // Route::get('bank/data', [AdminBankController::class, 'data'])->name('bank.data');

@@ -19,7 +19,11 @@ class Member
         if (!Auth::check()) {
             return redirect()->route('member.login')->with('error', 'Anda tidak bisa mengakses halaman yang dituju. Silahkan login terlebih dahulu');
         } else {
-            if (!Auth::user()->approved_at) {
+            if (Auth::user()->status == 0) {
+                Auth::logout();
+                return redirect()->route('admin.login')
+                    ->with('error', 'Akun anda tidak aktif. Silahkan hubungi admin');
+            } else if (Auth::user()->approved != 1) {
                 Auth::logout();
                 return redirect()->route('member.login')
                     ->with('error', 'Akun anda belum aktif. Perlu approve dari admin agar akun anda bisa digunakan. Silahkan hubungi admin');

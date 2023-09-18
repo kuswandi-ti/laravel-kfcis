@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(BankTableSeeder::class);
-        // $this->call(DepartmentSectionTableSeeder::class);
         $this->call(FormatDateTableSeeder::class);
         $this->call(FormatTimeTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);

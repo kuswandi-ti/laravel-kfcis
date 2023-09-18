@@ -84,26 +84,26 @@
                                     <div class="d-sm-flex align-items-center">
                                         <div class="mt-2 mt-sm-0">
                                             <h5 class="mb-1 product-name fs-16 fw-semibold align-items-center">
-                                                {{ truncateString($product->name ?? '', 25) }}
+                                                {{ truncateString($product->name ?? '', 35) }}
                                             </h5>
                                             <p class="mb-2 product-description fs-13 text-muted">
-                                                {{ truncateString($product->specification ?? '', 65) }}
+                                                {{ truncateString($product->specification ?? '', 50) }}
                                             </p>
                                             <h4 class="mb-2 fw-semibold">
                                                 <span>
-                                                    {{ formatAmount($product->price_sell, 1) }}
+                                                    {{ formatAmount($product->price_sell) }}
                                                     <span class="text-muted ms-1 fs-14 op-6">
-                                                        {{ formatAmount($product->price_hpp, 1) }}
+                                                        {{ formatAmount($product->price_hpp) }}
                                                     </span>
                                                 </span>
                                             </h4>
                                             <p class="mb-0 badge bg-warning-transparent fs-11 rounded-1">
-                                                {{ formatAmount($product->margin, 1) }}</p>
+                                                {{ formatAmount($product->margin) }}</p>
                                             <p class="mb-0 badge bg-secondary-transparent fs-11 rounded-1">
                                                 @php
                                                     $persen_margin = ($product->margin / $product->price_sell) * 100;
                                                 @endphp
-                                                {{ formatAmount($persen_margin, 2) }}%
+                                                {{ formatPercent($persen_margin ?? 0) }}%
                                             </p>
                                             <span
                                                 class="badge bg-{{ setStatusBadge($product->status) }}">{{ setStatusText($product->status) }}</span>

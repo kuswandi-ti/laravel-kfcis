@@ -1,16 +1,16 @@
 @extends('layouts.admin.master')
 
 @section('page_title')
-    {{ __('Anggota Koperasi') }}
+    {{ __('Approve Anggota Koperasi Baru') }}
 @endsection
 
 @section('section_header_title')
-    {{ __('Anggota Koperasi') }}
+    {{ __('Approve Anggota Koperasi Baru') }}
 @endsection
 
 @section('section_header_breadcrumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Daftar Data Anggota Koperasi') }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Daftar Data Anggota Koperasi Baru Belum Approve') }}</li>
 @endsection
 
 @section('page_content')
@@ -20,19 +20,12 @@
                 <div class="flex-wrap card-header d-flex align-items-center flex-xxl-nowrap">
                     <div class="flex-fill">
                         <div class="card-title">
-                            {{ __('Daftar Data Anggota Koperasi') }}
+                            {{ __('Daftar Data Anggota Koperasi Baru Belum Approve') }}
                             <p class="subtitle text-muted fs-12 fw-normal">
-                                {{ __('Menampilkan semua data anggota koperasi') }}
+                                {{ __('Menampilkan semua data anggota koperasi baru belum approve') }}
                             </p>
                         </div>
                     </div>
-                    @can('anggota create')
-                        <div class="mt-2 d-flex mt-sm-0 align-items-center">
-                            <a href="{{ route('admin.member.create') }}" class="btn btn-primary ms-2">
-                                {{ __('Baru') }}
-                            </a>
-                        </div>
-                    @endcan
                 </div>
             </div>
         </div>
@@ -67,7 +60,7 @@
                                                     @foreach ($departments as $department)
                                                         <li>
                                                             <a class="dropdown-item"
-                                                                href="{{ url('/admin/member/?department=' . $department->slug) }}">{{ $department->name ?? '' }}</a>
+                                                                href="{{ url('/admin/member/approve/?department=' . $department->slug) }}">{{ $department->name ?? '' }}</a>
                                                         </li>
                                                     @endforeach
                                                 @endif
@@ -89,7 +82,7 @@
                                                     @foreach ($sections as $section)
                                                         <li>
                                                             <a class="dropdown-item"
-                                                                href="{{ url('/admin/member/?section=' . $section->slug) }}">{{ $section->name ?? '' }}</a>
+                                                                href="{{ url('/admin/member/approve/?section=' . $section->slug) }}">{{ $section->name ?? '' }}</a>
                                                         </li>
                                                     @endforeach
                                                 @endif
@@ -105,11 +98,11 @@
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?employee_group=Bulanan') }}">{{ __('Bulanan') }}</a>
+                                                        href="{{ url('/admin/member/approve/?employee_group=Bulanan') }}">{{ __('Bulanan') }}</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?employee_group=Harian') }}">{{ __('Harian') }}</a>
+                                                        href="{{ url('/admin/member/approve/?employee_group=Harian') }}">{{ __('Harian') }}</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -123,15 +116,15 @@
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?approve=0') }}">{{ __('Belum Approve') }}</a>
+                                                        href="{{ url('/admin/member/approve/?approve=0') }}">{{ __('Belum Approve') }}</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?approve=1') }}">{{ __('Sudah Approve') }}</a>
+                                                        href="{{ url('/admin/member/approve/?approve=1') }}">{{ __('Sudah Approve') }}</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?approve=2') }}">{{ __('Ditolak') }}</a>
+                                                        href="{{ url('/admin/member/approve/?approve=2') }}">{{ __('Ditolak') }}</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -145,11 +138,11 @@
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?verify=1') }}">{{ __('Sudah Verify Email') }}</a>
+                                                        href="{{ url('/admin/member/approve/?verify=1') }}">{{ __('Sudah Verify Email') }}</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?verify=0') }}">{{ __('Belum Verify Email') }}</a>
+                                                        href="{{ url('/admin/member/approve/?verify=0') }}">{{ __('Belum Verify Email') }}</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -164,24 +157,25 @@
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?status=1') }}">{{ __('Aktif') }}</a>
+                                                        href="{{ url('/admin/member/approve/?status=1') }}">{{ __('Aktif') }}</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ url('/admin/member/?status=0') }}">{{ __('Tidak Aktif') }}</a>
+                                                        href="{{ url('/admin/member/approve/?status=0') }}">{{ __('Tidak Aktif') }}</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
                                 </ul>
-                                <form action="{{ route('admin.member.index') }}" method="GET" id="form-search">
+                                <form action="{{ route('admin.approve.member.index') }}" method="GET" id="form-search">
                                     <div class="mt-2 mb-2 input-group">
                                         <input type="text" class="form-control bg-light"
                                             placeholder="{{ __('Cari Data ...') }}" value="{{ old('search') }}"
                                             name="search">
                                     </div>
                                 </form>
-                                <a href="{{ route('admin.member.index') }}" class="mt-2 mb-2 btn btn-secondary ms-2">
+                                <a href="{{ route('admin.approve.member.index') }}"
+                                    class="mt-2 mb-2 btn btn-secondary ms-2">
                                     {{ __('Refresh') }}
                                 </a>
                             </div>
@@ -263,15 +257,6 @@
                                     <i class="ri-more-2-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    @can('anggota update')
-                                        <li>
-                                            <a class="dropdown-item border-bottom"
-                                                href="{{ route('admin.member.edit', $member) }}">
-                                                <i class="align-middle ri-edit-2-line me-2 d-inline-block"></i>
-                                                {{ __('Perbarui') }}
-                                            </a>
-                                        </li>
-                                    @endcan
                                     @if ($member->approved == 0)
                                         @can('anggota approve')
                                             <li>
@@ -305,29 +290,6 @@
                                             {{ __('Kirim Pesan') }}
                                         </a>
                                     </li>
-                                    @if ($member->status == 1 && $member->approved == 1 && !empty($member->email_verified_at))
-                                        @can('anggota delete')
-                                            <li>
-                                                <a class="dropdown-item border-bottom delete_item"
-                                                    href="{{ route('admin.member.destroy', $member) }}">
-                                                    <i class="align-middle ri-delete-bin-5-line me-2 d-inline-block"></i>
-                                                    {{ __('Hapus') }}
-                                                </a>
-                                            </li>
-                                        @endcan
-                                    @else
-                                        @if ($member->approved == 1 && !empty($member->email_verified_at))
-                                            @can('anggota restore')
-                                                <li>
-                                                    <a class="dropdown-item border-bottom"
-                                                        href="{{ route('admin.member.restore', $member) }}">
-                                                        <i class="align-middle ri-refresh-line me-2 d-inline-block"></i>
-                                                        {{ __('Pulihkan') }}
-                                                    </a>
-                                                </li>
-                                            @endcan
-                                        @endif
-                                    @endif
                                 </ul>
                             </div>
                         </div>

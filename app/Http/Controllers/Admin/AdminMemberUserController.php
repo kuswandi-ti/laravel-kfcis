@@ -44,10 +44,13 @@ class AdminMemberUserController extends Controller
                 $query->where('employee_group', $request->employee_group);
             })
             ->when($request->has('approve') && $request->approve != "", function ($query) use ($request) {
-                if ($request->approve == 1) {
-                    $query->where('approved_at', '!=', null);
+                $query->where('approved', $request->approve);
+            })
+            ->when($request->has('verify') && $request->verify != "", function ($query) use ($request) {
+                if ($request->verify == 1) {
+                    $query->where('email_verified_at', '!=', null);
                 } else {
-                    $query->where('approved_at', '==', null);
+                    $query->whereNull('email_verified_at');
                 }
             })
             ->when($request->has('status') && $request->status != "", function ($query) use ($request) {
@@ -65,7 +68,7 @@ class AdminMemberUserController extends Controller
                 }
             )
             ->orderBy('name', 'ASC')
-            ->paginate(8);
+            ->paginate(50);
 
         return view('admin.member.index', compact('departments', 'sections', 'members'));
     }
@@ -207,6 +210,111 @@ class AdminMemberUserController extends Controller
             return redirect()->route('admin.member.index')->with('success', __('Data anggota koperasi berhasil dipulihkan'));
         } else {
             return redirect()->route('admin.member.index')->with('error', __('Data anggota koperasi gagal dipulihkan'));
+        }
+    }
+
+    public function indexApprove(Request $request)
+    {
+        $departments = Department::where('status', 1)->orderBy('name')->get();
+        $sections = Section::where('status', 1)->orderBy('name')->get();
+
+        $members = User::where('approved', 0)
+            ->when($request->has('department') && $request->department != "", function ($query) use ($request) {
+                $query->whereHas('department', function ($q) use ($request) {
+                    $q->where('slug', $request->department);
+                });
+            })
+            ->when($request->has('section') && $request->section != "", function ($query) use ($request) {
+                $query->whereHas('section', function ($q) use ($request) {
+                    $q->where('slug', $request->section);
+                });
+            })
+            ->when($request->has('employee_group') && $request->employee_group != "", function ($query) use ($request) {
+                $query->where('employee_group', $request->employee_group);
+            })
+            ->when($request->has('approve') && $request->approve != "", function ($query) use ($request) {
+                $query->where('approved', $request->approve);
+            })
+            ->when($request->has('verify') && $request->verify != "", function ($query) use ($request) {
+                if ($request->verify == 1) {
+                    $query->where('email_verified_at', '!=', null);
+                } else {
+                    $query->whereNull('email_verified_at');
+                }
+            })
+            ->when($request->has('status') && $request->status != "", function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->when(
+                $request->search && $request->search != "",
+                function ($query) use ($request) {
+                    $query->where('nik', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('name', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('employee_group', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('account_number', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('account_name', 'LIKE', '%' . $request->search . '%');
+                }
+            )
+            ->orderBy('name', 'ASC')
+            ->paginate(50);
+
+        return view('admin.member.approve_index', compact('departments', 'sections', 'members'));
+    }
+
+    public function postApprove(User $member)
+    {
+        try {
+            $approve = $member->update([
+                'approved' => 1,
+                'approved_at' => saveDateTimeNow(),
+                'approved_by' => auth()->user()->name,
+            ]);
+
+            if ($approve) {
+                return response([
+                    'status' => 'success',
+                    'message' => __('Data anggota koperasi berhasil disetujui')
+                ]);
+            } else {
+                return response([
+                    'status' => 'error',
+                    'message' => __('Data anggota koperasi gagal disetujui')
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response([
+                'status' => 'error',
+                'message' => __('Data anggota koperasi gagal disetujui')
+            ]);
+        }
+    }
+
+    public function postReject(User $member)
+    {
+        try {
+            $approve = $member->update([
+                'approved' => 2,
+                'approved_at' => null,
+                'approved_by' => null,
+            ]);
+
+            if ($approve) {
+                return response([
+                    'status' => 'success',
+                    'message' => __('Data anggota koperasi berhasil ditolak')
+                ]);
+            } else {
+                return response([
+                    'status' => 'error',
+                    'message' => __('Data anggota koperasi gagal ditolak')
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response([
+                'status' => 'error',
+                'message' => __('Data anggota koperasi gagal ditolak')
+            ]);
         }
     }
 }

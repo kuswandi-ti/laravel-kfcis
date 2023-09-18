@@ -163,6 +163,64 @@ function setStatusText($status)
     return $status == 1 ? __('Aktif') : __('Tidak Aktif');
 }
 
+function setApproveBadge($status)
+{
+    $status_badge = '';
+
+    switch ($status) {
+        case '0':
+            $status_badge = 'danger';
+            break;
+
+        case '1':
+            $status_badge = 'success';
+            break;
+
+        case '2':
+            $status_badge = 'dark';
+            break;
+
+        default:
+            $status_badge = '';
+            break;
+    }
+    return $status_badge;
+}
+
+function setApproveText($status)
+{
+    $status_text = '';
+
+    switch ($status) {
+        case '0':
+            $status_text = 'Belum Approve';
+            break;
+
+        case '1':
+            $status_text = 'Sudah Approve';
+            break;
+
+        case '2':
+            $status_text = 'Ditolak';
+            break;
+
+        default:
+            $status_text = '';
+            break;
+    }
+    return $status_text;
+}
+
+function setVerifyBadge($status)
+{
+    return $status == 1 ? 'success' : 'danger';
+}
+
+function setVerifyText($status)
+{
+    return $status == 1 ? __('Sudah Verify Email') : __('Belum Verify Email');
+}
+
 function saveDateTimeNow()
 {
     return Carbon::now()->addHour(7)->format('Y-m-d H:i:s');
@@ -227,7 +285,16 @@ function formatMonth($month_number)
 
 function formatAmount($amount, $decimal = 0)
 {
+    $decimal_digit_amount = SettingSystem::where('key', 'decimal_digit_amount')->first();
+    $decimal = $decimal == 0 ? (int)$decimal_digit_amount->value : $decimal;
     return number_format((float)$amount, $decimal, ',', '.');
+}
+
+function formatPercent($percent, $decimal = 0)
+{
+    $decimal_digit_percent = SettingSystem::where('key', 'decimal_digit_percent')->first();
+    $decimal = $decimal == 0 ? (int)$decimal_digit_percent->value : $decimal;
+    return number_format((float)$percent, $decimal, ',', '.');
 }
 
 function unformatAmount($str)

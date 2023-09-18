@@ -30,13 +30,14 @@ return new class extends Migration
             $table->string('account_number')->nullable();
             $table->string('account_name')->nullable();
             $table->date('start_work_date')->nullable();
+            $table->boolean('approved')->default(0)->comment('0 = Not Yet Approved, 1 = Approved, 2 = Rejected');
             $table->timestamp('approved_at')->nullable();
             $table->string('approved_by')->nullable();
             $table->float('simpanan_pokok', 8, 2)->default(0);
             $table->float('simpanan_wajib', 8, 2)->default(0);
             $table->float('simpanan_sukarela', 8, 2)->default(0);
             $table->float('simpanan_sukarela_tetap', 8, 2)->default(0);
-            $table->boolean('status')->default(1)->comment('1 = Active, 0 = Inactive Status');
+            $table->boolean('status')->default(0)->comment('1 = Active, 0 = Inactive');
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
