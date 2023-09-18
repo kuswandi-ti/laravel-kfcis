@@ -83,9 +83,12 @@
                                     </div>
                                     <div class="d-sm-flex align-items-center">
                                         <div class="mt-2 mt-sm-0">
-                                            <h5 class="mb-1 product-name fs-16 fw-semibold align-items-center">
+                                            <h6 class="mb-1 product-code fs-16 fw-semibold align-items-center text-danger">
+                                                {{ truncateString($product->code ?? '', 35) }}
+                                            </h6>
+                                            <h6 class="mb-1 product-name fs-16 fw-semibold align-items-center">
                                                 {{ truncateString($product->name ?? '', 35) }}
-                                            </h5>
+                                            </h6>
                                             <p class="mb-2 product-description fs-13 text-muted">
                                                 {{ truncateString($product->specification ?? '', 50) }}
                                             </p>

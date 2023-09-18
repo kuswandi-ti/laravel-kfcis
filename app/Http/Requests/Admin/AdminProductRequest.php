@@ -24,7 +24,8 @@ class AdminProductRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name' => ['required', 'string', 'max:255', 'unique:products,name'],
+                    'code' => ['required', 'string', 'max:255', 'unique:products,code'],
+                    'name' => ['required', 'string', 'max:255'],
                     'specification' => ['required', 'string'],
                     'price_hpp' => ['required', 'numeric'],
                     'price_sell' => ['required', 'numeric'],
@@ -34,7 +35,8 @@ class AdminProductRequest extends FormRequest
             case 'PATCH':
             case 'PUT':
                 return [
-                    'name' => ['required', 'string', 'max:255', 'unique:products,name,' . $this->product->id],
+                    'code' => ['required', 'string', 'max:255', 'unique:products,code,' . $this->product->id],
+                    'name' => ['required', 'string', 'max:255'],
                     'specification' => ['required', 'string'],
                     'price_hpp' => ['required', 'numeric'],
                     'price_sell' => ['required', 'numeric'],

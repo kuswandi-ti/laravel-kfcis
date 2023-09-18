@@ -39,6 +39,9 @@
                             <div class="p-3 border row product-scroll rounded-3">
                                 <div class="mt-3 col-xl-7 mt-xxl-0">
                                     <div>
+                                        <p class="mb-0 fs-18 fw-semibold text-danger">
+                                            {{ $product->code ?? '' }}
+                                        </p>
                                         <p class="mb-0 fs-18 fw-semibold">
                                             {{ $product->name ?? '' }}
                                         </p>
@@ -52,10 +55,10 @@
                                 </div>
                                 <div class="mt-3 col-xl-5 mt-xxl-0">
                                     <div class="p-3 mb-3 border rounded-3">
-                                        <p class="mb-2 fs-16 fw-semibold">{{ __('Harga :') }}</p>
+                                        <p class="mb-4 fs-16 fw-semibold">{{ __('Harga :') }}</p>
                                         <div class="row">
                                             <div class="col-xl-12">
-                                                <div class="mb-2 row">
+                                                <div class="row">
                                                     <div class="col-xl-5">
                                                         <span class="fs-14 fw-semibold">{{ __('Harga HPP') }}</span>
                                                     </div>
@@ -65,7 +68,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div class="mb-2 row">
+                                                <div class="row">
                                                     <div class="col-xl-5">
                                                         <span class="fs-14 fw-semibold">{{ __('Harga Jual') }}</span>
                                                     </div>

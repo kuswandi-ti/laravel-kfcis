@@ -43,6 +43,20 @@
                     <div class="card-body">
                         <div class="mb-4 row gy-4">
                             <div class="col-xl-12">
+                                <label for="code" class="form-label text-default">{{ __('Kode Barang') }}
+                                    <x-all-not-null /></label>
+                                <input type="text" class="form-control @error('code') is-invalid @enderror"
+                                    name="code" value="{{ old('code') }}" placeholder="{{ __('Kode Barang') }}"
+                                    required autofocus>
+                                @error('code')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-4 row gy-4">
+                            <div class="col-xl-12">
                                 <label for="name" class="form-label text-default">{{ __('Nama Barang') }}
                                     <x-all-not-null /></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"

@@ -33,7 +33,8 @@ class AdminProductController extends Controller
             ->when(
                 $request->search && $request->search != "",
                 function ($query) use ($request) {
-                    $query->where('name', 'LIKE', '%' . $request->search . '%')
+                    $query->where('code', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('name', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('specification', 'LIKE', '%' . $request->search . '%');
                 }
             )
@@ -59,8 +60,9 @@ class AdminProductController extends Controller
         $imagePath = $this->handleImageUpload($request, 'image_barang', $request->old_image_barang, 'products');
 
         $store = Product::create([
+            'code' => $request->code,
+            'slug' => Str::slug($request->code),
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
             'specification' => $request->specification,
             'image' => !empty($imagePath) ? $imagePath : $request->old_image_barang,
             'price_hpp' => $request->price_hpp,
@@ -100,8 +102,9 @@ class AdminProductController extends Controller
         $imagePath = $this->handleImageUpload($request, 'image_barang', $request->old_image_barang, 'products');
 
         $update = $product->update([
+            'code' => $request->code,
+            'slug' => Str::slug($request->code),
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
             'specification' => $request->specification,
             'image' => !empty($imagePath) ? $imagePath : $request->old_image_barang,
             'price_hpp' => $request->price_hpp,
