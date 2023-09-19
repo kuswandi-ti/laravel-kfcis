@@ -16,10 +16,15 @@ return new class extends Migration
             $table->string('code');
             $table->string('slug');
             $table->string('name');
-            $table->string('type');
-            $table->bigInteger('parent_id');
-            $table->float('beginning_balance', 8, 2);
+            $table->bigInteger('parent_id')->unsigned()->nullable();
+            $table->float('beginning_balance')->default(0);
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('restored_at')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
+            $table->string('restored_by')->nullable();
         });
     }
 

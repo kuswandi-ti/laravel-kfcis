@@ -60,9 +60,9 @@
 
                 <!-- Start::slide -->
                 @if (canAccess(['coa index']))
-                    <li class="slide {{ setSidebarActive(['admin.department.*']) }}">
-                        <a href="{{ route('admin.department.index') }}"
-                            class="side-menu__item {{ setSidebarActive(['admin.department.*']) }}">
+                    <li class="slide {{ setSidebarActive(['admin.coa.*']) }}">
+                        <a href="{{ route('admin.coa.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.coa.*']) }}">
                             <span class="side-menu__icon">
                                 <i class='bx bx-grid-alt'></i>
                             </span>

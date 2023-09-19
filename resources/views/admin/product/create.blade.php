@@ -89,7 +89,8 @@
                                     <div class="col-xl-12">
                                         <label for="price_hpp" class="form-label text-default">{{ __('Harga HPP') }}
                                             <x-all-not-null /></label>
-                                        <input type="number" class="form-control @error('price_hpp') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control number-only @error('price_hpp') is-invalid @enderror"
                                             name="price_hpp" id="price_hpp" value="{{ old('price_hpp') ?? 0 }}"
                                             placeholder="{{ __('Harga HPP') }}" required>
                                         @error('price_hpp')
@@ -103,7 +104,8 @@
                                     <div class="col-xl-12">
                                         <label for="price_sell" class="form-label text-default">{{ __('Harga Jual') }}
                                             <x-all-not-null /></label>
-                                        <input type="number" class="form-control @error('price_sell') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control number-only @error('price_sell') is-invalid @enderror"
                                             name="price_sell" id="price_sell" value="{{ old('price_sell') ?? 0 }}"
                                             placeholder="{{ __('Harga Jual') }}" required>
                                         @error('price_sell')
@@ -194,6 +196,9 @@
                 if ($('#margin').val() === 'NaN') {
                     $('#margin').val(0);
                 };
+
+                $("#price_hpp").val(price_hpp)
+                $("#price_sell").val(price_sell)
             });
         });
     </script>

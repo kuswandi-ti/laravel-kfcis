@@ -300,6 +300,5 @@ function formatPercent($percent, $decimal = 0)
 function unformatAmount($str)
 {
     $str = str_replace(".", "", $str);
-    $str = str_replace(",", ".", $str);
     return (float) $str;
 }

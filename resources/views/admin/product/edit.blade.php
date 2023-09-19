@@ -90,7 +90,8 @@
                                     <div class="col-xl-12">
                                         <label for="price_hpp" class="form-label text-default">{{ __('Harga HPP') }}
                                             <x-all-not-null /></label>
-                                        <input type="number" class="form-control @error('price_hpp') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control number-only @error('price_hpp') is-invalid @enderror"
                                             name="price_hpp" id="price_hpp"
                                             value="{{ old('price_hpp') ?? ($product->price_hpp ?? 0) }}"
                                             placeholder="{{ __('Harga HPP') }}" required>
@@ -105,7 +106,8 @@
                                     <div class="col-xl-12">
                                         <label for="price_sell" class="form-label text-default">{{ __('Harga Jual') }}
                                             <x-all-not-null /></label>
-                                        <input type="number" class="form-control @error('price_sell') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control number-only @error('price_sell') is-invalid @enderror"
                                             name="price_sell" id="price_sell"
                                             value="{{ old('price_sell') ?? ($product->price_sell ?? 0) }}"
                                             placeholder="{{ __('Harga Jual') }}" required>
@@ -182,12 +184,15 @@
                 var price_hpp = $("#price_hpp").val();
                 var price_sell = $("#price_sell").val();
 
-                var margin = parseInt(price_sell) - parseInt(price_hpp);
+                var margin = parseInt(price_sell.replace('.', '')) - parseInt(price_hpp.replace('.', ''));
                 $("#margin").val(margin);
 
                 if ($('#margin').val() === 'NaN') {
                     $('#margin').val(0);
                 };
+
+                $("#price_hpp").val(price_hpp)
+                $("#price_sell").val(price_sell)
             });
         });
     </script>

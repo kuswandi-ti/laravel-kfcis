@@ -65,9 +65,9 @@ class AdminProductController extends Controller
             'name' => $request->name,
             'specification' => $request->specification,
             'image' => !empty($imagePath) ? $imagePath : $request->old_image_barang,
-            'price_hpp' => $request->price_hpp,
-            'price_sell' => $request->price_sell,
-            'margin' => $request->margin,
+            'price_hpp' => unformatAmount($request->price_hpp),
+            'price_sell' => unformatAmount($request->price_sell),
+            'margin' => unformatAmount($request->margin),
             'created_by' => auth()->user()->name,
         ]);
 
@@ -107,9 +107,9 @@ class AdminProductController extends Controller
             'name' => $request->name,
             'specification' => $request->specification,
             'image' => !empty($imagePath) ? $imagePath : $request->old_image_barang,
-            'price_hpp' => $request->price_hpp,
-            'price_sell' => $request->price_sell,
-            'margin' => $request->margin,
+            'price_hpp' => unformatAmount($request->price_hpp),
+            'price_sell' => unformatAmount($request->price_sell),
+            'margin' => unformatAmount($request->margin),
             'updated_by' => auth()->user()->name,
         ]);
 

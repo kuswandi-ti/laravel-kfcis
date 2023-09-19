@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminTranslateController;
 use App\Http\Controllers\Admin\AdminDepartmentController;
 use App\Http\Controllers\Admin\AdminMemberUserController;
 use App\Http\Controllers\Admin\AdminPermissionController;
+use App\Http\Controllers\Admin\AdminChartOfAccountController;
 
 Route::group(['middleware' => ['set_language']], function () {
     Route::get('/', [AdminAuthController::class, 'login'])->name('login');
@@ -57,6 +58,9 @@ Route::group([
     /** Profile Routes */
     Route::put('profile-password-update/{id}', [AdminProfileController::class, 'updatePassword'])->name('profile_password.update');
     Route::resource('profile', AdminProfileController::class);
+
+    /** Chart of Account Routes */
+    Route::resource('coa', AdminChartOfAccountController::class);
 
     /** Department Routes */
     Route::get('department/data', [AdminDepartmentController::class, 'data'])->name('department.data');

@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('specification')->nullable();
             $table->text('image')->nullable();
-            $table->float('price_hpp', 8, 2)->default(0);
-            $table->float('price_sell', 8, 2)->default(0);
-            $table->float('margin', 8, 2)->default(0);
+            $table->float('price_hpp')->default(0);
+            $table->float('price_sell')->default(0);
+            $table->float('margin')->default(0);
             $table->boolean('status')->default(1)->comment('1 = Active, 0 = Inactive Status');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

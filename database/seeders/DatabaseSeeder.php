@@ -11,6 +11,7 @@ use Database\Seeders\FormatDateTableSeeder;
 use Database\Seeders\FormatTimeTableSeeder;
 use Database\Seeders\ProfessionTableSeeder;
 use Database\Seeders\SettingSystemTableSeeder;
+use Database\Seeders\ChartOfAccountTableSeeder;
 use KodePandai\Indonesia\IndonesiaDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(BankTableSeeder::class);
+        $this->call(ChartOfAccountTableSeeder::class);
         $this->call(FormatDateTableSeeder::class);
         $this->call(FormatTimeTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);

@@ -110,7 +110,7 @@
                                             </p>
                                             <span
                                                 class="badge bg-{{ setStatusBadge($product->status) }}">{{ setStatusText($product->status) }}</span>
-                                            <div class="mt-4 text-center">
+                                            <div class="mt-4">
                                                 @can('barang penjualan update')
                                                     <a href="{{ route('admin.product.edit', $product) }}"
                                                         class="btn btn-sm btn-info-light me-1" data-bs-toggle="tooltip"
