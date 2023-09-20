@@ -23,6 +23,16 @@
         <div class="header-content-right">
             <!-- Start::header-element -->
             <div class="header-element country-selector">
+                <div class="header-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                    <i class="bx bx-calendar bx-flip-horizontal header-link-icon ionicon"></i>
+                    <span class="badge bg-danger rounded-pill header-icon-badge pulse pulse-secondary"
+                        id="notification-icon-badge">2003-2004</span>
+                </div>
+            </div>
+            <!-- End::header-element -->
+
+            <!-- Start::header-element -->
+            <div class="header-element country-selector">
                 <!-- Start::header-link|dropdown-toggle -->
                 <a aria-label="anchor" href="javascript:void(0);" class="header-link dropdown-toggle"
                     data-bs-toggle="dropdown" data-bs-auto-close="outside">

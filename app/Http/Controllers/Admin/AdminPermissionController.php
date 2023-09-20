@@ -115,28 +115,28 @@ class AdminPermissionController extends Controller
             ->addColumn('action', function ($query) {
                 if (canAccess(['permission update'])) {
                     $update = '
-                        <li>
-                            <a href="' . route('admin.permission.edit', $query->id) . '" class="dropdown-item border-bottom">
-                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
-                            </a>
-                        </li>
-                    ';
+                            <li>
+                                <a class="dropdown-item border-bottom" href="' . route('admin.permission.edit', $query) . '">
+                                    <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
+                                </a>
+                            </li>
+                        ';
                 }
                 if (canAccess(['permission delete'])) {
                     $delete = '
-                        <li>
-                            <a href="' . route('admin.permission.destroy', $query->id) . '" class="dropdown-item border-bottom delete_item">
-                                <i class="bx bx-trash fs-20"></i> ' . __("Hapus") . '
-                            </a>
-                        </li>
-                    ';
+                            <li>
+                                <a class="dropdown-item border-bottom delete_item" href="' . route('admin.permission.destroy', $query) . '">
+                                    <i class="bx bx-trash fs-20"></i> ' . __("Hapus") . '
+                                </a>
+                            </li>
+                        ';
                 }
                 if (canAccess(['permission update', 'permission delete'])) {
-                    return '<div class="dropdown ms-3">
-                                <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded fs-20"></i>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" style="">' .
+                    return '<div class="dropdown">
+                                <button class="btn btn-outline-primary btn-sm btn-wave waves-effect waves-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-cog fs-16"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="">' .
                         (!empty($update) ? $update : '') .
                         (!empty($delete) ? $delete : '') . '
                                 </ul>

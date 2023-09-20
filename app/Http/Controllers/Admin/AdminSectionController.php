@@ -157,20 +157,20 @@ class AdminSectionController extends Controller
                 return '<h6><span class="badge bg-' . setStatusBadge($query->status) . '">' . setStatusText($query->status) . '</span></h6>';
             })
             ->addColumn('action', function ($query) {
-                if (canAccess(['bagian update'])) {
-                    $update = '
-                        <li>
-                            <a href="' . route('admin.section.edit', $query) . '" class="dropdown-item border-bottom">
-                                <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
-                            </a>
-                        </li>
-                    ';
-                }
                 if ($query->status == 1) {
+                    if (canAccess(['bagian update'])) {
+                        $update = '
+                            <li>
+                                <a class="dropdown-item border-bottom" href="' . route('admin.section.edit', $query) . '">
+                                    <i class="bx bx-edit-alt fs-20"></i> ' . __("Perbarui") . '
+                                </a>
+                            </li>
+                        ';
+                    }
                     if (canAccess(['bagian delete'])) {
                         $delete = '
                             <li>
-                                <a href="' . route('admin.section.destroy', $query) . '" class="dropdown-item border-bottom delete_item">
+                                <a class="dropdown-item border-bottom delete_item" href="' . route('admin.section.destroy', $query) . '">
                                     <i class="bx bx-trash fs-20"></i> ' . __("Hapus") . '
                                 </a>
                             </li>
@@ -180,7 +180,7 @@ class AdminSectionController extends Controller
                     if (canAccess(['bagian restore'])) {
                         $restore = '
                             <li>
-                                <a href="' . route('admin.section.restore', $query) . '" class="dropdown-item border-bottom restore_item">
+                                <a class="dropdown-item border-bottom" href="' . route('admin.section.restore', $query) . '">
                                     <i class="bx bx-sync fs-20"></i> ' . __("Pulihkan") . '
                                 </a>
                             </li>
@@ -188,11 +188,11 @@ class AdminSectionController extends Controller
                     }
                 }
                 if (canAccess(['bagian update', 'bagian delete', 'bagian restore'])) {
-                    return '<div class="dropdown ms-3">
-                                <a href="javascript:void(0);" class="border-0 fs-14" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded fs-20"></i>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" style="">' .
+                    return '<div class="dropdown">
+                                <button class="btn btn-outline-primary btn-sm btn-wave waves-effect waves-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-cog fs-16"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="">' .
                         (!empty($update) ? $update : '') .
                         (!empty($restore) ? $restore : '') .
                         (!empty($delete) ? $delete : '') . '

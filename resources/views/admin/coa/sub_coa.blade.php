@@ -8,8 +8,10 @@
             <span class="text-danger">{{ formatAmount($item->beginning_balance) }}</span>
         </th>
         <td>
-            <div class="hstack gap-2 fs-15">
-                <a href="{{ route('admin.coa.edit', $item) }}" class="btn btn-icon btn-sm btn-info-light rounded-pill">
+            <div class="gap-2 hstack fs-15">
+                <a href="{{ route('admin.coa.edit', $item) }}"
+                    class="btn btn-outline-primary btn-sm btn-wave waves-effect waves-light rounded-pill"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="{{ __('Perbarui') }}">
                     <i class="ri-edit-line"></i>
                 </a>
             </div>
@@ -25,9 +27,11 @@
                     <span class="text-danger">{{ formatAmount($value->beginning_balance) }}</span>
                 </th>
                 <td>
-                    <div class="hstack gap-2 fs-15">
+                    <div class="gap-2 hstack fs-15">
                         <a href="{{ route('admin.coa.edit', $value) }}"
-                            class="btn btn-icon btn-sm btn-info-light rounded-pill">
+                            class="btn btn-outline-primary btn-sm btn-wave waves-effect waves-light rounded-pill"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-original-title="{{ __('Perbarui') }}">
                             <i class="ri-edit-line"></i>
                         </a>
                         {{-- <a href="{{ route('admin.coa.destroy', $value) }}"

@@ -39,6 +39,13 @@
                         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" colspan="3">{{ __('Akun') }}</th>
+                                            <th scope="col">{{ __('Saldo Awal') }}</th>
+                                            <th scope="col">{{ __('Aksi') }}</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         @foreach ($parent_coa as $coa)
                                             <thead>
@@ -52,12 +59,16 @@
                                                             class="text-danger">{{ formatAmount($coa->beginning_balance) }}</span>
                                                     </th>
                                                     <th>
-                                                        <div class="hstack gap-2 fs-15">
-                                                            <a href="{{ route('admin.coa.edit', $coa) }}"
-                                                                class="btn btn-icon btn-sm btn-info-light rounded-pill">
-                                                                <i class="ri-edit-line"></i>
-                                                            </a>
-                                                        </div>
+                                                        @can('coa update')
+                                                            <div class="gap-2 hstack fs-15">
+                                                                <a href="{{ route('admin.coa.edit', $coa) }}"
+                                                                    class="btn btn-outline-primary btn-sm btn-wave waves-effect waves-light rounded-pill"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                    data-bs-original-title="{{ __('Perbarui') }}">
+                                                                    <i class="ri-edit-line"></i>
+                                                                </a>
+                                                            </div>
+                                                        @endcan
                                                     </th>
                                                 </tr>
                                             </thead>

@@ -252,7 +252,7 @@
                             </div>
                             <div class="dropdown contact-hover-dropdown">
                                 <button aria-label="button"
-                                    class="btn btn-sm btn-icon btn-primary btn-wave waves-effect waves-light"
+                                    class="btn btn-sm btn-icon btn-primary btn-wave waves-effect waves-light ms-2"
                                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="ri-more-2-fill"></i>
                                 </button>
