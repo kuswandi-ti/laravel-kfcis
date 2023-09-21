@@ -45,6 +45,10 @@ function capitalFirstLetter(string $text = null): ?string
 function getArrayAllPermission()
 {
     return [
+        ['guard_name' => 'web', 'name' => 'plafon create', 'group_name' => 'Plafon Permission'],
+        ['guard_name' => 'web', 'name' => 'plafon delete', 'group_name' => 'Plafon Permission'],
+        ['guard_name' => 'web', 'name' => 'plafon index', 'group_name' => 'Plafon Permission'],
+        ['guard_name' => 'web', 'name' => 'plafon update', 'group_name' => 'Plafon Permission'],
         ['guard_name' => 'web', 'name' => 'periode create', 'group_name' => 'Periode Permission'],
         ['guard_name' => 'web', 'name' => 'periode delete', 'group_name' => 'Periode Permission'],
         ['guard_name' => 'web', 'name' => 'periode index', 'group_name' => 'Periode Permission'],

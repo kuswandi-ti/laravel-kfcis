@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\MainDataSeeder;
+use Database\Seeders\PlafondTableSeeder;
 use Database\Seeders\ReligionTableSeeder;
 use Database\Seeders\LanguagesTableSeeder;
 use Database\Seeders\FormatDateTableSeeder;
@@ -34,6 +35,8 @@ class DatabaseSeeder extends Seeder
         $this->call(FormatTimeTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);
         $this->call(MainDataSeeder::class);
+        $this->call(PeriodTableSeeder::class);
+        $this->call(PlafondTableSeeder::class);
         $this->call(ProfessionTableSeeder::class);
         $this->call(ReligionTableSeeder::class);
         $this->call(SettingSystemTableSeeder::class);

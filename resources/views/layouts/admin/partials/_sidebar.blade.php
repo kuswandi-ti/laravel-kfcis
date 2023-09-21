@@ -53,7 +53,14 @@
                 {{-- DATA UTAMA - BEGIN --}}
                 {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
-                @if (canAccess(['departemen index', 'bagian index', 'barang penjualan index', 'pengurus index', 'anggota index']))
+                @if (canAccess([
+                        'departemen index',
+                        'bagian index',
+                        'barang penjualan index',
+                        'pengurus index',
+                        'anggota index',
+                        'plafon index',
+                    ]))
                     <li class="mt-4 slide__category"><span class="category-name">{{ __('Data Utama') }}</span></li>
                 @endif
                 <!-- End::slide__category -->
@@ -141,6 +148,19 @@
                     </li>
                 @endif
                 <!-- End::slide -->
+                <!-- Start::slide -->
+                @if (canAccess(['plafon index']))
+                    <li class="slide {{ setSidebarActive(['admin.plafond.*']) }}">
+                        <a href="{{ route('admin.plafond.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.plafond.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-coin-stack'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Plafon Pinjaman') }}</span>
+                        </a>
+                    </li>
+                @endif
+                <!-- End::slide -->
                 {{-- ======================================================================================================= --}}
                 {{-- DATA UTAMA - BEGIN --}}
                 {{-- ======================================================================================================= --}}
@@ -164,9 +184,9 @@
 
                 <!-- Start::slide -->
                 @if (canAccess(['penjualan index']))
-                    <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
-                        <a href="{{ route('admin.product.index') }}"
-                            class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                    <li class="slide {{ setSidebarActive(['admin.sale.*']) }}">
+                        <a href="{{ route('admin.sale.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.sale.*']) }}">
                             <span class="side-menu__icon">
                                 <i class='bx bx-store'></i>
                             </span>
@@ -176,31 +196,32 @@
                 @endif
                 @if (canAccess(['setor tabungan index', 'tarik tabungan index']))
                     <li
-                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        class="slide has-sub {{ setSidebarActive(['admin.saving-deposit.*', 'admin.saving-withdraw.*']) }} {{ setSidebarOpen(['admin.saving-deposit.*', 'admin.saving-withdraw.*']) }}">
                         <a href="javascript:void(0);"
-                            class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            class="side-menu__item {{ setSidebarActive(['admin.saving-deposit.*', 'admin.saving-withdraw.*']) }}">
                             <span class=" side-menu__icon">
                                 <i class='bx bx-wallet'></i>
                             </span>
                             <span class="side-menu__label">{{ __('Tabungan') }}</span>
                             <i class="fe fe-chevron-right side-menu__angle"></i>
                         </a>
-                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                        <ul
+                            class="slide-menu child1 {{ setSidebarActive(['admin.saving-deposit.*', 'admin.saving-withdraw.*']) }}">
                             <li class="slide side-menu__label1">
                                 <a href="javascript:void(0)">{{ __('Tabungan') }}</a>
                             </li>
                             @if (canAccess(['setor tabungan index']))
-                                <li class="slide {{ setSidebarActive(['admin.admin.*']) }}">
-                                    <a href="{{ route('admin.admin.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.admin.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.saving-deposit.*']) }}">
+                                    <a href="{{ route('admin.saving-deposit.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.saving-deposit.*']) }}">
                                         {{ __('Setor Tabungan') }}
                                     </a>
                                 </li>
                             @endif
                             @if (canAccess(['tarik tabungan index']))
-                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
-                                    <a href="{{ route('admin.member.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.saving-withdraw.*']) }}">
+                                    <a href="{{ route('admin.saving-withdraw.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.saving-withdraw.*']) }}">
                                         {{ __('Tarik Tabungan') }}
                                     </a>
                                 </li>
@@ -210,39 +231,40 @@
                 @endcan
                 @if (canAccess(['pinjaman reguler index', 'pinjaman pendanaan index', 'pinjaman sosial index']))
                     <li
-                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        class="slide has-sub {{ setSidebarActive(['admin.loan-regular.*', 'admin.loan-funding.*', 'admin.loan-social.*']) }} {{ setSidebarOpen(['admin.loan-regular.*', 'admin.loan-funding.*', 'admin.loan-social.*']) }}">
                         <a href="javascript:void(0);"
-                            class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            class="side-menu__item {{ setSidebarActive(['admin.loan-regular.*', 'admin.loan-funding.*', 'admin.loan-social.*']) }}">
                             <span class=" side-menu__icon">
                                 <i class='bx bx-dollar-circle'></i>
                             </span>
                             <span class="side-menu__label">{{ __('Pinjaman') }}</span>
                             <i class="fe fe-chevron-right side-menu__angle"></i>
                         </a>
-                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                        <ul
+                            class="slide-menu child1 {{ setSidebarActive(['admin.loan-regular.*', 'admin.loan-funding.*', 'admin.loan-social.*']) }}">
                             <li class="slide side-menu__label1">
                                 <a href="javascript:void(0)">{{ __('Pinjaman') }}</a>
                             </li>
                             @if (canAccess(['pinjaman reguler index']))
-                                <li class="slide {{ setSidebarActive(['admin.admin.*']) }}">
-                                    <a href="{{ route('admin.admin.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.admin.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.loan-regular.*']) }}">
+                                    <a href="{{ route('admin.loan-regular.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.loan-regular.*']) }}">
                                         {{ __('Reguler') }}
                                     </a>
                                 </li>
                             @endif
                             @if (canAccess(['pinjaman pendanaan index']))
-                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
-                                    <a href="{{ route('admin.member.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.loan-funding.*']) }}">
+                                    <a href="{{ route('admin.loan-funding.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.loan-funding.*']) }}">
                                         {{ __('Pendanaan') }}
                                     </a>
                                 </li>
                             @endif
                             @if (canAccess(['pinjaman sosial index']))
-                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
-                                    <a href="{{ route('admin.member.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.loan-social.*']) }}">
+                                    <a href="{{ route('admin.loan-social.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.loan-social.*']) }}">
                                         {{ __('Sosial') }}
                                     </a>
                                 </li>
@@ -279,9 +301,9 @@
                     </li>
                 @endif
                 @if (canAccess(['setor tabungan approve']))
-                    <li class="slide {{ setSidebarActive(['admin.product.*']) }}">
-                        <a href="{{ route('admin.product.index') }}"
-                            class="side-menu__item {{ setSidebarActive(['admin.product.*']) }}">
+                    <li class="slide {{ setSidebarActive(['admin.approve.saving_deposit.*']) }}">
+                        <a href="{{ route('admin.approve.saving_deposit.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.approve.saving_deposit.*']) }}">
                             <span class="side-menu__icon">
                                 <i class='bx bx-check-square'></i>
                             </span>
@@ -291,39 +313,40 @@
                 @endif
                 @if (canAccess(['pinjaman reguler approve', 'pinjaman pendanaan approve', 'pinjaman sosial approve']))
                     <li
-                        class="slide has-sub {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }} {{ setSidebarOpen(['admin.admin.*', 'admin.member.*']) }}">
+                        class="slide has-sub {{ setSidebarActive(['admin.approve.loan_regular.*', 'admin.approve.loan_funding.*', 'admin.approve.loan_social.*']) }} {{ setSidebarOpen(['admin.approve.loan_regular.*', 'admin.loan_funding.*', 'admin.approve.loan_social.*']) }}">
                         <a href="javascript:void(0);"
-                            class="side-menu__item {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                            class="side-menu__item {{ setSidebarActive(['admin.approve.loan_regular.*', 'admin.approve.loan_funding.*', 'admin.approve.loan_social.*']) }}">
                             <span class=" side-menu__icon">
                                 <i class='bx bx-check-square'></i>
                             </span>
                             <span class="side-menu__label">{{ __('Pinjaman') }}</span>
                             <i class="fe fe-chevron-right side-menu__angle"></i>
                         </a>
-                        <ul class="slide-menu child1 {{ setSidebarActive(['admin.admin.*', 'admin.member.*']) }}">
+                        <ul
+                            class="slide-menu child1 {{ setSidebarActive(['admin.approve.loan_regular.*', 'admin.approve.loan_funding.*', 'admin.approve.loan_social.*']) }}">
                             <li class="slide side-menu__label1">
                                 <a href="javascript:void(0)">{{ __('Pinjaman') }}</a>
                             </li>
                             @if (canAccess(['pinjaman reguler approve']))
-                                <li class="slide {{ setSidebarActive(['admin.admin.*']) }}">
-                                    <a href="{{ route('admin.admin.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.admin.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.approve.loan_regular.*']) }}">
+                                    <a href="{{ route('admin.approve.loan_regular.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.approve.loan_regular.*']) }}">
                                         {{ __('Reguler') }}
                                     </a>
                                 </li>
                             @endif
                             @if (canAccess(['pinjaman pendanaan approve']))
-                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
-                                    <a href="{{ route('admin.member.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.approve.loan_funding.*']) }}">
+                                    <a href="{{ route('admin.approve.loan_funding.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.approve.loan_funding.*']) }}">
                                         {{ __('Pendanaan') }}
                                     </a>
                                 </li>
                             @endif
                             @if (canAccess(['pinjaman sosial approve']))
-                                <li class="slide {{ setSidebarActive(['admin.member.*']) }}">
-                                    <a href="{{ route('admin.member.index') }}"
-                                        class="side-menu__item {{ setSidebarActive(['admin.member.*']) }}">
+                                <li class="slide {{ setSidebarActive(['admin.approve.loan_social.*']) }}">
+                                    <a href="{{ route('admin.approve.loan_social.index') }}"
+                                        class="side-menu__item {{ setSidebarActive(['admin.approve.loan_social.*']) }}">
                                         {{ __('Sosial') }}
                                     </a>
                                 </li>

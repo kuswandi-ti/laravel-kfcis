@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminSaleController;
 use App\Http\Controllers\Admin\AdminPeriodController;
 use App\Http\Controllers\Admin\AdminPackageController;
+use App\Http\Controllers\Admin\AdminPlafondController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminSectionController;
@@ -56,7 +57,7 @@ Route::group([
 
     Route::group([
         'middleware' => ['active_period']
-    ], function() {
+    ], function () {
         /** Sale Routes */
         Route::resource('sale', AdminSaleController::class);
 
@@ -101,17 +102,21 @@ Route::group([
     Route::get('product/restore/{product}', [AdminProductController::class, 'restore'])->name('product.restore');
     Route::resource('product', AdminProductController::class);
 
-    /** Pengurus Routes */
+    /** Admin Routes */
     Route::get('admin/data', [AdminAdminUserController::class, 'data'])->name('admin.data');
     Route::get('admin/restore/{admin}', [AdminAdminUserController::class, 'restore'])->name('admin.restore');
     Route::resource('admin', AdminAdminUserController::class);
 
-    /** Anggota Routes */
+    /** Member Routes */
     Route::get('member/approve', [AdminMemberUserController::class, 'indexApprove'])->name('approve.member.index');
     Route::post('member/approve/{member}', [AdminMemberUserController::class, 'postApprove'])->name('approve.member.post');
     Route::post('member/reject/{member}', [AdminMemberUserController::class, 'postReject'])->name('reject.member.post');
     Route::get('member/restore/{member}', [AdminMemberUserController::class, 'restore'])->name('member.restore');
     Route::resource('member', AdminMemberUserController::class);
+
+    /** Plafon Routes */
+    Route::get('plafond/data', [AdminPlafondController::class, 'data'])->name('plafond.data');
+    Route::resource('plafond', AdminPlafondController::class);
 
     /** Role Routes */
     Route::get('role/data', [AdminRoleController::class, 'data'])->name('role.data');
