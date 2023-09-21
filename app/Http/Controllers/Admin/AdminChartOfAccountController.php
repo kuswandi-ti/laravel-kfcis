@@ -10,6 +10,15 @@ use App\Http\Requests\Admin\AdminChartOfAccountRequest;
 
 class AdminChartOfAccountController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:coa create'])->only(['create', 'store']);
+        $this->middleware(['permission:coa delete'])->only(['destroy']);
+        $this->middleware(['permission:coa index'])->only(['index', 'show', 'data']);
+        $this->middleware(['permission:coa restore'])->only(['restore']);
+        $this->middleware(['permission:coa update'])->only(['edit', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,7 +46,7 @@ class AdminChartOfAccountController extends Controller
             'code' => $request->code,
             'slug' => Str::slug($request->code),
             'name' => $request->name,
-            'parent_id' => $request->parent,
+            'parent_id' => isset($request->parent) ? $request->parent : null,
             'beginning_balance' => unformatAmount($request->beginning_balance),
             'created_by' => auth()->user()->name,
         ]);

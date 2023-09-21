@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBankController;
 use App\Http\Controllers\Admin\AdminRoleController;
+use App\Http\Controllers\Admin\AdminSaleController;
+use App\Http\Controllers\Admin\AdminPeriodController;
 use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminProfileController;
@@ -15,9 +17,14 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminResidenceController;
 use App\Http\Controllers\Admin\AdminTranslateController;
 use App\Http\Controllers\Admin\AdminDepartmentController;
+use App\Http\Controllers\Admin\AdminLoanSocialController;
 use App\Http\Controllers\Admin\AdminMemberUserController;
 use App\Http\Controllers\Admin\AdminPermissionController;
+use App\Http\Controllers\Admin\AdminLoanFundingController;
+use App\Http\Controllers\Admin\AdminLoanRegularController;
+use App\Http\Controllers\Admin\AdminSavingDepositController;
 use App\Http\Controllers\Admin\AdminChartOfAccountController;
+use App\Http\Controllers\Admin\AdminSavingWithdrawController;
 
 Route::group(['middleware' => ['set_language']], function () {
     Route::get('/', [AdminAuthController::class, 'login'])->name('login');
@@ -43,21 +50,39 @@ Route::group([
     /** Dashboard Routes */
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
-    /** Package Routes */
-    // Route::resource('package', AdminPackageController::class);
-    // Route::get('package/restore/{id}', [AdminPackageController::class, 'restore'])->name('package.restore');
-
-    /** Residence Routes */
-    // Route::get('residence/data', [AdminResidenceController::class, 'data'])->name('residence.data');
-    // Route::get('residence/restore/{id}', [AdminResidenceController::class, 'restore'])->name('residence.restore');
-    // Route::post('get-cities', [AdminResidenceController::class, 'getCities'])->name('residence.get_cities');
-    // Route::post('get-districts', [AdminResidenceController::class, 'getDistricts'])->name('residence.get_districts');
-    // Route::post('get-villages', [AdminResidenceController::class, 'getVillages'])->name('residence.get_villages');
-    // Route::resource('residence', AdminResidenceController::class);
-
     /** Profile Routes */
     Route::put('profile-password-update/{id}', [AdminProfileController::class, 'updatePassword'])->name('profile_password.update');
     Route::resource('profile', AdminProfileController::class);
+
+    Route::group([
+        'middleware' => ['active_period']
+    ], function() {
+        /** Sale Routes */
+        Route::resource('sale', AdminSaleController::class);
+
+        /** Saving - Deposit Routes */
+        Route::get('saving-deposit/approve', [AdminSavingDepositController::class, 'indexApproveSavingDeposit'])->name('approve.saving_deposit.index');
+        Route::post('saving-deposit/approve/{member}', [AdminSavingDepositController::class, 'postApproveSavingDeposit'])->name('approve.saving_deposit.post');
+        Route::resource('saving-deposit', AdminSavingDepositController::class);
+
+        /** Saving - Withdraw Routes */
+        Route::resource('saving-withdraw', AdminSavingWithdrawController::class);
+
+        /** Loan - Regular Routes */
+        Route::get('loan-regular/approve', [AdminLoanRegularController::class, 'indexApproveLoanRegular'])->name('approve.loan_regular.index');
+        Route::post('loan-regular/approve/{member}', [AdminLoanRegularController::class, 'postApproveLoanRegular'])->name('approve.loan_regular.post');
+        Route::resource('loan-regular', AdminLoanRegularController::class);
+
+        /** Loan - Funding Routes */
+        Route::get('loan-funding/approve', [AdminLoanFundingController::class, 'indexApproveLoanFunding'])->name('approve.loan_funding.index');
+        Route::post('loan-funding/approve/{member}', [AdminLoanFundingController::class, 'postApproveLoanFunding'])->name('approve.loan_funding.post');
+        Route::resource('loan-funding', AdminLoanFundingController::class);
+
+        /** Loan - Social Routes */
+        Route::get('loan-social/approve', [AdminLoanSocialController::class, 'indexApproveLoanSocial'])->name('approve.loan_social.index');
+        Route::post('loan-social/approve/{member}', [AdminLoanSocialController::class, 'postApproveLoanSocial'])->name('approve.loan_social.post');
+        Route::resource('loan-social', AdminLoanSocialController::class);
+    });
 
     /** Chart of Account Routes */
     Route::resource('coa', AdminChartOfAccountController::class);
@@ -96,27 +121,14 @@ Route::group([
     Route::get('permission/data', [AdminPermissionController::class, 'data'])->name('permission.data');
     Route::resource('permission', AdminPermissionController::class);
 
+    /** Period Routes */
+    Route::get('period/data', [AdminPeriodController::class, 'data'])->name('period.data');
+    Route::get('period/restore/{period}', [AdminPeriodController::class, 'restore'])->name('period.restore');
+    Route::resource('period', AdminPeriodController::class);
+
     /** Setting Routes */
     Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
     Route::put('general-setting', [AdminSettingController::class, 'generalSettingUpdate'])->name('general_setting.update');
     Route::put('jasa-setting', [AdminSettingController::class, 'jasaSettingUpdate'])->name('jasa_setting.update');
     Route::put('other-setting', [AdminSettingController::class, 'otherSettingUpdate'])->name('other_setting.update');
-
-    /** Bank Routes */
-    // Route::get('bank/data', [AdminBankController::class, 'data'])->name('bank.data');
-    // Route::get('bank/bank/{id}', [AdminBankController::class, 'restore'])->name('bank.restore');
-    // Route::resource('bank', AdminBankController::class);
-
-    /** Language Routes */
-    // Route::get('language/data', [AdminLanguageController::class, 'data'])->name('language.data');
-    // Route::get('language/restore/{id}', [AdminLanguageController::class, 'restore'])->name('language.restore');
-    // Route::resource('language', AdminLanguageController::class);
-
-    /** Translate Routes */
-    // Route::get('translate-admin', [AdminTranslateController::class, 'indexAdmin'])->name('translate.admin');
-    // Route::get('translate-mobile', [AdminTranslateController::class, 'indexMobile'])->name('translate.mobile');
-    // Route::get('translate-website', [AdminTranslateController::class, 'indexWebsite'])->name('translate.website');
-    // Route::post('extract-localize-string', [AdminTranslateController::class, 'extractLocalizationStrings'])->name('translate.extract_localize_string');
-    // Route::post('languange-string-update', [AdminTranslateController::class, 'updateLanguangeString'])->name('translate.update_languange_string');
-    // Route::post('translate-string', [AdminTranslateController::class, 'translateString'])->name('translate.translate_string');
 });

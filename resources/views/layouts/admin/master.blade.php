@@ -280,6 +280,47 @@
                     }
                 })
             })
+
+            $('body').on('click', '.deactivate', function(e) {
+                e.preventDefault();
+                swalWithBootstrapButtons.fire({
+                    title: "{{ __('Anda yakin akan menonaktifkan data ?') }}",
+                    text: "{{ __('Setelah data non aktif, data tidak bisa digunakan') }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "{{ __('Ya, nonaktifkan data !') }}",
+                    cancelButtonText: "{{ __('Batal') }}",
+                    reverseButtons: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let url = $(this).attr('href');
+                        $.ajax({
+                            method: 'DELETE',
+                            url: url,
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    Swal.fire(
+                                        "{{ __('Tidak Aktif !') }}",
+                                        data.message,
+                                        'success'
+                                    ).then(() => {
+                                        window.location.reload();
+                                    });
+                                } else if (data.status == 'error') {
+                                    Swal.fire(
+                                        'Error!',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                })
+            })
         });
     </script>
 </body>

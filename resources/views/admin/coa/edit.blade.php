@@ -72,11 +72,15 @@
                         </div>
                         <div class="mb-4 row gy-4">
                             <div class="col-xl-12">
-                                <label for="parent" class="form-label text-default">{{ __('Akun Utama') }}
-                                    <x-all-not-null /></label>
+                                <label for="parent" class="form-label text-default">{{ __('Akun Induk') }}
+                                    {{ _('(kosongkan jika akun utama)') }}
+                                </label>
                                 <select
                                     class="js-example-placeholder-single js-states form-control select2 @error('section') is-invalid @enderror"
-                                    name="parent" id="parent" required>
+                                    name="parent" id="parent">
+                                    <option value="" selected>
+                                        {{ _('(kosongkan jika akun utama)') }}
+                                    </option>
                                     @foreach ($parent_coa as $parent)
                                         <option value="{{ $parent->id }}"
                                             {{ old('parent') == $parent->id ? 'selected' : ($parent->id == $coa->parent_id ? 'selected' : '') }}>

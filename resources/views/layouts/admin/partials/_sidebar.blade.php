@@ -412,9 +412,9 @@
                     </li>
                 @endif
                 @if (canAccess(['periode index', 'setting system']))
-                    <li class="slide {{ setSidebarActive(['admin.setting.*']) }}">
-                        <a href="{{ route('admin.setting.index') }}"
-                            class="side-menu__item {{ setSidebarActive(['admin.setting.*']) }}">
+                    <li class="slide {{ setSidebarActive(['admin.period.*']) }}">
+                        <a href="{{ route('admin.period.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.period.*']) }}">
                             <span class="side-menu__icon">
                                 <i class='bx bx-calendar'></i>
                             </span>

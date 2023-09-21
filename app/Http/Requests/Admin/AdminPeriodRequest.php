@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminChartOfAccountRequest extends FormRequest
+class AdminPeriodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,24 +21,17 @@ class AdminChartOfAccountRequest extends FormRequest
      */
     public function rules(): array
     {
-        switch ($this->method())
-        {
+        switch ($this->method()) {
             case 'POST':
                 return [
-                    'code' => ['required', 'string', 'max:255', 'unique:chart_of_accounts,code'],
-                    'name' => ['required', 'string', 'max:255'],
-                    'parent' => ['nullable'],
-                    'beginning_balance' => ['required'],
+                    'name' => ['required', 'string', 'max:255', 'unique:periods,name'],
                 ];
                 break;
 
             case 'PATCH':
             case 'PUT':
                 return [
-                    'code' => ['required', 'string', 'max:255', 'unique:chart_of_accounts,code,' . $this->coa->id],
-                    'name' => ['required', 'string', 'max:255'],
-                    'parent' => ['nullable'],
-                    'beginning_balance' => ['required'],
+                    'name' => ['required', 'string', 'max:255', 'unique:periods,name,' . $this->period->id],
                 ];
                 break;
         }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('periods', function (Blueprint $table) {
             $table->id();
-            $table->string('period');
+            $table->string('name');
             $table->string('slug');
             $table->boolean('status')->default(0)->comment('1 = Active, 0 = Inactive Status');
             $table->timestamps();

@@ -31,7 +31,7 @@
                             <div class="card-title">
                                 {{ __('Memperbarui Data Bagian') }}
                                 <p class="subtitle text-muted fs-12 fw-normal">
-                                    {{ __('Silahkan input data untuk proses pembaruan data bagian') }}
+                                    {{ __('Silahkan input data untuk proses memperbarui data bagian') }}
                                 </p>
                             </div>
                         </div>

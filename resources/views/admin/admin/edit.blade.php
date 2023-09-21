@@ -31,7 +31,7 @@
                             <div class="card-title">
                                 {{ __('Memperbarui Data Pengurus Koperasi') }}
                                 <p class="subtitle text-muted fs-12 fw-normal">
-                                    {{ __('Silahkan input data untuk proses pembaruan data pengurus koperasi') }}
+                                    {{ __('Silahkan input data untuk proses memperbarui data pengurus koperasi') }}
                                 </p>
                             </div>
                         </div>

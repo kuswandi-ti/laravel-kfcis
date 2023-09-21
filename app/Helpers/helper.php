@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Period;
 use Illuminate\Support\Str;
 use App\Models\SettingSystem;
 
@@ -241,9 +242,9 @@ function saveTimeNow()
     return Carbon::now()->addHour(7)->format('H:i:s');
 }
 
-function noImage(): ?string
+function activePeriod(): ?String
 {
-    return config('common.path_storage') . config('common.no_image');
+    return Period::where('status', 1)->first()->name ?? '';
 }
 
 function canAccess(array $permissions)

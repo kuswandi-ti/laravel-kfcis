@@ -50,6 +50,7 @@ class Kernel extends HttpKernel
         'member' => \App\Http\Middleware\Member::class,
         'mobile' => \App\Http\Middleware\Mobile::class,
         'set_language' => \App\Http\Middleware\SetLanguage::class,
+        'active_period' => \App\Http\Middleware\ActivePeriod::class,
     ];
 
     /**
