@@ -117,7 +117,10 @@
                                 </div>
                                 <div class="row gy-4">
                                     <div class="col-xl-12">
-                                        <label for="margin" class="form-label text-default">{{ __('Margin') }}</label>
+                                        <label for="margin" class="form-label text-default">
+                                            {{ __('Margin') }}
+                                            <x-web-badge-read-only />
+                                        </label>
                                         <input type="text" class="form-control @error('margin') is-invalid @enderror"
                                             name="margin" id="margin" value="{{ old('margin') ?? 0 }}"
                                             placeholder="{{ __('Margin') }}" readonly>
