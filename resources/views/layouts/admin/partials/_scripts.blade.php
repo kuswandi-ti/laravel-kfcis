@@ -30,5 +30,9 @@
 <!-- Sweetalerts JS -->
 <script src="{{ url(config('common.path_template_admin') . 'assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 
+<!-- Loading Overlay JS -->
+<script src="{{ url(config('common.path_template_admin') . 'assets/libs/loading-overlay/loadingoverlay.min.js') }}">
+</script>
+
 <!-- Custom JS -->
 <script src="{{ url(config('common.path_template_admin') . 'assets/js/custom.js') }}"></script>

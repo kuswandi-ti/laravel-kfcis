@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBankController;
+use App\Http\Controllers\Admin\AdminNeedController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminSaleController;
 use App\Http\Controllers\Admin\AdminPeriodController;
@@ -88,6 +89,10 @@ Route::group([
     /** Chart of Account Routes */
     Route::resource('coa', AdminChartOfAccountController::class);
 
+    /** Need Routes */
+    Route::get('need/data', [AdminNeedController::class, 'data'])->name('need.data');
+    Route::resource('need', AdminNeedController::class);
+
     /** Department Routes */
     Route::get('department/data', [AdminDepartmentController::class, 'data'])->name('department.data');
     Route::get('department/restore/{department}', [AdminDepartmentController::class, 'restore'])->name('department.restore');
@@ -134,6 +139,7 @@ Route::group([
     /** Setting Routes */
     Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
     Route::put('general-setting', [AdminSettingController::class, 'generalSettingUpdate'])->name('general_setting.update');
-    Route::put('jasa-setting', [AdminSettingController::class, 'jasaSettingUpdate'])->name('jasa_setting.update');
+    Route::put('fee-setting', [AdminSettingController::class, 'feeSettingUpdate'])->name('fee_setting.update');
+    Route::put('transaction-setting', [AdminSettingController::class, 'transactionSettingUpdate'])->name('transaction_setting.update');
     Route::put('other-setting', [AdminSettingController::class, 'otherSettingUpdate'])->name('other_setting.update');
 });

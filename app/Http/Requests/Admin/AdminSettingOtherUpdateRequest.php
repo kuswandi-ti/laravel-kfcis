@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminJasaSettingUpdateRequest extends FormRequest
+class AdminSettingOtherUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class AdminJasaSettingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'jasa_pinjaman_reguler' => ['required', 'numeric'],
-            'jasa_pinjaman_pendanaan' => ['required', 'numeric'],
-            'jasa_pinjaman_sosial' => ['required', 'numeric'],
+            'decimal_digit_amount' => ['required', 'numeric'],
+            'decimal_digit_percent' => ['required', 'numeric'],
         ];
     }
 }

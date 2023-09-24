@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminGeneralSettingUpdateRequest extends FormRequest
+class AdminSettingGeneralUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class AdminGeneralSettingUpdateRequest extends FormRequest
     {
         return [
             'company_name' => ['required', 'string', 'max:255'],
-            // 'site_title' => ['required', 'string', 'max:255'],
+            'site_title' => ['required', 'string', 'max:255'],
+            'company_email' => ['required', 'string', 'max:255'],
             // 'company_phone' => ['required', 'string', 'max:255'],
-            // 'company_email' => ['required', 'string', 'max:255'],
             // 'company_address' => ['required', 'string', 'max:255'],
             // 'default_date_format' => ['required'],
             // 'default_time_format' => ['required'],

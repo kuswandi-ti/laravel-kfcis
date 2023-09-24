@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminOtherSettingUpdateRequest extends FormRequest
+class AdminSettingFeeUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class AdminOtherSettingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'decimal_digit_amount' => ['required', 'numeric'],
-            'decimal_digit_percent' => ['required', 'numeric'],
+            'fee_loan_regular' => ['required', 'numeric'],
+            'fee_loan_funding' => ['required', 'numeric'],
+            'fee_loan_social' => ['required', 'numeric'],
         ];
     }
 }

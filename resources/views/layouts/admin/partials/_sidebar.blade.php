@@ -54,6 +54,8 @@
                 {{-- ======================================================================================================= --}}
                 <!-- Start::slide__category -->
                 @if (canAccess([
+                        'coa index',
+                        'keperluan index',
                         'departemen index',
                         'bagian index',
                         'barang penjualan index',
@@ -74,6 +76,20 @@
                                 <i class='bx bx-grid-alt'></i>
                             </span>
                             <span class="side-menu__label">{{ __('Chart of Account') }}</span>
+                        </a>
+                    </li>
+                @endif
+                <!-- End::slide -->
+
+                <!-- Start::slide -->
+                @if (canAccess(['keperluan index']))
+                    <li class="slide {{ setSidebarActive(['admin.need.*']) }}">
+                        <a href="{{ route('admin.need.index') }}"
+                            class="side-menu__item {{ setSidebarActive(['admin.need.*']) }}">
+                            <span class="side-menu__icon">
+                                <i class='bx bx-task'></i>
+                            </span>
+                            <span class="side-menu__label">{{ __('Keperluan') }}</span>
                         </a>
                     </li>
                 @endif

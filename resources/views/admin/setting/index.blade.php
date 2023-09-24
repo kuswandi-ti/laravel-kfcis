@@ -30,6 +30,11 @@
                             <i class="align-middle bx bx-hive me-2 fs-18"></i>
                             {{ __('Persentase Jasa') }}
                         </a>
+                        <a class="mt-3 nav-link" data-bs-toggle="tab" role="tab" aria-current="page" href="#tab4"
+                            aria-selected="false" tabindex="-1">
+                            <i class="align-middle bx bx-receipt me-2 fs-18"></i>
+                            {{ __('Penomoran Transaksi') }}
+                        </a>
                         <a class="mt-3 nav-link" data-bs-toggle="tab" role="tab" aria-current="page" href="#tab3"
                             aria-selected="false" tabindex="-1">
                             <i class="align-middle bx bx-cog me-2 fs-18"></i>
@@ -308,7 +313,7 @@
                         </div>
 
                         <div class="tab-pane text-muted" id="tab2" role="tabpanel">
-                            <form method="POST" action="{{ route('admin.jasa_setting.update') }}">
+                            <form method="POST" action="{{ route('admin.fee_setting.update') }}">
                                 @csrf
                                 @method('PUT')
 
@@ -328,17 +333,16 @@
                                                                 </div>
                                                                 <div class="col-xl-9">
                                                                     <div class="input-group">
-                                                                        <input type="number"
-                                                                            class="form-control default-number @error('jasa_pinjaman_reguler') is-invalid @enderror"
-                                                                            name="jasa_pinjaman_reguler"
-                                                                            id="jasa_pinjaman_reguler"
-                                                                            value="{{ old('jasa_pinjaman_reguler') ?? (!empty($setting_system['jasa_pinjaman_reguler']) ? $setting_system['jasa_pinjaman_reguler'] : '0') }}"
+                                                                        <input type="text"
+                                                                            class="form-control number-only default-number @error('fee_loan_regular') is-invalid @enderror"
+                                                                            name="fee_loan_regular" id="fee_loan_regular"
+                                                                            value="{{ old('fee_loan_regular') ?? (!empty($setting_system['fee_loan_regular']) ? $setting_system['fee_loan_regular'] : '0') }}"
                                                                             placeholder="{{ __('Persentase Jasa Pinjaman Reguler') }}"
                                                                             aria-describedby="basic-addon2" required>
                                                                         <span class="input-group-text"
                                                                             id="basic-addon2">%</span>
                                                                     </div>
-                                                                    @error('jasa_pinjaman_reguler')
+                                                                    @error('fee_loan_regular')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
                                                                         </div>
@@ -356,17 +360,16 @@
                                                                 </div>
                                                                 <div class="col-xl-9">
                                                                     <div class="input-group">
-                                                                        <input type="number"
-                                                                            class="form-control default-number @error('jasa_pinjaman_pendanaan') is-invalid @enderror"
-                                                                            name="jasa_pinjaman_pendanaan"
-                                                                            id="jasa_pinjaman_pendanaan"
-                                                                            value="{{ old('jasa_pinjaman_pendanaan') ?? (!empty($setting_system['jasa_pinjaman_pendanaan']) ? $setting_system['jasa_pinjaman_pendanaan'] : '0') }}"
+                                                                        <input type="text"
+                                                                            class="form-control number-only default-number @error('fee_loan_funding') is-invalid @enderror"
+                                                                            name="fee_loan_funding" id="fee_loan_funding"
+                                                                            value="{{ old('fee_loan_funding') ?? (!empty($setting_system['fee_loan_funding']) ? $setting_system['fee_loan_funding'] : '0') }}"
                                                                             placeholder="{{ __('Persentase Jasa Pinjaman Pendanaan') }}"
                                                                             aria-describedby="basic-addon2" required>
                                                                         <span class="input-group-text"
                                                                             id="basic-addon2">%</span>
                                                                     </div>
-                                                                    @error('jasa_pinjaman_pendanaan')
+                                                                    @error('fee_loan_funding')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
                                                                         </div>
@@ -384,17 +387,16 @@
                                                                 </div>
                                                                 <div class="col-xl-9">
                                                                     <div class="input-group">
-                                                                        <input type="number"
-                                                                            class="form-control default-number @error('jasa_pinjaman_sosial') is-invalid @enderror"
-                                                                            name="jasa_pinjaman_sosial"
-                                                                            id="jasa_pinjaman_sosial"
-                                                                            value="{{ old('jasa_pinjaman_sosial') ?? (!empty($setting_system['jasa_pinjaman_sosial']) ? $setting_system['jasa_pinjaman_sosial'] : '0') }}"
+                                                                        <input type="text"
+                                                                            class="form-control number-only default-number @error('fee_loan_social') is-invalid @enderror"
+                                                                            name="fee_loan_social" id="fee_loan_social"
+                                                                            value="{{ old('fee_loan_social') ?? (!empty($setting_system['fee_loan_social']) ? $setting_system['fee_loan_social'] : '0') }}"
                                                                             placeholder="{{ __('Persentase Jasa Pinjaman Sosial') }}"
                                                                             aria-describedby="basic-addon2" required>
                                                                         <span class="input-group-text"
                                                                             id="basic-addon2">%</span>
                                                                     </div>
-                                                                    @error('jasa_pinjaman_sosial')
+                                                                    @error('fee_loan_social')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
                                                                         </div>
@@ -437,8 +439,8 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-xl-9">
-                                                                    <input type="number"
-                                                                        class="form-control default-number @error('decimal_digit_amount') is-invalid @enderror"
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('decimal_digit_amount') is-invalid @enderror"
                                                                         name="decimal_digit_amount"
                                                                         id="decimal_digit_amount"
                                                                         value="{{ old('decimal_digit_amount') ?? (!empty($setting_system['decimal_digit_amount']) ? $setting_system['decimal_digit_amount'] : '0') }}"
@@ -461,14 +463,324 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-xl-9">
-                                                                    <input type="number"
-                                                                        class="form-control default-number @error('decimal_digit') is-invalid @enderror"
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('decimal_digit') is-invalid @enderror"
                                                                         name="decimal_digit_percent"
                                                                         id="decimal_digit_percent"
                                                                         value="{{ old('decimal_digit_percent') ?? (!empty($setting_system['decimal_digit_percent']) ? $setting_system['decimal_digit_percent'] : '0') }}"
                                                                         placeholder="{{ __('Digit Desimal Persen') }}"
                                                                         aria-describedby="basic-addon2" required>
                                                                     @error('decimal_digit_percent')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="gap-2 mt-2 d-grid">
+                                                        <button class="btn btn-primary" type="submit">
+                                                            {{ __('Simpan') }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane text-muted" id="tab4" role="tabpanel">
+                            <form method="POST" action="{{ route('admin.transaction_setting.update') }}">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="p-3">
+                                    <div class="mb-3 row">
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                                            <div class="border shadow-none card custom-card border-dashed-primary">
+                                                <div class="p-3 card-body">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Penjualan') }}
+                                                                        <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-5">
+                                                                    <label for="sale_prefix"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Prefix') }}
+                                                                        <x-all-not-null />
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control @error('sale_prefix') is-invalid @enderror"
+                                                                        name="sale_prefix" id="sale_prefix"
+                                                                        value="{{ old('sale_prefix') ?? (!empty($setting_system['sale_prefix']) ? $setting_system['sale_prefix'] : '') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('sale_prefix')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="col-xl-4">
+                                                                    <label for="sale_last_number"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Nomor Terakhir') }}
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('sale_last_number') is-invalid @enderror"
+                                                                        name="sale_last_number" id="sale_last_number"
+                                                                        value="{{ old('sale_last_number') ?? (!empty($setting_system['sale_last_number']) ? $setting_system['sale_last_number'] : '0') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" disabled>
+                                                                    @error('sale_last_number')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Pinjaman Reguler') }}
+                                                                        <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-5">
+                                                                    <label for="loan_regular_prefix"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Prefix') }}
+                                                                        <x-all-not-null />
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control @error('loan_regular_prefix') is-invalid @enderror"
+                                                                        name="loan_regular_prefix"
+                                                                        id="loan_regular_prefix"
+                                                                        value="{{ old('loan_regular_prefix') ?? (!empty($setting_system['loan_regular_prefix']) ? $setting_system['loan_regular_prefix'] : '') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('loan_regular_prefix')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="col-xl-4">
+                                                                    <label for="loan_regular_last_number"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Nomor Terakhir') }}
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('loan_regular_last_number') is-invalid @enderror"
+                                                                        name="loan_regular_last_number"
+                                                                        id="loan_regular_last_number"
+                                                                        value="{{ old('loan_regular_last_number') ?? (!empty($setting_system['loan_regular_last_number']) ? $setting_system['loan_regular_last_number'] : '0') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" disabled>
+                                                                    @error('loan_regular_last_number')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Pinjaman Pendanaan') }}
+                                                                        <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-5">
+                                                                    <label for="loan_funding_prefix"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Prefix') }}
+                                                                        <x-all-not-null />
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control @error('loan_funding_prefix') is-invalid @enderror"
+                                                                        name="loan_funding_prefix"
+                                                                        id="loan_funding_prefix"
+                                                                        value="{{ old('loan_funding_prefix') ?? (!empty($setting_system['loan_funding_prefix']) ? $setting_system['loan_funding_prefix'] : '') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('loan_funding_prefix')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="col-xl-4">
+                                                                    <label for="loan_funding_last_number"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Nomor Terakhir') }}
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('loan_funding_last_number') is-invalid @enderror"
+                                                                        name="loan_funding_last_number"
+                                                                        id="loan_funding_last_number"
+                                                                        value="{{ old('loan_funding_last_number') ?? (!empty($setting_system['loan_funding_last_number']) ? $setting_system['loan_funding_last_number'] : '0') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" disabled>
+                                                                    @error('loan_funding_last_number')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Pinjaman Sosial') }}
+                                                                        <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-5">
+                                                                    <label for="loan_social_prefix"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Prefix') }}
+                                                                        <x-all-not-null />
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control @error('loan_social_prefix') is-invalid @enderror"
+                                                                        name="loan_social_prefix" id="loan_social_prefix"
+                                                                        value="{{ old('loan_social_prefix') ?? (!empty($setting_system['loan_social_prefix']) ? $setting_system['loan_social_prefix'] : '') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('loan_social_prefix')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="col-xl-4">
+                                                                    <label for="loan_social_last_number"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Nomor Terakhir') }}
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('loan_social_last_number') is-invalid @enderror"
+                                                                        name="loan_social_last_number"
+                                                                        id="loan_social_last_number"
+                                                                        value="{{ old('loan_social_last_number') ?? (!empty($setting_system['loan_social_last_number']) ? $setting_system['loan_social_last_number'] : '0') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" disabled>
+                                                                    @error('loan_social_last_number')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Setor Tabungan') }}
+                                                                        <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-5">
+                                                                    <label for="saving_deposit_prefix"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Prefix') }}
+                                                                        <x-all-not-null />
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control @error('saving_deposit_prefix') is-invalid @enderror"
+                                                                        name="saving_deposit_prefix"
+                                                                        id="saving_deposit_prefix"
+                                                                        value="{{ old('saving_deposit_prefix') ?? (!empty($setting_system['saving_deposit_prefix']) ? $setting_system['saving_deposit_prefix'] : '') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('saving_deposit_prefix')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="col-xl-4">
+                                                                    <label for="saving_deposit_last_number"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Nomor Terakhir') }}
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('saving_deposit_last_number') is-invalid @enderror"
+                                                                        name="saving_deposit_last_number"
+                                                                        id="saving_deposit_last_number"
+                                                                        value="{{ old('saving_deposit_last_number') ?? (!empty($setting_system['saving_deposit_last_number']) ? $setting_system['saving_deposit_last_number'] : '0') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" disabled>
+                                                                    @error('saving_deposit_last_number')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div
+                                                                class="row gy-2 d-sm-flex align-items-center justify-content-between">
+                                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                    <span class="mb-0 fs-14 fw-semibold">
+                                                                        {{ __('Tarik Tabungan') }}
+                                                                        <x-all-not-null />
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-xl-5">
+                                                                    <label for="saving_withdraw_prefix"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Prefix') }}
+                                                                        <x-all-not-null />
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control @error('saving_withdraw_prefix') is-invalid @enderror"
+                                                                        name="saving_withdraw_prefix"
+                                                                        id="saving_withdraw_prefix"
+                                                                        value="{{ old('saving_withdraw_prefix') ?? (!empty($setting_system['saving_withdraw_prefix']) ? $setting_system['saving_withdraw_prefix'] : '') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" required>
+                                                                    @error('saving_withdraw_prefix')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="col-xl-4">
+                                                                    <label for="saving_withdraw_last_number"
+                                                                        class="form-label text-default">
+                                                                        {{ __('Nomor Terakhir') }}
+                                                                    </label>
+                                                                    <input type="text"
+                                                                        class="form-control number-only default-number @error('saving_withdraw_last_number') is-invalid @enderror"
+                                                                        name="saving_withdraw_last_number"
+                                                                        id="saving_withdraw_last_number"
+                                                                        value="{{ old('saving_withdraw_last_number') ?? (!empty($setting_system['saving_withdraw_last_number']) ? $setting_system['saving_withdraw_last_number'] : '0') }}"
+                                                                        placeholder="{{ __('Prefix') }}"
+                                                                        aria-describedby="basic-addon2" disabled>
+                                                                    @error('saving_withdraw_last_number')
                                                                         <div class="invalid-feedback">
                                                                             {{ $message }}
                                                                         </div>
@@ -503,20 +815,20 @@
         $(document).ready(function() {
             $(".default-number").keyup(
                 function() {
-                    var jasa_pinjaman_reguler = $("#jasa_pinjaman_reguler").val();
-                    var jasa_pinjaman_pendanaan = $("#jasa_pinjaman_pendanaan").val();
-                    var jasa_pinjaman_sosial = $("#jasa_pinjaman_sosial").val();
+                    var fee_loan_regular = $("#fee_loan_regular").val();
+                    var fee_loan_funding = $("#fee_loan_funding").val();
+                    var fee_loan_social = $("#fee_loan_social").val();
                     var decimal_digit_amount = $("#decimal_digit_amount").val();
                     var decimal_digit_percent = $("#decimal_digit_percent").val();
 
-                    if (jasa_pinjaman_reguler.length == 0) {
-                        $("#jasa_pinjaman_reguler").val(0);
+                    if (fee_loan_regular.length == 0) {
+                        $("#fee_loan_regular").val(0);
                     }
-                    if (jasa_pinjaman_pendanaan.length == 0) {
-                        $("#jasa_pinjaman_pendanaan").val(0);
+                    if (fee_loan_funding.length == 0) {
+                        $("#fee_loan_funding").val(0);
                     }
-                    if (jasa_pinjaman_sosial.length == 0) {
-                        $("#jasa_pinjaman_sosial").val(0);
+                    if (fee_loan_social.length == 0) {
+                        $("#fee_loan_social").val(0);
                     }
                     if (decimal_digit_amount.length == 0) {
                         $("#decimal_digit_amount").val(0);

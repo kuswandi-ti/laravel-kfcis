@@ -142,7 +142,7 @@ class AdminDepartmentController extends Controller
             ->editColumn('sections', function ($query) {
                 $section = '';
                 foreach ($query->sections as $item) {
-                    $section .= '<span class="badge bg-outline-danger">' . $item->name . '</span>&nbsp;';
+                    $section .= '<span class="badge bg-outline-primary">' . $item->name . '</span>&nbsp;';
                 }
                 return $section;
             })

@@ -12,7 +12,7 @@ class AdminSavingDepositController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.saving_deposit.index');
     }
 
     /**
