@@ -3,10 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminSaleController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:penjualan create'])->only(['create', 'store']);
+        $this->middleware(['permission:penjualan delete'])->only(['destroy']);
+        $this->middleware(['permission:penjualan index'])->only(['index', 'show', 'data']);
+        $this->middleware(['permission:penjualan update'])->only(['edit', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -18,9 +28,26 @@ class AdminSaleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.sale.create');
+        $products = Product::where('status', 1)
+            ->when(
+                $request->search && $request->search != "",
+                function ($query) use ($request) {
+                    $query->where('code', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('name', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('specification', 'LIKE', '%' . $request->search . '%');
+                }
+            )
+            ->orderBy('name', 'ASC')
+            ->paginate(9);
+        $members = User::where('status', 1)
+            ->where('name', '!=', 'Super Admin')
+            ->where('approved', 1)
+            ->orderBy('name', 'ASC')
+            ->pluck('name', 'id');
+
+        return view('admin.sale.create', compact('products', 'members'));
     }
 
     /**

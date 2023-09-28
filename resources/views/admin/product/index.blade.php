@@ -28,16 +28,26 @@
                     </div>
                     <div class="mt-2 d-flex mt-sm-0 align-items-center">
                         <div class="m-2 btn-group d-xxl-flex d-block">
-                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ __('Status') }}
+                            <button
+                                class="btn btn-sm btn-primary{{ request()->get('status') == null ? '-light' : '' }} dropdown-toggle"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @php
+                                    $status = request()->get('status');
+                                @endphp
+                                @if (isset($status))
+                                    {{ $status == 0 ? __('Tidak Aktif') : __('Aktif') }}
+                                @else
+                                    {{ __('Status') }}
+                                @endif
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="/admin/product/?status=1">{{ __('Aktif') }}</a>
+                                    <a class="dropdown-item {{ ($status !== null) & ($status == 1) ? 'active' : '' }}"
+                                        href="/admin/product/?status=1">{{ __('Aktif') }}</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/admin/product/?status=0">{{ __('Tidak Aktif') }}</a>
+                                    <a class="dropdown-item {{ ($status !== null) & ($status == 0) ? 'active' : '' }}"
+                                        href="/admin/product/?status=0">{{ __('Tidak Aktif') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -87,10 +97,10 @@
                                                 {{ truncateString($product->code ?? '', 35) }}
                                             </h6>
                                             <h6 class="mb-1 product-name fs-16 fw-semibold align-items-center">
-                                                {{ truncateString($product->name ?? '', 35) }}
+                                                {{ truncateString($product->name ?? '', 25) }}
                                             </h6>
                                             <p class="mb-2 product-description fs-13 text-muted">
-                                                {{ truncateString($product->specification ?? '', 50) }}
+                                                {{ truncateString($product->specification ?? '', 35) }}
                                             </p>
                                             <h4 class="mb-2 fw-semibold">
                                                 <span>

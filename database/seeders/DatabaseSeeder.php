@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(NeedTableSeeder::class);
         $this->call(PeriodTableSeeder::class);
         $this->call(PlafondTableSeeder::class);
+        $this->call(ProductTableSeeder::class);
         $this->call(ProfessionTableSeeder::class);
         $this->call(ReligionTableSeeder::class);
         $this->call(SettingSystemTableSeeder::class);

@@ -54,9 +54,17 @@
                                 <ul class="mb-2 navbar-nav me-auto mb-lg-0 align-items-xxl-center">
                                     <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
                                         <div class="btn-group d-xxl-flex d-block">
-                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                {{ __('Departemen') }}
+                                            <button
+                                                class="btn btn-sm btn-primary{{ empty(request()->get('department')) ? '-light' : '' }} dropdown-toggle"
+                                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @php
+                                                    $department = request()->get('department');
+                                                @endphp
+                                                @if (isset($department))
+                                                    {{ strtoupper($department) }}
+                                                @else
+                                                    {{ __('Departemen') }}
+                                                @endif
                                             </button>
                                             <ul class="dropdown-menu">
                                                 @if ($departments->count() == 0)
@@ -66,7 +74,7 @@
                                                 @else
                                                     @foreach ($departments as $department)
                                                         <li>
-                                                            <a class="dropdown-item"
+                                                            <a class="dropdown-item {{ request()->get('department') == $department->slug ? 'active' : '' }}"
                                                                 href="{{ url('/admin/member/?department=' . $department->slug) }}">{{ $department->name ?? '' }}</a>
                                                         </li>
                                                     @endforeach
@@ -76,9 +84,17 @@
                                     </li>
                                     <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
                                         <div class="btn-group d-xxl-flex d-block">
-                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                {{ __('Bagian') }}
+                                            <button
+                                                class="btn btn-sm btn-primary{{ empty(request()->get('section')) ? '-light' : '' }} dropdown-toggle"
+                                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @php
+                                                    $section = request()->get('section');
+                                                @endphp
+                                                @if (isset($section))
+                                                    {{ strtoupper($section) }}
+                                                @else
+                                                    {{ __('Bagian') }}
+                                                @endif
                                             </button>
                                             <ul class="dropdown-menu">
                                                 @if ($sections->count() == 0)
@@ -88,7 +104,7 @@
                                                 @else
                                                     @foreach ($sections as $section)
                                                         <li>
-                                                            <a class="dropdown-item"
+                                                            <a class="dropdown-item {{ request()->get('section') == $section->slug ? 'active' : '' }}"
                                                                 href="{{ url('/admin/member/?section=' . $section->slug) }}">{{ $section->name ?? '' }}</a>
                                                         </li>
                                                     @endforeach
@@ -98,17 +114,25 @@
                                     </li>
                                     <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
                                         <div class="btn-group d-xxl-flex d-block">
-                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                {{ __('Jenis Karyawan') }}
+                                            <button
+                                                class="btn btn-sm btn-primary{{ empty(request()->get('employee_group')) ? '-light' : '' }} dropdown-toggle"
+                                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @php
+                                                    $employee_group = request()->get('employee_group');
+                                                @endphp
+                                                @if (isset($employee_group))
+                                                    {{ $employee_group }}
+                                                @else
+                                                    {{ __('Jenis Karyawan') }}
+                                                @endif
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ request()->get('employee_group') == __('Bulanan') ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?employee_group=Bulanan') }}">{{ __('Bulanan') }}</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ request()->get('employee_group') == __('Harian') ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?employee_group=Harian') }}">{{ __('Harian') }}</a>
                                                 </li>
                                             </ul>
@@ -116,21 +140,29 @@
                                     </li>
                                     <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
                                         <div class="btn-group d-xxl-flex d-block">
-                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                {{ __('Approve') }}
+                                            <button
+                                                class="btn btn-sm btn-primary{{ request()->get('approve') == null ? '-light' : '' }} dropdown-toggle"
+                                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @php
+                                                    $approve = request()->get('approve');
+                                                @endphp
+                                                @if (isset($approve))
+                                                    {{ $approve == 0 ? __('Belum Approve') : ($approve == 1 ? __('Sudah Approve') : __('Ditolak')) }}
+                                                @else
+                                                    {{ __('Approve') }}
+                                                @endif
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ ($approve !== null) & ($approve == 0) ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?approve=0') }}">{{ __('Belum Approve') }}</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ ($approve !== null) & ($approve == 1) ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?approve=1') }}">{{ __('Sudah Approve') }}</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ ($approve !== null) & ($approve == 2) ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?approve=2') }}">{{ __('Ditolak') }}</a>
                                                 </li>
                                             </ul>
@@ -138,17 +170,25 @@
                                     </li>
                                     <li class="mb-2 nav-item mb-xxl-0 ms-xxl-0 ms-3">
                                         <div class="btn-group d-xxl-flex d-block">
-                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                {{ __('Verify Email') }}
+                                            <button
+                                                class="btn btn-sm btn-primary{{ request()->get('verify') == null ? '-light' : '' }} dropdown-toggle"
+                                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @php
+                                                    $verify = request()->get('verify');
+                                                @endphp
+                                                @if (isset($verify))
+                                                    {{ $verify == 0 ? __('Belum Verify Email') : __('Sudah Verify Email') }}
+                                                @else
+                                                    {{ __('Verify Email') }}
+                                                @endif
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ ($verify !== null) & ($verify == 1) ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?verify=1') }}">{{ __('Sudah Verify Email') }}</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ ($verify !== null) & ($verify == 0) ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?verify=0') }}">{{ __('Belum Verify Email') }}</a>
                                                 </li>
                                             </ul>
@@ -156,18 +196,26 @@
                                     </li>
                                     <li class="nav-item mb-xxl-0 ms-xxl-0 ms-3">
                                         <div class="btn-group d-xxl-flex d-block">
-                                            <button class="btn btn-sm btn-primary-light dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                {{ __('Status') }}
+                                            <button
+                                                class="btn btn-sm btn-primary{{ request()->get('status') == null ? '-light' : '' }} dropdown-toggle"
+                                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                @php
+                                                    $status = request()->get('status');
+                                                @endphp
+                                                @if (isset($status))
+                                                    {{ $status == 0 ? __('Tidak Aktif') : __('Aktif') }}
+                                                @else
+                                                    {{ __('Status') }}
+                                                @endif
                                             </button>
                                             <div class="m-2">&nbsp;</div>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ ($status !== null) & ($status == 1) ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?status=1') }}">{{ __('Aktif') }}</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item {{ ($status !== null) & ($status == 0) ? 'active' : '' }}"
                                                         href="{{ url('/admin/member/?status=0') }}">{{ __('Tidak Aktif') }}</a>
                                                 </li>
                                             </ul>
