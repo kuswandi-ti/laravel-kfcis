@@ -89,4 +89,9 @@ class AdminSaleController extends Controller
     {
         //
     }
+
+    public function addToCart(Request $request)
+    {
+        //
+    }
 }

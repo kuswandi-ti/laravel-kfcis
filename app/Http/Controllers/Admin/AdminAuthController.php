@@ -6,11 +6,14 @@ use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Mail\AdminSendResetLinkMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Admin\AdminAuthLoginRequest;
 use App\Http\Requests\Admin\AdminAuthResetPasswordRequest;
 use App\Http\Requests\Admin\AdminAuthSendResetLinkRequest;
@@ -48,10 +51,13 @@ class AdminAuthController extends Controller
 
     public function login()
     {
+        Session::put('url.intended', URL::previous());
+
         if (!Auth::check()) {
             return view('admin.auth.login');
         } else {
-            return redirect()->route('admin.dashboard.index');
+            // return redirect()->route('admin.dashboard.index');
+            return Redirect::to(Session::get('url.intended'));
         }
     }
 
@@ -59,7 +65,8 @@ class AdminAuthController extends Controller
     {
         $request->authenticate();
 
-        return redirect()->route('admin.dashboard.index');
+        // return redirect()->route('admin.dashboard.index');
+        return Redirect::to(Session::get('url.intended'));
     }
 
     public function forgotPassword()

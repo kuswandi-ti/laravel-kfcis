@@ -49,7 +49,7 @@
                                     {{ __('Kredit') }}
                                 </option>
                                 <option value="Cash" {{ old('payment_type') == 'Cash' ? 'selected' : '' }}>
-                                    {{ __('Cash') }}
+                                    {{ __('Tunai') }}
                                 </option>
                             </select>
                         </div>
@@ -110,63 +110,68 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        @if ($products->count() > 0)
-                            @foreach ($products as $product)
-                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                    <div class="border card border-primary custom-card">
-                                        <div class="card-body">
-                                            <div class="text-center">
-                                                <span class="avatar avatar-xxl avatar-rounded">
-                                                    <img src="{{ !empty($product->image) ? url(config('common.path_storage') . $product->image) : url(config('common.path_template_admin') . config('common.image_product')) }}"
-                                                        alt="">
-                                                </span>
-                                                <div class="mt-2 text-center">
-                                                    <h6
-                                                        class="mb-1 product-code fs-16 fw-semibold align-items-center text-danger">
-                                                        {{ $product->code ?? '' }}
-                                                    </h6>
-                                                    <h6 class="mb-1 product-name fs-16 fw-semibold align-items-center">
-                                                        {{ truncateString($product->name ?? '', 20) }}
-                                                    </h6>
-                                                    <p class="mb-2 product-description fs-13 text-muted">
-                                                        {{ truncateString($product->specification ?? '', 25) }}
-                                                    </p>
-                                                    <h6 class="text-success fw-semibold">
-                                                        <span>
-                                                            {{ formatAmount($product->price_sell) ?? 0 }}
-                                                        </span>
-                                                    </h6>
+                    <form name="form_cart" id="form_cart">
+                        <div class="row">
+                            @if ($products->count() > 0)
+                                @foreach ($products as $product)
+                                    <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                        <div class="border card border-primary custom-card">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <span class="avatar avatar-xxl avatar-rounded">
+                                                        <img src="{{ !empty($product->image) ? url(config('common.path_storage') . $product->image) : url(config('common.path_template_admin') . config('common.image_product')) }}"
+                                                            alt="">
+                                                    </span>
+                                                    <div class="mt-2 text-center">
+                                                        <h6
+                                                            class="mb-1 product-code fs-16 fw-semibold align-items-center text-danger">
+                                                            {{ $product->code ?? '' }}
+                                                        </h6>
+                                                        <h6 class="mb-1 product-name fs-16 fw-semibold align-items-center">
+                                                            {{ truncateString($product->name ?? '', 20) }}
+                                                        </h6>
+                                                        <p class="mb-2 product-description fs-13 text-muted">
+                                                            {{ truncateString($product->specification ?? '', 25) }}
+                                                        </p>
+                                                        <h6 class="text-success fw-semibold">
+                                                            <span>
+                                                                {{ formatAmount($product->price_sell) ?? 0 }}
+                                                            </span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center card-footer">
+                                                <div class="btn-list">
+                                                    <a href="{{ route('admin.sale.add_to_cart') }}"
+                                                        class="btn btn-sm btn-primary btn-wave waves-effect waves-light btn_add_to_cart"
+                                                        data-product_id="{{ $product->id ?? 0 }}"
+                                                        data-product_name="{{ $product->name ?? '' }}"
+                                                        data-product_specification="{{ $product->specification ?? '' }}"
+                                                        data-product_image="{{ $product->image ?? '' }}"
+                                                        data-product_price_hpp="{{ $product->price_hpp ?? 0 }}"
+                                                        data-product_price_sell="{{ $product->price_sell ?? 0 }}">
+                                                        {{-- <i class='bx bx-cart-add fs-16'></i> --}}
+                                                        {{ __('Tambahkan') }}
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-center card-footer">
-                                            <div class="btn-list">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-primary btn-wave waves-effect waves-light btn_add"
-                                                    data-id="{{ $product->id ?? 0 }}"
-                                                    data-name="{{ $product->name ?? '' }}"
-                                                    data-price_sell="{{ $product->price_sell ?? 0 }}">
-                                                    <i class='bx bx-cart-add fs-16'></i>
-                                                    {{ __('Tambahkan') }}
-                                                </button>
-                                            </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="text-center">
+                                        <div class="alert alert-solid-danger alert-dismissible fade show">
+                                            {{ __('Tidak ada data') }}
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        @else
-                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                <div class="text-center">
-                                    <div class="alert alert-solid-danger alert-dismissible fade show">
-                                        {{ __('Tidak ada data') }}
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
+                            @endif
 
-                        {!! $products->withQueryString()->links('pagination::bootstrap-5') !!}
-                    </div>
+                            {!! $products->withQueryString()->links('pagination::bootstrap-5') !!}
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -239,27 +244,27 @@
 
 @push('scripts')
     <script>
-        var value = 1,
-            minValue = 1,
-            maxValue = 1000000;
-        let productMinusBtn = document.querySelectorAll(".product-quantity-minus")
-        let productPlusBtn = document.querySelectorAll(".product-quantity-plus")
-        productMinusBtn.forEach((element) => {
-            element.onclick = () => {
-                if (value > minValue) {
-                    value = value - 1;
-                    element.parentElement.childNodes[3].value = value;
-                }
-            }
-        })
-        productPlusBtn.forEach((element) => {
-            element.onclick = () => {
-                if (value < maxValue) {
-                    value = value + 1;
-                    element.parentElement.childNodes[3].value = value;
-                }
-            }
-        })
+        // var value = 1,
+        //     minValue = 1,
+        //     maxValue = 1000000;
+        // let productMinusBtn = document.querySelectorAll(".product-quantity-minus")
+        // let productPlusBtn = document.querySelectorAll(".product-quantity-plus")
+        // productMinusBtn.forEach((element) => {
+        //     element.onclick = () => {
+        //         if (value > minValue) {
+        //             value = value - 1;
+        //             element.parentElement.childNodes[3].value = value;
+        //         }
+        //     }
+        // })
+        // productPlusBtn.forEach((element) => {
+        //     element.onclick = () => {
+        //         if (value < maxValue) {
+        //             value = value + 1;
+        //             element.parentElement.childNodes[3].value = value;
+        //         }
+        //     }
+        // })
 
         $(document).ready(function() {
             $("#nonmember").prop('disabled', true);
@@ -282,13 +287,13 @@
 
         $('#payment_type').change(function() {
             var value = $(this).val();
-            if (value == 'Cash') {
-                $("#payment_month").prop('disabled', true);
-                $("#payment_year").prop('disabled', true);
-            } else {
+            if (value == 'Credit') {
                 $("#payment_month").prop('disabled', false);
                 $("#payment_year").prop('disabled', false);
                 $("#payment_year").focus()
+            } else {
+                $("#payment_month").prop('disabled', true);
+                $("#payment_year").prop('disabled', true);
             }
         });
 
@@ -298,14 +303,51 @@
             // TODO : ajax ke cart
         });
 
-        $(document).on('click', '.btn_add', function() {
-            var product_id = $(this).attr("data-id");
-            var product_name = $(this).attr("data-name");
-            var product_price_sell = $(this).attr("data-price_sell");
+        $(document).on('keyup', '.default-number', function(e) {
+            var quantity = $("#quantity").val();
+            var disc = $("#disc").val();
+
+            if (quantity.length == 0) {
+                $("#quantity").val(1);
+            }
+            if (disc.length == 0) {
+                $("#disc").val(0);
+            }
+        });
+
+        $(document).ajaxStart(function() {
+            $('.btn_add_to_cart').text("{{ __('Menambahkan...') }}");
+            $('.btn_add_to_cart').attr('disabled', true);
+            $('.btn_add_to_cart').prepend(
+                '<span class="align-middle spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;'
+            );
+        });
+
+        $(document).ajaxComplete(function() {
+            $('.btn_add_to_cart').text("{{ __('Tambahkan') }}");
+            $('.btn_add_to_cart').attr('disabled', false);
+            $('.spinner-border').remove()
+        });
+
+        $(document).on('click', '.btn_add_to_cart', function(e) {
+            e.preventDefault();
+
+            let product_id = $(this).attr("data-product_id");
+            let product_name = $(this).attr("data-product_name");
+            let product_specification = $(this).attr("data-product_specification");
+            let product_image = $(this).attr("data-product_image");
+            let product_price_hpp = $(this).attr("data-product_price_hpp");
+            let product_price_sell = $(this).attr("data-product_price_sell");
+            let quantity = 1;
+
+            let url = $(this).attr('href');
+
             $(".empty_cart").remove();
-            // TODO : ajax ke cart
+
+            // TODO : ajax simpan ke cart
+
             $('.cart').append(
-                `
+                `                    
                     <div class="accordion-item" id="item_${product_id}">
                         <h2 class="accordion-header" id="heading_${product_id}">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -313,7 +355,7 @@
                                 aria-controls="collapse_${product_id}">
                                 ${product_name}
                                 &nbsp;
-                                <span class="badge float-end bg-success fs-12">10</span>
+                                <span class="badge float-end bg-success fs-12">${quantity}</span>
                                 &nbsp;
                                 <a class="btn btn-icon btn-sm btn-secondary-transparent rounded-pill btn-wave waves-effect waves-light btn_remove" name="remove_cart" id="${product_id}">
                                     <i class="ri-delete-bin-line"></i>
@@ -322,7 +364,7 @@
                         </h2>
                         <div id="collapse_${product_id}" class="accordion-collapse collapse" aria-labelledby="heading_${product_id}">
                             <div class="accordion-body">
-                                <div class="accordion-body p-0">
+                                <div class="p-0 accordion-body">
                                     <div class="row">
                                         <div class="mb-2 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <div class="border input-group rounded-1 flex-nowrap">
@@ -330,8 +372,8 @@
                                                     class="bg-transparent btn btn-sm input-group-text flex-fill border-start-0 border-top-0 border-bottom-0 border-end product-quantity-minus"><i
                                                         class="ri-subtract-line"></i></button>
                                                 <input type="text"
-                                                    class="text-center border-0 form-control form-control-sm w-100"
-                                                    aria-label="quantity" id="product-quantity" value="1">
+                                                    class="text-center border-0 form-control form-control-sm w-100 number-only default-number"
+                                                    aria-label="quantity" name="quantity" id="quantity" value="${quantity}">
                                                 <button aria-label="button" type="button"
                                                     class="bg-transparent btn btn-sm input-group-text flex-fill border-end-0 border-top-0 border-bottom-0 border-start product-quantity-plus"><i
                                                         class="ri-add-line"></i></button>
@@ -343,9 +385,9 @@
                                                     <small>{{ __('Harga') }}</small>
                                                 </span>
                                                 <input type="text"
-                                                    class="form-control number-only default-number @error('price_sell') is-invalid @enderror"
+                                                    class="form-control"
                                                     name="price_sell" id="price_sell"
-                                                    value="{{ old('price_sell') ?? '' }}"
+                                                    value="${product_price_sell}"
                                                     placeholder="{{ __('Harga') }}" aria-describedby="basic-addon2"
                                                     readonly>
                                                 <span class="input-group-text text-danger">
@@ -359,9 +401,9 @@
                                                     <small>{{ __('Diskon') }}</small>
                                                 </span>
                                                 <input type="text"
-                                                    class="form-control number-only default-number @error('disc') is-invalid @enderror"
+                                                    class="form-control number-only default-number"
                                                     name="disc" id="disc"
-                                                    value="{{ old('disc') ?? '' }}"
+                                                    value="{{ old('disc') ?? 0 }}"
                                                     placeholder="{{ __('Diskon') }}" aria-describedby="basic-addon2"
                                                     required>
                                                 <span class="input-group-text">%</span>
@@ -373,9 +415,9 @@
                                                     <small>{{ __('Total') }}</small>
                                                 </span>
                                                 <input type="text"
-                                                    class="form-control number-only default-number @error('total') is-invalid @enderror"
+                                                    class="form-control"
                                                     name="total" id="total"
-                                                    value="{{ old('total') ?? '' }}"
+                                                    value="{{ old('total') ?? 0 }}"
                                                     placeholder="{{ __('Total') }}" aria-describedby="basic-addon2"
                                                     readonly>
                                                 <span class="input-group-text text-danger">
@@ -384,7 +426,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-2 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <textarea class="form-control" rows="3" name="note" placeholder="{{ __('Keterangan') }}">{{ old('note') ?? '' }}</textarea>
+                                            <textarea class="form-control" rows="3" name="notes" placeholder="{{ __('Keterangan') }}">{{ old('notes') ?? '' }}</textarea>
                                         </div>
                                     </div>
                                 </div>

@@ -60,6 +60,7 @@ Route::group([
         'middleware' => ['active_period']
     ], function () {
         /** Sale Routes */
+        Route::post('sale/add-to-cart', [AdminSaleController::class, 'addToCart'])->name('sale.add_to_cart');
         Route::resource('sale', AdminSaleController::class);
 
         /** Saving - Deposit Routes */
@@ -119,7 +120,7 @@ Route::group([
     Route::get('member/restore/{member}', [AdminMemberUserController::class, 'restore'])->name('member.restore');
     Route::resource('member', AdminMemberUserController::class);
 
-    /** Plafon Routes */
+    /** Plafond Routes */
     Route::get('plafond/data', [AdminPlafondController::class, 'data'])->name('plafond.data');
     Route::resource('plafond', AdminPlafondController::class);
 
