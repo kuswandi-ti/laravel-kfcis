@@ -2028,12 +2028,6 @@
                                                             <ul class="dropdown-menu">
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                        href="{{ route('mobile.login') }}">
-                                                                        {{ __('Login User') }}
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item"
                                                                         href="{{ route('member.login') }}">
                                                                         {{ __('Login Admin') }}
                                                                     </a>
